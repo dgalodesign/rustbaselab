@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { getBaseById, getRelatedBases, incrementBaseViews } from "@/lib/db-queries"
-import { Clock, Eye, Hammer, Calendar, ArrowLeft } from "lucide-react"
+import { Clock, Hammer, Calendar, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import type { Metadata } from "next"
 
@@ -30,10 +30,10 @@ export async function generateMetadata({ params }: BasePageProps): Promise<Metad
 
   return {
     title: `${base.title} - RustBaseLab`,
-    description: base.description,
+    description: base.features || base.title,
     openGraph: {
       title: base.title,
-      description: base.description,
+      description: base.features || base.title,
       type: "article",
     },
   }
@@ -49,22 +49,22 @@ export default async function BasePage({ params }: BasePageProps) {
 
   await incrementBaseViews(id)
 
-  const relatedBases = await getRelatedBases(id, base.category)
+  const relatedBases = await getRelatedBases(id, base.type_id || null)
 
-  const categoryColors = {
-    solo: "bg-blue-500/10 text-blue-500 border-blue-500/20",
-    duo: "bg-green-500/10 text-green-500 border-green-500/20",
-    trio: "bg-purple-500/10 text-purple-500 border-purple-500/20",
-    quad: "bg-orange-500/10 text-orange-500 border-orange-500/20",
-    zerg: "bg-red-500/10 text-red-500 border-red-500/20",
-    bunker: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
-    raid: "bg-pink-500/10 text-pink-500 border-pink-500/20",
+  const formatMaterials = () => {
+    const materials = []
+    if (base.materials_stone > 0) materials.push(`${base.materials_stone.toLocaleString()} Stone`)
+    if (base.materials_metal > 0) materials.push(`${base.materials_metal.toLocaleString()} Metal`)
+    if (base.materials_hq > 0) materials.push(`${base.materials_hq.toLocaleString()} HQM`)
+    return materials.length > 0 ? materials.join(", ") : "Materials not specified"
   }
 
-  const difficultyColors = {
-    easy: "bg-green-500/10 text-green-400",
-    medium: "bg-yellow-500/10 text-yellow-400",
-    hard: "bg-red-500/10 text-red-400",
+  const formatUpkeep = () => {
+    const upkeep = []
+    if (base.upkeep_stone > 0) upkeep.push(`${base.upkeep_stone.toLocaleString()} Stone`)
+    if (base.upkeep_metal > 0) upkeep.push(`${base.upkeep_metal.toLocaleString()} Metal`)
+    if (base.upkeep_hq > 0) upkeep.push(`${base.upkeep_hq.toLocaleString()} HQM`)
+    return upkeep.length > 0 ? upkeep.join(", ") : "Upkeep not specified"
   }
 
   return (
@@ -88,35 +88,40 @@ export default async function BasePage({ params }: BasePageProps) {
         <section className="border-b border-border/40 bg-gradient-to-b from-background to-muted/20">
           <div className="container mx-auto px-4 py-8">
             <div className="mb-4 flex flex-wrap items-center gap-2">
-              <Badge variant="outline" className={categoryColors[base.category]}>
-                {base.category.toUpperCase()}
-              </Badge>
-              <Badge variant="outline" className={difficultyColors[base.difficulty]}>
-                {base.difficulty}
-              </Badge>
-              {base.featured && <Badge className="bg-primary text-primary-foreground">Featured</Badge>}
+              {base.type?.name && (
+                <Badge variant="outline" className="bg-amber-500/10 text-amber-500 border-amber-500/20">
+                  {base.type.name}
+                </Badge>
+              )}
+              {base.team_sizes && (
+                <Badge variant="outline" className="bg-blue-500/10 text-blue-500 border-blue-500/20">
+                  {base.team_sizes}
+                </Badge>
+              )}
             </div>
 
             <h1 className="mb-4 font-mono text-4xl font-bold text-balance md:text-5xl">{base.title}</h1>
-            <p className="mb-6 text-lg text-muted-foreground text-pretty">{base.description}</p>
+            {base.features && <p className="mb-6 text-lg text-muted-foreground text-pretty">{base.features}</p>}
 
             <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                <span>Build Time: {base.buildTime}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Eye className="h-4 w-4" />
-                <span>{base.views.toLocaleString()} views</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Hammer className="h-4 w-4" />
-                <span>Difficulty: {base.difficulty}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                <span>Updated: {new Date(base.updatedAt).toLocaleDateString()}</span>
-              </div>
+              {base.build_time_min && (
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  <span>Build Time: {base.build_time_min} min</span>
+                </div>
+              )}
+              {base.raid_cost_sulfur && (
+                <div className="flex items-center gap-2">
+                  <Hammer className="h-4 w-4" />
+                  <span>Raid Cost: {base.raid_cost_sulfur.toLocaleString()} Sulfur</span>
+                </div>
+              )}
+              {base.created_at && (
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  <span>Added: {new Date(base.created_at).toLocaleDateString()}</span>
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -131,25 +136,28 @@ export default async function BasePage({ params }: BasePageProps) {
           <div className="grid gap-8 lg:grid-cols-3">
             {/* Main Content */}
             <div className="lg:col-span-2">
-              <div className="mb-8">
-                <h2 className="mb-4 text-2xl font-bold">Video Tutorial</h2>
-                <YouTubeEmbed url={base.youtubeUrl} title={base.title} />
-              </div>
+              {base.video_youtube_id && (
+                <div className="mb-8">
+                  <h2 className="mb-4 text-2xl font-bold">Video Tutorial</h2>
+                  <YouTubeEmbed url={`https://www.youtube.com/watch?v=${base.video_youtube_id}`} title={base.title} />
+                </div>
+              )}
 
               <Card>
                 <CardContent className="p-6">
                   <h3 className="mb-4 text-xl font-bold">About This Base</h3>
                   <div className="space-y-4 text-muted-foreground">
-                    <p>{base.description}</p>
+                    {base.features && <p>{base.features}</p>}
                     <p>
-                      This {base.category} base design is rated as {base.difficulty} difficulty and takes approximately{" "}
-                      {base.buildTime} to build. It's perfect for players looking for a reliable and efficient base
-                      design.
+                      This base design is suitable for {base.team_sizes || "various team sizes"} and provides a solid
+                      foundation for your Rust gameplay.
                     </p>
-                    <p>
-                      Watch the full video tutorial above to see the complete building process, including tips for
-                      optimal placement and defensive strategies.
-                    </p>
+                    {base.video_youtube_id && (
+                      <p>
+                        Watch the full video tutorial above to see the complete building process, including tips for
+                        optimal placement and defensive strategies.
+                      </p>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -161,9 +169,17 @@ export default async function BasePage({ params }: BasePageProps) {
                 <CardContent className="p-6">
                   <h3 className="mb-4 text-lg font-bold">Materials Required</h3>
                   <div className="space-y-2 text-sm">
-                    <div className="flex items-center justify-between rounded-lg bg-muted/50 p-3">
-                      <span className="text-muted-foreground">Total Cost:</span>
-                      <span className="font-mono font-semibold">{base.materials}</span>
+                    <div className="rounded-lg bg-muted/50 p-3 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Build Cost:</span>
+                        <span className="font-mono font-semibold text-xs">{formatMaterials()}</span>
+                      </div>
+                      {(base.upkeep_stone > 0 || base.upkeep_metal > 0 || base.upkeep_hq > 0) && (
+                        <div className="flex items-center justify-between pt-2 border-t border-border/40">
+                          <span className="text-muted-foreground">Upkeep:</span>
+                          <span className="font-mono font-semibold text-xs">{formatUpkeep()}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </CardContent>
@@ -173,26 +189,34 @@ export default async function BasePage({ params }: BasePageProps) {
                 <CardContent className="p-6">
                   <h3 className="mb-4 text-lg font-bold">Base Stats</h3>
                   <div className="space-y-3 text-sm">
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Category:</span>
-                      <Badge variant="outline" className={categoryColors[base.category]}>
-                        {base.category}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Difficulty:</span>
-                      <Badge variant="outline" className={difficultyColors[base.difficulty]}>
-                        {base.difficulty}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Build Time:</span>
-                      <span className="font-medium">{base.buildTime}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Views:</span>
-                      <span className="font-medium">{base.views.toLocaleString()}</span>
-                    </div>
+                    {base.type?.name && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Type:</span>
+                        <Badge variant="outline" className="bg-amber-500/10 text-amber-500 border-amber-500/20">
+                          {base.type.name}
+                        </Badge>
+                      </div>
+                    )}
+                    {base.team_sizes && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Team Size:</span>
+                        <Badge variant="outline" className="bg-blue-500/10 text-blue-500 border-blue-500/20">
+                          {base.team_sizes}
+                        </Badge>
+                      </div>
+                    )}
+                    {base.build_time_min && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Build Time:</span>
+                        <span className="font-medium">{base.build_time_min} min</span>
+                      </div>
+                    )}
+                    {base.raid_cost_sulfur && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Raid Cost:</span>
+                        <span className="font-medium">{base.raid_cost_sulfur.toLocaleString()} Sulfur</span>
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
