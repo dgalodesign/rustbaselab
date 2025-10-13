@@ -4,14 +4,16 @@ import type { Base, Footprint, TeamSize, Tag, Creator } from "./types"
 export async function getAllBases(): Promise<Base[]> {
   const supabase = await createClient()
 
-  const { data, error } = await supabase
-    .from("bases")
-    .select("*")
-    .eq("status", "published")
-    .order("created_at", { ascending: false })
+  const { count, error: countError } = await supabase.from("bases").select("*", { count: "exact", head: true })
+
+  console.log("[v0] getAllBases - total count in DB:", count)
+  console.log("[v0] getAllBases - count error:", countError)
+
+  const { data, error } = await supabase.from("bases").select("*").order("created_at", { ascending: false })
 
   console.log("[v0] getAllBases - data:", data)
   console.log("[v0] getAllBases - error:", error)
+  console.log("[v0] getAllBases - data length:", data?.length)
 
   if (error) {
     console.error("[v0] Error fetching bases:", error)
@@ -150,15 +152,16 @@ export async function getAllCreators(): Promise<Creator[]> {
 export async function getFeaturedBases(): Promise<Base[]> {
   const supabase = await createClient()
 
-  const { data, error } = await supabase
-    .from("bases")
-    .select("*")
-    .eq("status", "published")
-    .order("created_at", { ascending: false })
-    .limit(6)
+  const { count, error: countError } = await supabase.from("bases").select("*", { count: "exact", head: true })
+
+  console.log("[v0] getFeaturedBases - total count in DB:", count)
+  console.log("[v0] getFeaturedBases - count error:", countError)
+
+  const { data, error } = await supabase.from("bases").select("*").order("created_at", { ascending: false }).limit(6)
 
   console.log("[v0] getFeaturedBases - data:", data)
   console.log("[v0] getFeaturedBases - error:", error)
+  console.log("[v0] getFeaturedBases - data length:", data?.length)
 
   if (error) {
     console.error("[v0] Error fetching featured bases:", error)
