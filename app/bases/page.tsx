@@ -1,29 +1,12 @@
-"use client"
-
-import { useState, useMemo } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { FilterBar } from "@/components/filter-bar"
 import { AdPlaceholder } from "@/components/ad-placeholder"
-import { mockBases } from "@/lib/mock-data"
+import { getAllBases } from "@/lib/db-queries"
 
-export default function BasesPage() {
-  const [categoryFilter, setCategoryFilter] = useState("all")
-  const [difficultyFilter, setDifficultyFilter] = useState("all")
-
-  const filteredBases = useMemo(() => {
-    return mockBases.filter((base) => {
-      const categoryMatch = categoryFilter === "all" || base.category === categoryFilter
-      const difficultyMatch = difficultyFilter === "all" || base.difficulty === difficultyFilter
-      return categoryMatch && difficultyMatch
-    })
-  }, [categoryFilter, difficultyFilter])
-
-  const handleFilterChange = (category: string, difficulty: string) => {
-    setCategoryFilter(category)
-    setDifficultyFilter(difficulty)
-  }
+export default async function BasesPage() {
+  const bases = await getAllBases()
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -48,22 +31,20 @@ export default function BasesPage() {
         {/* Bases Grid */}
         <section className="container mx-auto px-4 py-12">
           <div className="mb-6">
-            <FilterBar onFilterChange={handleFilterChange} />
+            <FilterBar />
           </div>
 
-          <div className="mb-4 text-sm text-muted-foreground">
-            Showing {filteredBases.length} of {mockBases.length} bases
-          </div>
+          <div className="mb-4 text-sm text-muted-foreground">Showing {bases.length} bases</div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredBases.map((base) => (
+            {bases.map((base) => (
               <BaseCard key={base.id} base={base} />
             ))}
           </div>
 
-          {filteredBases.length === 0 && (
+          {bases.length === 0 && (
             <div className="py-12 text-center">
-              <p className="text-lg text-muted-foreground">No bases found matching your filters.</p>
+              <p className="text-lg text-muted-foreground">No bases found.</p>
             </div>
           )}
         </section>

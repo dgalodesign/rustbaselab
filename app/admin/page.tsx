@@ -1,52 +1,49 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BaseForm } from "@/components/admin/base-form"
 import { BaseList } from "@/components/admin/base-list"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { mockBases } from "@/lib/mock-data"
 import { Plus, Database, Eye, TrendingUp } from "lucide-react"
 import type { Base } from "@/lib/types"
+import { createBase, updateBase, deleteBase, getAllBases } from "@/lib/db-actions"
 
 export default function AdminPage() {
-  const [bases, setBases] = useState<Base[]>(mockBases)
+  const [bases, setBases] = useState<Base[]>([])
   const [editingBase, setEditingBase] = useState<Base | null>(null)
   const [showForm, setShowForm] = useState(false)
+  const [loading, setLoading] = useState(true)
 
-  const handleSubmit = (data: Partial<Base>) => {
-    if (editingBase) {
-      // Update existing base
-      setBases(
-        bases.map((base) =>
-          base.id === editingBase.id ? { ...base, ...data, updatedAt: new Date().toISOString() } : base,
-        ),
-      )
-      alert("Base updated successfully!")
-    } else {
-      // Create new base
-      const newBase: Base = {
-        id: String(bases.length + 1),
-        title: data.title!,
-        description: data.description!,
-        youtubeUrl: data.youtubeUrl!,
-        thumbnailUrl: data.thumbnailUrl || "/placeholder.svg?height=400&width=600",
-        category: data.category!,
-        difficulty: data.difficulty!,
-        buildTime: data.buildTime!,
-        materials: data.materials!,
-        featured: data.featured || false,
-        views: 0,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+  useEffect(() => {
+    loadBases()
+  }, [])
+
+  const loadBases = async () => {
+    setLoading(true)
+    const data = await getAllBases()
+    setBases(data)
+    setLoading(false)
+  }
+
+  const handleSubmit = async (data: Partial<Base>) => {
+    try {
+      if (editingBase) {
+        await updateBase(editingBase.id, data)
+        alert("Base updated successfully!")
+      } else {
+        await createBase(data)
+        alert("Base created successfully!")
       }
-      setBases([...bases, newBase])
-      alert("Base created successfully!")
+      await loadBases()
+      setShowForm(false)
+      setEditingBase(null)
+    } catch (error) {
+      console.error("[v0] Error saving base:", error)
+      alert("Error saving base. Please try again.")
     }
-    setShowForm(false)
-    setEditingBase(null)
   }
 
   const handleEdit = (base: Base) => {
@@ -54,9 +51,15 @@ export default function AdminPage() {
     setShowForm(true)
   }
 
-  const handleDelete = (id: string) => {
-    setBases(bases.filter((base) => base.id !== id))
-    alert("Base deleted successfully!")
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteBase(id)
+      alert("Base deleted successfully!")
+      await loadBases()
+    } catch (error) {
+      console.error("[v0] Error deleting base:", error)
+      alert("Error deleting base. Please try again.")
+    }
   }
 
   const handleCancel = () => {
@@ -66,6 +69,18 @@ export default function AdminPage() {
 
   const totalViews = bases.reduce((sum, base) => sum + base.views, 0)
   const featuredCount = bases.filter((base) => base.featured).length
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <main className="flex-1 flex items-center justify-center">
+          <p className="text-muted-foreground">Loading...</p>
+        </main>
+        <Footer />
+      </div>
+    )
+  }
 
   return (
     <div className="flex min-h-screen flex-col">

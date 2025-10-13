@@ -189,27 +189,62 @@ export async function getAllCreators(): Promise<Creator[]> {
   return data || []
 }
 
-// Admin functions for CRUD operations
-export async function createBase(baseData: Partial<Base>): Promise<{ data: Base | null; error: any }> {
+export async function getFeaturedBases(): Promise<Base[]> {
   const supabase = await createClient()
 
-  const { data, error } = await supabase.from("bases").insert([baseData]).select().single()
+  const { data, error } = await supabase
+    .from("bases")
+    .select(`
+      *,
+      type:types(name),
+      footprint:footprints(name),
+      creator:creators(name, channel_youtube_id),
+      team_sizes:base_teams(team_size:team_sizes(size)),
+      tags:base_tags(tag:tags(tag, description))
+    `)
+    .eq("status", "published")
+    .order("created_at", { ascending: false })
+    .limit(6)
 
-  return { data, error }
+  if (error) {
+    console.error("[v0] Error fetching featured bases:", error)
+    return []
+  }
+
+  return data || []
 }
 
-export async function updateBase(id: string, baseData: Partial<Base>): Promise<{ data: Base | null; error: any }> {
+export async function getRelatedBases(currentBaseId: string, typeId?: string | null): Promise<Base[]> {
   const supabase = await createClient()
 
-  const { data, error } = await supabase.from("bases").update(baseData).eq("id", id).select().single()
+  let query = supabase
+    .from("bases")
+    .select(`
+      *,
+      type:types(name),
+      footprint:footprints(name),
+      creator:creators(name, channel_youtube_id),
+      team_sizes:base_teams(team_size:team_sizes(size)),
+      tags:base_tags(tag:tags(tag, description))
+    `)
+    .eq("status", "published")
+    .neq("id", currentBaseId)
 
-  return { data, error }
+  if (typeId) {
+    query = query.eq("type_id", typeId)
+  }
+
+  const { data, error } = await query.order("created_at", { ascending: false }).limit(3)
+
+  if (error) {
+    console.error("[v0] Error fetching related bases:", error)
+    return []
+  }
+
+  return data || []
 }
 
-export async function deleteBase(id: string): Promise<{ error: any }> {
-  const supabase = await createClient()
-
-  const { error } = await supabase.from("bases").delete().eq("id", id)
-
-  return { error }
+export async function incrementBaseViews(id: string): Promise<void> {
+  // For now, we'll skip this as it requires a custom RPC function in Supabase
+  console.log("[v0] View increment skipped for base:", id)
 }

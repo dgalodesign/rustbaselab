@@ -4,27 +4,31 @@ import { useState, useEffect } from "react"
 import { Search, X } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 
 interface SearchInputProps {
-  onSearch: (query: string) => void
+  initialQuery?: string
   placeholder?: string
-  defaultValue?: string
 }
 
-export function SearchInput({ onSearch, placeholder = "Search bases...", defaultValue = "" }: SearchInputProps) {
-  const [query, setQuery] = useState(defaultValue)
+export function SearchInput({ initialQuery = "", placeholder = "Search bases..." }: SearchInputProps) {
+  const [query, setQuery] = useState(initialQuery)
+  const router = useRouter()
 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      onSearch(query)
-    }, 300)
+      if (query) {
+        router.push(`/search?q=${encodeURIComponent(query)}`)
+      } else {
+        router.push("/search")
+      }
+    }, 500)
 
     return () => clearTimeout(debounce)
-  }, [query, onSearch])
+  }, [query, router])
 
   const handleClear = () => {
     setQuery("")
-    onSearch("")
   }
 
   return (

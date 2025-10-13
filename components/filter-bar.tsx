@@ -4,9 +4,8 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { SlidersHorizontal } from "lucide-react"
-
 interface FilterBarProps {
-  onFilterChange: (category: string, difficulty: string) => void
+  onFilterChange?: (category: string, difficulty: string) => void
 }
 
 export function FilterBar({ onFilterChange }: FilterBarProps) {
@@ -15,18 +14,18 @@ export function FilterBar({ onFilterChange }: FilterBarProps) {
 
   const handleCategoryChange = (value: string) => {
     setCategory(value)
-    onFilterChange(value, difficulty)
+    onFilterChange?.(value, difficulty)
   }
 
   const handleDifficultyChange = (value: string) => {
     setDifficulty(value)
-    onFilterChange(category, value)
+    onFilterChange?.(category, value)
   }
 
   const handleReset = () => {
     setCategory("all")
     setDifficulty("all")
-    onFilterChange("all", "all")
+    onFilterChange?.("all", "all")
   }
 
   return (

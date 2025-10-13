@@ -1,34 +1,15 @@
-"use client"
-
-import { useState, useMemo } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { FilterBar } from "@/components/filter-bar"
 import { AdPlaceholder } from "@/components/ad-placeholder"
 import { Button } from "@/components/ui/button"
-import { mockBases } from "@/lib/mock-data"
-import { ArrowRight, Sparkles } from "lucide-react"
+import { Sparkles, ArrowRight } from "lucide-react"
 import Link from "next/link"
+import { getAllBases, getFeaturedBases } from "@/lib/db-queries"
 
-export default function HomePage() {
-  const [categoryFilter, setCategoryFilter] = useState("all")
-  const [difficultyFilter, setDifficultyFilter] = useState("all")
-
-  const featuredBases = useMemo(() => mockBases.filter((base) => base.featured), [])
-
-  const filteredBases = useMemo(() => {
-    return mockBases.filter((base) => {
-      const categoryMatch = categoryFilter === "all" || base.category === categoryFilter
-      const difficultyMatch = difficultyFilter === "all" || base.difficulty === difficultyFilter
-      return categoryMatch && difficultyMatch
-    })
-  }, [categoryFilter, difficultyFilter])
-
-  const handleFilterChange = (category: string, difficulty: string) => {
-    setCategoryFilter(category)
-    setDifficultyFilter(difficulty)
-  }
+export default async function HomePage() {
+  const [allBases, featuredBases] = await Promise.all([getAllBases(), getFeaturedBases()])
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -99,25 +80,18 @@ export default function HomePage() {
           </div>
 
           <div className="mb-6">
-            <FilterBar onFilterChange={handleFilterChange} />
+            <FilterBar />
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredBases.map((base) => (
+            {allBases.map((base) => (
               <BaseCard key={base.id} base={base} />
             ))}
           </div>
 
-          {filteredBases.length === 0 && (
+          {allBases.length === 0 && (
             <div className="py-12 text-center">
-              <p className="text-lg text-muted-foreground">No bases found matching your filters.</p>
-              <Button
-                variant="outline"
-                className="mt-4 bg-transparent"
-                onClick={() => handleFilterChange("all", "all")}
-              >
-                Reset Filters
-              </Button>
+              <p className="text-lg text-muted-foreground">No bases found.</p>
             </div>
           )}
         </section>

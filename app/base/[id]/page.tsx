@@ -7,7 +7,7 @@ import { AdPlaceholder } from "@/components/ad-placeholder"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { getBaseById, mockBases } from "@/lib/mock-data"
+import { getBaseById, getRelatedBases, incrementBaseViews } from "@/lib/db-queries"
 import { Clock, Eye, Hammer, Calendar, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import type { Metadata } from "next"
@@ -20,7 +20,7 @@ interface BasePageProps {
 
 export async function generateMetadata({ params }: BasePageProps): Promise<Metadata> {
   const { id } = await params
-  const base = getBaseById(id)
+  const base = await getBaseById(id)
 
   if (!base) {
     return {
@@ -41,11 +41,15 @@ export async function generateMetadata({ params }: BasePageProps): Promise<Metad
 
 export default async function BasePage({ params }: BasePageProps) {
   const { id } = await params
-  const base = getBaseById(id)
+  const base = await getBaseById(id)
 
   if (!base) {
     notFound()
   }
+
+  await incrementBaseViews(id)
+
+  const relatedBases = await getRelatedBases(id, base.category)
 
   const categoryColors = {
     solo: "bg-blue-500/10 text-blue-500 border-blue-500/20",
@@ -205,7 +209,7 @@ export default async function BasePage({ params }: BasePageProps) {
         </section>
 
         {/* Related Bases */}
-        <RelatedBases bases={mockBases} currentBaseId={base.id} />
+        <RelatedBases bases={relatedBases} />
       </main>
 
       <Footer />

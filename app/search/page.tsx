@@ -1,48 +1,21 @@
-"use client"
-
-import { useState, useMemo, useCallback } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { SearchInput } from "@/components/search-input"
 import { FilterBar } from "@/components/filter-bar"
 import { AdPlaceholder } from "@/components/ad-placeholder"
-import { mockBases } from "@/lib/mock-data"
+import { searchBases } from "@/lib/db-queries"
 import { SearchIcon } from "lucide-react"
 
-export default function SearchPage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [categoryFilter, setCategoryFilter] = useState("all")
-  const [difficultyFilter, setDifficultyFilter] = useState("all")
+interface SearchPageProps {
+  searchParams: Promise<{
+    q?: string
+  }>
+}
 
-  const filteredBases = useMemo(() => {
-    return mockBases.filter((base) => {
-      // Search filter
-      const searchLower = searchQuery.toLowerCase()
-      const matchesSearch =
-        !searchQuery ||
-        base.title.toLowerCase().includes(searchLower) ||
-        base.description.toLowerCase().includes(searchLower) ||
-        base.category.toLowerCase().includes(searchLower)
-
-      // Category filter
-      const matchesCategory = categoryFilter === "all" || base.category === categoryFilter
-
-      // Difficulty filter
-      const matchesDifficulty = difficultyFilter === "all" || base.difficulty === difficultyFilter
-
-      return matchesSearch && matchesCategory && matchesDifficulty
-    })
-  }, [searchQuery, categoryFilter, difficultyFilter])
-
-  const handleSearch = useCallback((query: string) => {
-    setSearchQuery(query)
-  }, [])
-
-  const handleFilterChange = useCallback((category: string, difficulty: string) => {
-    setCategoryFilter(category)
-    setDifficultyFilter(difficulty)
-  }, [])
+export default async function SearchPage({ searchParams }: SearchPageProps) {
+  const { q: query = "" } = await searchParams
+  const bases = query ? await searchBases(query) : []
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -62,7 +35,7 @@ export default function SearchPage() {
               </p>
 
               <div className="mx-auto max-w-xl">
-                <SearchInput onSearch={handleSearch} placeholder="Search by title, description, or category..." />
+                <SearchInput initialQuery={query} placeholder="Search by title, description, or category..." />
               </div>
             </div>
           </div>
@@ -76,43 +49,39 @@ export default function SearchPage() {
         {/* Search Results */}
         <section className="container mx-auto px-4 py-12">
           <div className="mb-6">
-            <FilterBar onFilterChange={handleFilterChange} />
+            <FilterBar />
           </div>
 
           <div className="mb-6 flex items-center justify-between">
             <div className="text-sm text-muted-foreground">
-              {searchQuery ? (
+              {query ? (
                 <>
-                  Found <span className="font-semibold text-foreground">{filteredBases.length}</span> results for "
-                  <span className="font-semibold text-foreground">{searchQuery}</span>"
+                  Found <span className="font-semibold text-foreground">{bases.length}</span> results for "
+                  <span className="font-semibold text-foreground">{query}</span>"
                 </>
               ) : (
-                <>
-                  Showing <span className="font-semibold text-foreground">{filteredBases.length}</span> bases
-                </>
+                <>Enter a search term to find bases</>
               )}
             </div>
           </div>
 
-          {filteredBases.length > 0 ? (
+          {bases.length > 0 ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {filteredBases.map((base) => (
+              {bases.map((base) => (
                 <BaseCard key={base.id} base={base} />
               ))}
             </div>
-          ) : (
+          ) : query ? (
             <div className="py-16 text-center">
               <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-muted">
                 <SearchIcon className="h-10 w-10 text-muted-foreground" />
               </div>
               <h3 className="mb-2 text-xl font-semibold">No bases found</h3>
               <p className="text-muted-foreground">
-                {searchQuery
-                  ? `No results found for "${searchQuery}". Try different keywords or adjust your filters.`
-                  : "Try adjusting your filters to see more results."}
+                No results found for "{query}". Try different keywords or adjust your filters.
               </p>
             </div>
-          )}
+          ) : null}
         </section>
 
         {/* Ad Space - Bottom */}
