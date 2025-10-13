@@ -2,7 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Clock, Eye, Hammer } from "lucide-react"
+import { Clock, Hammer } from "lucide-react"
 import type { Base } from "@/lib/types"
 
 interface BaseCardProps {
@@ -10,7 +10,13 @@ interface BaseCardProps {
 }
 
 export function BaseCard({ base }: BaseCardProps) {
-  const categoryColors = {
+  const typeName = base.type?.name || "Base"
+  const teamSize = base.team_sizes?.[0]?.team_size?.size || "Unknown"
+  const buildTime = base.build_time_min ? `${base.build_time_min} min` : "N/A"
+  const thumbnailUrl =
+    base.image_main_url || `/placeholder.svg?height=400&width=600&query=${encodeURIComponent(base.title)}`
+
+  const categoryColors: Record<string, string> = {
     solo: "bg-blue-500/10 text-blue-500 border-blue-500/20",
     duo: "bg-green-500/10 text-green-500 border-green-500/20",
     trio: "bg-purple-500/10 text-purple-500 border-purple-500/20",
@@ -18,12 +24,12 @@ export function BaseCard({ base }: BaseCardProps) {
     zerg: "bg-red-500/10 text-red-500 border-red-500/20",
     bunker: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
     raid: "bg-pink-500/10 text-pink-500 border-pink-500/20",
+    default: "bg-gray-500/10 text-gray-500 border-gray-500/20",
   }
 
-  const difficultyColors = {
-    easy: "bg-green-500/10 text-green-400",
-    medium: "bg-yellow-500/10 text-yellow-400",
-    hard: "bg-red-500/10 text-red-400",
+  const getColorForTeamSize = (size: string) => {
+    const lowerSize = size.toLowerCase()
+    return categoryColors[lowerSize] || categoryColors.default
   }
 
   return (
@@ -32,44 +38,44 @@ export function BaseCard({ base }: BaseCardProps) {
         <CardHeader className="p-0">
           <div className="relative aspect-video overflow-hidden bg-muted">
             <Image
-              src={base.thumbnailUrl || "/placeholder.svg"}
+              src={thumbnailUrl || "/placeholder.svg"}
               alt={base.title}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
-            {base.featured && (
-              <Badge className="absolute right-2 top-2 bg-primary text-primary-foreground">Featured</Badge>
-            )}
           </div>
         </CardHeader>
 
         <CardContent className="p-4">
           <div className="mb-2 flex items-center gap-2">
-            <Badge variant="outline" className={categoryColors[base.category]}>
-              {base.category.toUpperCase()}
+            <Badge variant="outline" className={getColorForTeamSize(teamSize)}>
+              {teamSize}
             </Badge>
-            <Badge variant="outline" className={difficultyColors[base.difficulty]}>
-              {base.difficulty}
+            <Badge variant="outline" className="bg-amber-500/10 text-amber-500 border-amber-500/20">
+              {typeName}
             </Badge>
           </div>
 
-          <h3 className="mb-2 line-clamp-1 font-semibold text-balance group-hover:text-primary">{base.title}</h3>
-          <p className="line-clamp-2 text-sm text-muted-foreground text-pretty">{base.description}</p>
+          <h3 className="mb-2 line-clamp-2 font-semibold text-balance group-hover:text-primary">{base.title}</h3>
+          {base.features && <p className="line-clamp-2 text-sm text-muted-foreground text-pretty">{base.features}</p>}
         </CardContent>
 
         <CardFooter className="flex items-center justify-between border-t border-border/40 p-4 text-xs text-muted-foreground">
           <div className="flex items-center gap-1">
             <Clock className="h-3 w-3" />
-            <span>{base.buildTime}</span>
+            <span>{buildTime}</span>
           </div>
-          <div className="flex items-center gap-1">
-            <Eye className="h-3 w-3" />
-            <span>{base.views.toLocaleString()}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Hammer className="h-3 w-3" />
-            <span className="hidden sm:inline">{base.difficulty}</span>
-          </div>
+          {base.raid_cost_sulfur && (
+            <div className="flex items-center gap-1">
+              <Hammer className="h-3 w-3" />
+              <span>{base.raid_cost_sulfur.toLocaleString()} sulfur</span>
+            </div>
+          )}
+          {base.footprint?.name && (
+            <div className="flex items-center gap-1">
+              <span className="text-xs">{base.footprint.name}</span>
+            </div>
+          )}
         </CardFooter>
       </Card>
     </Link>
