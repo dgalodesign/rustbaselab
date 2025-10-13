@@ -9,7 +9,11 @@ import Link from "next/link"
 import { getAllBases, getFeaturedBases } from "@/lib/db-queries"
 
 export default async function HomePage() {
+  console.log("[v0] HomePage - Starting to fetch data")
   const [allBases, featuredBases] = await Promise.all([getAllBases(), getFeaturedBases()])
+
+  console.log("[v0] HomePage - allBases count:", allBases.length)
+  console.log("[v0] HomePage - featuredBases count:", featuredBases.length)
 
   return (
     <div className="flex min-h-screen flex-col">
