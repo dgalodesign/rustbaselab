@@ -4,16 +4,13 @@ import type { Base, Footprint, TeamSize, Tag, Creator } from "./types"
 export async function getAllBases(): Promise<Base[]> {
   const supabase = await createClient()
 
-  const { count, error: countError } = await supabase.from("bases").select("*", { count: "exact", head: true })
-
-  console.log("[v0] getAllBases - total count in DB:", count)
-  console.log("[v0] getAllBases - count error:", countError)
-
-  const { data, error } = await supabase.from("bases").select("*").order("created_at", { ascending: false })
-
-  console.log("[v0] getAllBases - data:", data)
-  console.log("[v0] getAllBases - error:", error)
-  console.log("[v0] getAllBases - data length:", data?.length)
+  const { data, error } = await supabase
+    .from("bases")
+    .select(`
+      *,
+      creator:creators(name, channel_youtube_id)
+    `)
+    .order("created_at", { ascending: false })
 
   if (error) {
     console.error("[v0] Error fetching bases:", error)
@@ -43,11 +40,16 @@ export async function getBaseBySlug(slug: string): Promise<Base | null> {
 export async function getBaseById(id: string): Promise<Base | null> {
   const supabase = await createClient()
 
-  const { data, error } = await supabase.from("bases").select("*").eq("id", id).single()
-
-  console.log("[v0] getBaseById - id:", id)
-  console.log("[v0] getBaseById - data:", data)
-  console.log("[v0] getBaseById - error:", error)
+  const { data, error } = await supabase
+    .from("bases")
+    .select(`
+      *,
+      creator:creators(name, channel_youtube_id),
+      type:types(type),
+      footprint:footprints(footprint)
+    `)
+    .eq("id", id)
+    .single()
 
   if (error) {
     console.error("[v0] Error fetching base:", error)
@@ -152,16 +154,14 @@ export async function getAllCreators(): Promise<Creator[]> {
 export async function getFeaturedBases(): Promise<Base[]> {
   const supabase = await createClient()
 
-  const { count, error: countError } = await supabase.from("bases").select("*", { count: "exact", head: true })
-
-  console.log("[v0] getFeaturedBases - total count in DB:", count)
-  console.log("[v0] getFeaturedBases - count error:", countError)
-
-  const { data, error } = await supabase.from("bases").select("*").order("created_at", { ascending: false }).limit(6)
-
-  console.log("[v0] getFeaturedBases - data:", data)
-  console.log("[v0] getFeaturedBases - error:", error)
-  console.log("[v0] getFeaturedBases - data length:", data?.length)
+  const { data, error } = await supabase
+    .from("bases")
+    .select(`
+      *,
+      creator:creators(name, channel_youtube_id)
+    `)
+    .order("created_at", { ascending: false })
+    .limit(6)
 
   if (error) {
     console.error("[v0] Error fetching featured bases:", error)
@@ -218,11 +218,9 @@ export async function getFilteredBases(filters: {
 
   let query = supabase.from("bases").select(`
     *,
-    type:types(type),
-    footprint:footprints(footprint),
     creator:creators(name, channel_youtube_id),
-    base_teams!inner(team_size:team_sizes(size)),
-    base_tags(tag:tags(tag, description))
+    type:types(type),
+    footprint:footprints(footprint)
   `)
 
   // Filtrar por tipo

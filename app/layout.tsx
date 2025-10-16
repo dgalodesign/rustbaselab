@@ -5,7 +5,11 @@ import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { Suspense } from "react"
+import { I18nProvider } from "@/lib/i18n/context"
 
+export const metadata: Metadata = {
+  title: "RustBaseLab - Rust Base Designs & Tutorials",
+  description:
 import { DM_Sans as V0_Font_DM_Sans, Space_Mono as V0_Font_Space_Mono, Source_Serif_4 as V0_Font_Source_Serif_4 } from 'next/font/google'
 
 // Initialize fonts
@@ -13,9 +17,6 @@ const _dmSans = V0_Font_DM_Sans({ subsets: ['latin'], weight: ["100","200","300"
 const _spaceMono = V0_Font_Space_Mono({ subsets: ['latin'], weight: ["400","700"] })
 const _sourceSerif_4 = V0_Font_Source_Serif_4({ subsets: ['latin'], weight: ["200","300","400","500","600","700","800","900"] })
 
-export const metadata: Metadata = {
-  title: "RustBaseLab - Rust Base Designs & Tutorials",
-  description:
     "Discover the best Rust base designs for solo, duo, trio, and zerg gameplay. Video tutorials and building guides.",
   keywords: "rust, rust base, rust base design, rust tutorial, rust building, rust solo base, rust duo base",
   generator: "v0.app",
@@ -34,7 +35,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}>
-        <Suspense fallback={null}>{children}</Suspense>
+        <I18nProvider>
+          <Suspense fallback={null}>{children}</Suspense>
+        </I18nProvider>
         <Analytics />
       </body>
     </html>

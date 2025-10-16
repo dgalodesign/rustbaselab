@@ -1,8 +1,14 @@
+"use client"
+
 import Link from "next/link"
 import { Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { LanguageSelector } from "@/components/language-selector"
+import { useTranslations } from "@/lib/i18n/context"
 
 export function Header() {
+  const { t } = useTranslations()
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -15,22 +21,22 @@ export function Header() {
 
         <nav className="hidden items-center gap-6 md:flex">
           <Link href="/" className="text-sm font-medium transition-colors hover:text-primary">
-            Home
+            {t.nav.home}
           </Link>
           <Link href="/bases" className="text-sm font-medium transition-colors hover:text-primary">
-            All Bases
-          </Link>
-          <Link href="/admin" className="text-sm font-medium transition-colors hover:text-primary">
-            Admin
+            {t.nav.allBases}
           </Link>
         </nav>
 
-        <Button variant="outline" size="sm" asChild>
-          <Link href="/search">
-            <Search className="h-4 w-4" />
-            <span className="ml-2 hidden sm:inline">Search</span>
-          </Link>
-        </Button>
+        <div className="flex items-center gap-2">
+          <LanguageSelector />
+          <Button variant="outline" size="sm" asChild>
+            <Link href="/search">
+              <Search className="h-4 w-4" />
+              <span className="ml-2 hidden sm:inline">{t.nav.search}</span>
+            </Link>
+          </Button>
+        </div>
       </div>
     </header>
   )
