@@ -194,3 +194,67 @@ export async function incrementBaseViews(id: string): Promise<void> {
   // For now, we'll skip this as it requires a custom RPC function in Supabase
   console.log("[v0] View increment skipped for base:", id)
 }
+
+export async function getAllTypes(): Promise<Array<{ id: string; type: string }>> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase.from("types").select("*").order("type")
+
+  if (error) {
+    console.error("[v0] Error fetching types:", error)
+    return []
+  }
+
+  return data || []
+}
+
+export async function getFilteredBases(filters: {
+  typeId?: string
+  teamSizeId?: string
+  tagId?: string
+  search?: string
+}): Promise<Base[]> {
+  const supabase = await createClient()
+
+  let query = supabase.from("bases").select(`
+    *,
+    type:types(type),
+    footprint:footprints(footprint),
+    creator:creators(name, channel_youtube_id),
+    base_teams!inner(team_size:team_sizes(size)),
+    base_tags(tag:tags(tag, description))
+  `)
+
+  // Filtrar por tipo
+  if (filters.typeId && filters.typeId !== "all") {
+    query = query.eq("type_id", filters.typeId)
+  }
+
+  // Filtrar por team size
+  if (filters.teamSizeId && filters.teamSizeId !== "all") {
+    query = query.eq("base_teams.team_size_id", filters.teamSizeId)
+  }
+
+  // Filtrar por tag
+  if (filters.tagId && filters.tagId !== "all") {
+    query = query.eq("base_tags.tag_id", filters.tagId)
+  }
+
+  // Búsqueda por texto
+  if (filters.search) {
+    query = query.or(`title.ilike.%${filters.search}%,features.ilike.%${filters.search}%`)
+  }
+
+  const { data, error } = await query.order("created_at", { ascending: false })
+
+  console.log("[v0] getFilteredBases - filters:", filters)
+  console.log("[v0] getFilteredBases - data:", data)
+  console.log("[v0] getFilteredBases - error:", error)
+
+  if (error) {
+    console.error("[v0] Error fetching filtered bases:", error)
+    return []
+  }
+
+  return (data || []) as Base[]
+}
