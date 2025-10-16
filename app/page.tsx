@@ -6,21 +6,41 @@ import { AdPlaceholder } from "@/components/ad-placeholder"
 import { Button } from "@/components/ui/button"
 import { Sparkles, ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { getFeaturedBases, getAllTypes, getAllTeamSizes, getAllTags } from "@/lib/db-queries"
+import { getFeaturedBases, getAllTypes, getAllTeamSizes, getAllFootprints, getFilteredBases } from "@/lib/db-queries"
 
-export default async function HomePage() {
+interface HomePageProps {
+  searchParams: Promise<{
+    type?: string
+    teamSize?: string
+    footprint?: string
+  }>
+}
+
+export default async function HomePage({ searchParams }: HomePageProps) {
   console.log("[v0] HomePage - Starting to fetch data")
-  const [featuredBases, types, teamSizes, tags] = await Promise.all([
+
+  const params = await searchParams
+  const typeId = params.type || "all"
+  const teamSizeId = params.teamSize || "all"
+  const footprintId = params.footprint || "all"
+
+  const [featuredBases, types, teamSizes, footprints, filteredBases] = await Promise.all([
     getFeaturedBases(),
     getAllTypes(),
     getAllTeamSizes(),
-    getAllTags(),
+    getAllFootprints(),
+    typeId !== "all" || teamSizeId !== "all" || footprintId !== "all"
+      ? getFilteredBases({ typeId, teamSizeId, footprintId })
+      : Promise.resolve([]),
   ])
 
   console.log("[v0] HomePage - featuredBases count:", featuredBases.length)
   console.log("[v0] HomePage - types count:", types.length)
   console.log("[v0] HomePage - teamSizes count:", teamSizes.length)
-  console.log("[v0] HomePage - tags count:", tags.length)
+  console.log("[v0] HomePage - footprints count:", footprints.length)
+  console.log("[v0] HomePage - filteredBases count:", filteredBases.length)
+
+  const hasActiveFilters = typeId !== "all" || teamSizeId !== "all" || footprintId !== "all"
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -94,20 +114,36 @@ export default async function HomePage() {
           <div className="mb-8">
             <h2 className="mb-2 font-mono text-3xl font-bold">Explorar Bases</h2>
             <p className="text-muted-foreground">
-              Filtra por tipo, tamaño de equipo y etiquetas para encontrar tu base perfecta
+              Filtra por tipo, tamaño de equipo y huella para encontrar tu base perfecta
             </p>
           </div>
 
           <div className="mb-6">
-            <FilterBar types={types} teamSizes={teamSizes} tags={tags} />
+            <FilterBar types={types} teamSizes={teamSizes} footprints={footprints} />
           </div>
 
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">Usa los filtros arriba para explorar las bases disponibles</p>
-            <Button asChild className="mt-4">
-              <Link href="/bases">Ver Todas las Bases</Link>
-            </Button>
-          </div>
+          {hasActiveFilters ? (
+            <>
+              <div className="mb-4 text-sm text-muted-foreground">Mostrando {filteredBases.length} bases</div>
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {filteredBases.map((base) => (
+                  <BaseCard key={base.id} base={base} />
+                ))}
+              </div>
+              {filteredBases.length === 0 && (
+                <div className="py-12 text-center">
+                  <p className="text-lg text-muted-foreground">No se encontraron bases con estos filtros.</p>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="text-center py-8">
+              <p className="text-muted-foreground">Usa los filtros arriba para explorar las bases disponibles</p>
+              <Button asChild className="mt-4">
+                <Link href="/bases">Ver Todas las Bases</Link>
+              </Button>
+            </div>
+          )}
         </section>
 
         {/* Ad Space - Bottom */}

@@ -3,13 +3,13 @@ import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { FilterBar } from "@/components/filter-bar"
 import { AdPlaceholder } from "@/components/ad-placeholder"
-import { getFilteredBases, getAllTypes, getAllTeamSizes, getAllTags } from "@/lib/db-queries"
+import { getFilteredBases, getAllTypes, getAllTeamSizes, getAllFootprints } from "@/lib/db-queries"
 
 interface BasesPageProps {
   searchParams: Promise<{
     type?: string
     teamSize?: string
-    tag?: string
+    footprint?: string
   }>
 }
 
@@ -17,13 +17,13 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
   const params = await searchParams
   const typeId = params.type || "all"
   const teamSizeId = params.teamSize || "all"
-  const tagId = params.tag || "all"
+  const footprintId = params.footprint || "all"
 
-  const [bases, types, teamSizes, tags] = await Promise.all([
-    getFilteredBases({ typeId, teamSizeId, tagId }),
+  const [bases, types, teamSizes, footprints] = await Promise.all([
+    getFilteredBases({ typeId, teamSizeId, footprintId }),
     getAllTypes(),
     getAllTeamSizes(),
-    getAllTags(),
+    getAllFootprints(),
   ])
 
   return (
@@ -49,7 +49,7 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
         {/* Bases Grid */}
         <section className="container mx-auto px-4 py-12">
           <div className="mb-6">
-            <FilterBar types={types} teamSizes={teamSizes} tags={tags} />
+            <FilterBar types={types} teamSizes={teamSizes} footprints={footprints} />
           </div>
 
           <div className="mb-4 text-sm text-muted-foreground">Mostrando {bases.length} bases</div>

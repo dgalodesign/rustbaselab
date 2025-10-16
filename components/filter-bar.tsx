@@ -1,57 +1,55 @@
 "use client"
 
-import { useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { SlidersHorizontal } from "lucide-react"
+import { useTranslations } from "@/lib/i18n/context"
 
 interface FilterBarProps {
   types?: Array<{ id: string; type: string }>
   teamSizes?: Array<{ id: string; size: string }>
-  tags?: Array<{ id: string; tag: string }>
-  onFilterChange?: (filters: { typeId: string; teamSizeId: string; tagId: string }) => void
+  footprints?: Array<{ id: string; footprint: string }>
 }
 
-export function FilterBar({ types = [], teamSizes = [], tags = [], onFilterChange }: FilterBarProps) {
-  const [typeId, setTypeId] = useState("all")
-  const [teamSizeId, setTeamSizeId] = useState("all")
-  const [tagId, setTagId] = useState("all")
+export function FilterBar({ types = [], teamSizes = [], footprints = [] }: FilterBarProps) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const { t } = useTranslations()
 
-  const handleTypeChange = (value: string) => {
-    setTypeId(value)
-    onFilterChange?.({ typeId: value, teamSizeId, tagId })
-  }
+  const typeId = searchParams.get("type") || "all"
+  const teamSizeId = searchParams.get("teamSize") || "all"
+  const footprintId = searchParams.get("footprint") || "all"
 
-  const handleTeamSizeChange = (value: string) => {
-    setTeamSizeId(value)
-    onFilterChange?.({ typeId, teamSizeId: value, tagId })
-  }
-
-  const handleTagChange = (value: string) => {
-    setTagId(value)
-    onFilterChange?.({ typeId, teamSizeId, tagId: value })
+  const updateFilters = (key: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (value === "all") {
+      params.delete(key)
+    } else {
+      params.set(key, value)
+    }
+    router.push(`?${params.toString()}`)
   }
 
   const handleReset = () => {
-    setTypeId("all")
-    setTeamSizeId("all")
-    setTagId("all")
-    onFilterChange?.({ typeId: "all", teamSizeId: "all", tagId: "all" })
+    router.push(window.location.pathname)
   }
+
+  const hasActiveFilters = typeId !== "all" || teamSizeId !== "all" || footprintId !== "all"
 
   return (
     <div className="flex flex-wrap items-center gap-4 rounded-lg border border-border/40 bg-card p-4">
       <div className="flex items-center gap-2">
         <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
-        <span className="text-sm font-medium">Filtros:</span>
+        <span className="text-sm font-medium">{t.home.filters.title}:</span>
       </div>
 
-      <Select value={typeId} onValueChange={handleTypeChange}>
+      <Select value={typeId} onValueChange={(value) => updateFilters("type", value)}>
         <SelectTrigger className="w-[160px]">
-          <SelectValue placeholder="Tipo de Base" />
+          <SelectValue placeholder={t.home.filters.type} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Todos los Tipos</SelectItem>
+          <SelectItem value="all">{t.home.filters.allTypes}</SelectItem>
           {types.map((type) => (
             <SelectItem key={type.id} value={type.id}>
               {type.type}
@@ -60,12 +58,12 @@ export function FilterBar({ types = [], teamSizes = [], tags = [], onFilterChang
         </SelectContent>
       </Select>
 
-      <Select value={teamSizeId} onValueChange={handleTeamSizeChange}>
+      <Select value={teamSizeId} onValueChange={(value) => updateFilters("teamSize", value)}>
         <SelectTrigger className="w-[160px]">
-          <SelectValue placeholder="Tamaño de Equipo" />
+          <SelectValue placeholder={t.home.filters.teamSize} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Todos los Tamaños</SelectItem>
+          <SelectItem value="all">{t.home.filters.allTeamSizes}</SelectItem>
           {teamSizes.map((size) => (
             <SelectItem key={size.id} value={size.id}>
               {size.size}
@@ -74,23 +72,23 @@ export function FilterBar({ types = [], teamSizes = [], tags = [], onFilterChang
         </SelectContent>
       </Select>
 
-      <Select value={tagId} onValueChange={handleTagChange}>
+      <Select value={footprintId} onValueChange={(value) => updateFilters("footprint", value)}>
         <SelectTrigger className="w-[160px]">
-          <SelectValue placeholder="Etiqueta" />
+          <SelectValue placeholder={t.home.filters.footprint} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Todas las Etiquetas</SelectItem>
-          {tags.map((tag) => (
-            <SelectItem key={tag.id} value={tag.id}>
-              {tag.tag}
+          <SelectItem value="all">{t.home.filters.allFootprints}</SelectItem>
+          {footprints.map((footprint) => (
+            <SelectItem key={footprint.id} value={footprint.id}>
+              {footprint.footprint}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      {(typeId !== "all" || teamSizeId !== "all" || tagId !== "all") && (
+      {hasActiveFilters && (
         <Button variant="outline" size="sm" onClick={handleReset}>
-          Limpiar
+          {t.home.filters.reset}
         </Button>
       )}
     </div>

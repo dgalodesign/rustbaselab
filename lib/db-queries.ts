@@ -211,7 +211,7 @@ export async function getAllTypes(): Promise<Array<{ id: string; type: string }>
 export async function getFilteredBases(filters: {
   typeId?: string
   teamSizeId?: string
-  tagId?: string
+  footprintId?: string
   search?: string
 }): Promise<Base[]> {
   const supabase = await createClient()
@@ -223,19 +223,28 @@ export async function getFilteredBases(filters: {
     footprint:footprints(footprint)
   `)
 
-  // Filtrar por tipo
   if (filters.typeId && filters.typeId !== "all") {
     query = query.eq("type_id", filters.typeId)
   }
 
-  // Filtrar por team size
-  if (filters.teamSizeId && filters.teamSizeId !== "all") {
-    query = query.eq("base_teams.team_size_id", filters.teamSizeId)
+  if (filters.footprintId && filters.footprintId !== "all") {
+    query = query.eq("footprint_id", filters.footprintId)
   }
 
-  // Filtrar por tag
-  if (filters.tagId && filters.tagId !== "all") {
-    query = query.eq("base_tags.tag_id", filters.tagId)
+  if (filters.teamSizeId && filters.teamSizeId !== "all") {
+    // Primero obtenemos los IDs de bases que tienen este team_size
+    const { data: baseTeams } = await supabase
+      .from("base_teams")
+      .select("base_id")
+      .eq("team_size_id", filters.teamSizeId)
+
+    if (baseTeams && baseTeams.length > 0) {
+      const baseIds = baseTeams.map((bt) => bt.base_id)
+      query = query.in("id", baseIds)
+    } else {
+      // Si no hay bases con este team_size, retornar array vacío
+      return []
+    }
   }
 
   // Búsqueda por texto
@@ -246,7 +255,7 @@ export async function getFilteredBases(filters: {
   const { data, error } = await query.order("created_at", { ascending: false })
 
   console.log("[v0] getFilteredBases - filters:", filters)
-  console.log("[v0] getFilteredBases - data:", data)
+  console.log("[v0] getFilteredBases - data count:", data?.length || 0)
   console.log("[v0] getFilteredBases - error:", error)
 
   if (error) {
