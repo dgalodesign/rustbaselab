@@ -34,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}>
+      <body className={`${GeistSans.className} ${GeistMono.className} antialiased`}>
         <I18nProvider>
           <Suspense fallback={null}>{children}</Suspense>
         </I18nProvider>
