@@ -53,17 +53,19 @@ export default async function BasePage({ params }: BasePageProps) {
 
   const formatMaterials = () => {
     const materials = []
-    if (base.materials_stone > 0) materials.push(`${base.materials_stone.toLocaleString()} Stone`)
-    if (base.materials_metal > 0) materials.push(`${base.materials_metal.toLocaleString()} Metal`)
-    if (base.materials_hq > 0) materials.push(`${base.materials_hq.toLocaleString()} HQM`)
+    if (base.materials_stone && base.materials_stone > 0)
+      materials.push(`${base.materials_stone.toLocaleString()} Stone`)
+    if (base.materials_metal && base.materials_metal > 0)
+      materials.push(`${base.materials_metal.toLocaleString()} Metal`)
+    if (base.materials_hq && base.materials_hq > 0) materials.push(`${base.materials_hq.toLocaleString()} HQM`)
     return materials.length > 0 ? materials.join(", ") : "Materials not specified"
   }
 
   const formatUpkeep = () => {
     const upkeep = []
-    if (base.upkeep_stone > 0) upkeep.push(`${base.upkeep_stone.toLocaleString()} Stone`)
-    if (base.upkeep_metal > 0) upkeep.push(`${base.upkeep_metal.toLocaleString()} Metal`)
-    if (base.upkeep_hq > 0) upkeep.push(`${base.upkeep_hq.toLocaleString()} HQM`)
+    if (base.upkeep_stone && base.upkeep_stone > 0) upkeep.push(`${base.upkeep_stone.toLocaleString()} Stone`)
+    if (base.upkeep_metal && base.upkeep_metal > 0) upkeep.push(`${base.upkeep_metal.toLocaleString()} Metal`)
+    if (base.upkeep_hq && base.upkeep_hq > 0) upkeep.push(`${base.upkeep_hq.toLocaleString()} HQM`)
     return upkeep.length > 0 ? upkeep.join(", ") : "Upkeep not specified"
   }
 
@@ -88,14 +90,14 @@ export default async function BasePage({ params }: BasePageProps) {
         <section className="border-b border-border/40 bg-gradient-to-b from-background to-muted/20">
           <div className="container mx-auto px-4 py-8">
             <div className="mb-4 flex flex-wrap items-center gap-2">
-              {base.type?.name && (
+              {base.type?.type && (
                 <Badge variant="outline" className="bg-amber-500/10 text-amber-500 border-amber-500/20">
-                  {base.type.name}
+                  {base.type.type}
                 </Badge>
               )}
-              {base.team_sizes && (
+              {base.footprint?.footprint && (
                 <Badge variant="outline" className="bg-blue-500/10 text-blue-500 border-blue-500/20">
-                  {base.team_sizes}
+                  {base.footprint.footprint}
                 </Badge>
               )}
             </div>
@@ -148,10 +150,7 @@ export default async function BasePage({ params }: BasePageProps) {
                   <h3 className="mb-4 text-xl font-bold">About This Base</h3>
                   <div className="space-y-4 text-muted-foreground">
                     {base.features && <p>{base.features}</p>}
-                    <p>
-                      This base design is suitable for {base.team_sizes || "various team sizes"} and provides a solid
-                      foundation for your Rust gameplay.
-                    </p>
+                    <p>This base design provides a solid foundation for your Rust gameplay.</p>
                     {base.video_youtube_id && (
                       <p>
                         Watch the full video tutorial above to see the complete building process, including tips for
@@ -174,7 +173,7 @@ export default async function BasePage({ params }: BasePageProps) {
                         <span className="text-muted-foreground">Build Cost:</span>
                         <span className="font-mono font-semibold text-xs">{formatMaterials()}</span>
                       </div>
-                      {(base.upkeep_stone > 0 || base.upkeep_metal > 0 || base.upkeep_hq > 0) && (
+                      {(base.upkeep_stone || base.upkeep_metal || base.upkeep_hq) && (
                         <div className="flex items-center justify-between pt-2 border-t border-border/40">
                           <span className="text-muted-foreground">Upkeep:</span>
                           <span className="font-mono font-semibold text-xs">{formatUpkeep()}</span>
@@ -189,19 +188,19 @@ export default async function BasePage({ params }: BasePageProps) {
                 <CardContent className="p-6">
                   <h3 className="mb-4 text-lg font-bold">Base Stats</h3>
                   <div className="space-y-3 text-sm">
-                    {base.type?.name && (
+                    {base.type?.type && (
                       <div className="flex items-center justify-between">
                         <span className="text-muted-foreground">Type:</span>
                         <Badge variant="outline" className="bg-amber-500/10 text-amber-500 border-amber-500/20">
-                          {base.type.name}
+                          {base.type.type}
                         </Badge>
                       </div>
                     )}
-                    {base.team_sizes && (
+                    {base.footprint?.footprint && (
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Team Size:</span>
+                        <span className="text-muted-foreground">Footprint:</span>
                         <Badge variant="outline" className="bg-blue-500/10 text-blue-500 border-blue-500/20">
-                          {base.team_sizes}
+                          {base.footprint.footprint}
                         </Badge>
                       </div>
                     )}

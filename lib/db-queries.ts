@@ -102,7 +102,7 @@ export async function getBasesByType(typeId: string): Promise<Base[]> {
 export async function getAllFootprints(): Promise<Footprint[]> {
   const supabase = await createClient()
 
-  const { data, error } = await supabase.from("footprints").select("*").order("name")
+  const { data, error } = await supabase.from("footprints").select("*").order("footprint")
 
   if (error) {
     console.error("[v0] Error fetching footprints:", error)

@@ -23,9 +23,8 @@ export interface Base {
   type_id: string | null
   footprint_id: string | null
   creator_id: string | null
-  // Joined data
-  type?: { name: string }
-  footprint?: { name: string }
+  type?: { type: string }
+  footprint?: { footprint: string }
   creator?: { name: string; channel_youtube_id: string }
   team_sizes?: Array<{ team_size: { size: string } }>
   tags?: Array<{ tag: { tag: string; description: string } }>
@@ -33,12 +32,12 @@ export interface Base {
 
 export interface BaseType {
   id: string
-  name: string
+  type: string
 }
 
 export interface Footprint {
   id: string
-  name: string
+  footprint: string
 }
 
 export interface TeamSize {
