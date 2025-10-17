@@ -13,7 +13,7 @@ export async function getAllBases(): Promise<Base[]> {
     .order("created_at", { ascending: false })
 
   if (error) {
-    console.error("[v0] Error fetching bases:", error)
+    console.error("Error fetching bases:", error)
     return []
   }
 
@@ -25,12 +25,8 @@ export async function getBaseBySlug(slug: string): Promise<Base | null> {
 
   const { data, error } = await supabase.from("bases").select("*").eq("slug", slug).eq("status", "published").single()
 
-  console.log("[v0] getBaseBySlug - slug:", slug)
-  console.log("[v0] getBaseBySlug - data:", data)
-  console.log("[v0] getBaseBySlug - error:", error)
-
   if (error) {
-    console.error("[v0] Error fetching base:", error)
+    console.error("Error fetching base:", error)
     return null
   }
 
@@ -52,7 +48,7 @@ export async function getBaseById(id: string): Promise<Base | null> {
     .single()
 
   if (error) {
-    console.error("[v0] Error fetching base:", error)
+    console.error("Error fetching base:", error)
     return null
   }
 
@@ -69,12 +65,8 @@ export async function searchBases(query: string): Promise<Base[]> {
     .or(`title.ilike.%${query}%,features.ilike.%${query}%,seo_description.ilike.%${query}%`)
     .order("created_at", { ascending: false })
 
-  console.log("[v0] searchBases - query:", query)
-  console.log("[v0] searchBases - data:", data)
-  console.log("[v0] searchBases - error:", error)
-
   if (error) {
-    console.error("[v0] Error searching bases:", error)
+    console.error("Error searching bases:", error)
     return []
   }
 
@@ -92,7 +84,7 @@ export async function getBasesByType(typeId: string): Promise<Base[]> {
     .order("created_at", { ascending: false })
 
   if (error) {
-    console.error("[v0] Error fetching bases by type:", error)
+    console.error("Error fetching bases by type:", error)
     return []
   }
 
@@ -105,7 +97,7 @@ export async function getAllFootprints(): Promise<Footprint[]> {
   const { data, error } = await supabase.from("footprints").select("*").order("footprint")
 
   if (error) {
-    console.error("[v0] Error fetching footprints:", error)
+    console.error("Error fetching footprints:", error)
     return []
   }
 
@@ -118,7 +110,7 @@ export async function getAllTeamSizes(): Promise<TeamSize[]> {
   const { data, error } = await supabase.from("team_sizes").select("*").order("size")
 
   if (error) {
-    console.error("[v0] Error fetching team sizes:", error)
+    console.error("Error fetching team sizes:", error)
     return []
   }
 
@@ -131,7 +123,7 @@ export async function getAllTags(): Promise<Tag[]> {
   const { data, error } = await supabase.from("tags").select("*").order("tag")
 
   if (error) {
-    console.error("[v0] Error fetching tags:", error)
+    console.error("Error fetching tags:", error)
     return []
   }
 
@@ -144,7 +136,7 @@ export async function getAllCreators(): Promise<Creator[]> {
   const { data, error } = await supabase.from("creators").select("*").order("name")
 
   if (error) {
-    console.error("[v0] Error fetching creators:", error)
+    console.error("Error fetching creators:", error)
     return []
   }
 
@@ -164,7 +156,7 @@ export async function getFeaturedBases(): Promise<Base[]> {
     .limit(6)
 
   if (error) {
-    console.error("[v0] Error fetching featured bases:", error)
+    console.error("Error fetching featured bases:", error)
     return []
   }
 
@@ -183,7 +175,7 @@ export async function getRelatedBases(currentBaseId: string, typeId?: string | n
   const { data, error } = await query.order("created_at", { ascending: false }).limit(3)
 
   if (error) {
-    console.error("[v0] Error fetching related bases:", error)
+    console.error("Error fetching related bases:", error)
     return []
   }
 
@@ -192,7 +184,7 @@ export async function getRelatedBases(currentBaseId: string, typeId?: string | n
 
 export async function incrementBaseViews(id: string): Promise<void> {
   // For now, we'll skip this as it requires a custom RPC function in Supabase
-  console.log("[v0] View increment skipped for base:", id)
+  console.log("View increment skipped for base:", id)
 }
 
 export async function getAllTypes(): Promise<Array<{ id: string; type: string }>> {
@@ -201,7 +193,7 @@ export async function getAllTypes(): Promise<Array<{ id: string; type: string }>
   const { data, error } = await supabase.from("types").select("*").order("type")
 
   if (error) {
-    console.error("[v0] Error fetching types:", error)
+    console.error("Error fetching types:", error)
     return []
   }
 
@@ -232,10 +224,15 @@ export async function getFilteredBases(filters: {
   }
 
   if (filters.teamSizeId && filters.teamSizeId !== "all") {
-    const { data: baseTeams } = await supabase
+    const { data: baseTeams, error: teamError } = await supabase
       .from("base_teams")
       .select("base_id")
       .eq("team_size_id", filters.teamSizeId)
+
+    if (teamError) {
+      console.error("Error fetching base teams:", teamError)
+      return []
+    }
 
     if (baseTeams && baseTeams.length > 0) {
       const baseIds = baseTeams.map((bt) => bt.base_id)
@@ -251,12 +248,8 @@ export async function getFilteredBases(filters: {
 
   const { data, error } = await query.order("created_at", { ascending: false })
 
-  console.log("[v0] getFilteredBases - filters:", filters)
-  console.log("[v0] getFilteredBases - data count:", data?.length || 0)
-  console.log("[v0] getFilteredBases - error:", error)
-
   if (error) {
-    console.error("[v0] Error fetching filtered bases:", error)
+    console.error("Error fetching filtered bases:", error)
     return []
   }
 
