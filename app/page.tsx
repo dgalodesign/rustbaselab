@@ -80,7 +80,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             </div>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredBases.map((base) => (
               <BaseCard key={base.id} base={base} />
             ))}
