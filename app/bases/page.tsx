@@ -31,7 +31,6 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
       <Header />
 
       <main className="flex-1">
-        {/* Page Header */}
         <section className="border-b border-border/40 bg-gradient-to-b from-background to-muted/20">
           <div className="container mx-auto px-4 py-12">
             <h1 className="mb-4 font-mono text-4xl font-bold md:text-5xl">Todos los Diseños de Bases</h1>
@@ -41,12 +40,10 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
           </div>
         </section>
 
-        {/* Ad Space - Top */}
         <section className="container mx-auto px-4 py-6">
           <AdPlaceholder slot="bases-page-top" format="horizontal" />
         </section>
 
-        {/* Bases Grid */}
         <section className="container mx-auto px-4 py-12">
           <div className="mb-6">
             <FilterBar types={types} teamSizes={teamSizes} footprints={footprints} />
@@ -67,7 +64,6 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
           )}
         </section>
 
-        {/* Ad Space - Bottom */}
         <section className="container mx-auto px-4 py-6">
           <AdPlaceholder slot="bases-page-bottom" format="horizontal" />
         </section>

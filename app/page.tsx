@@ -17,8 +17,6 @@ interface HomePageProps {
 }
 
 export default async function HomePage({ searchParams }: HomePageProps) {
-  console.log("[v0] HomePage - Starting to fetch data")
-
   const params = await searchParams
   const typeId = params.type || "all"
   const teamSizeId = params.teamSize || "all"
@@ -33,12 +31,6 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       ? getFilteredBases({ typeId, teamSizeId, footprintId })
       : Promise.resolve([]),
   ])
-
-  console.log("[v0] HomePage - featuredBases count:", featuredBases.length)
-  console.log("[v0] HomePage - types count:", types.length)
-  console.log("[v0] HomePage - teamSizes count:", teamSizes.length)
-  console.log("[v0] HomePage - footprints count:", footprints.length)
-  console.log("[v0] HomePage - filteredBases count:", filteredBases.length)
 
   const hasActiveFilters = typeId !== "all" || teamSizeId !== "all" || footprintId !== "all"
 
@@ -77,10 +69,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           </div>
         </section>
 
-        {/* Ad Space - Top */}
-        <section className="container mx-auto px-4 py-6">
-          <AdPlaceholder slot="homepage-top" format="horizontal" />
-        </section>
+        <AdPlaceholder slot="homepage-top" format="horizontal" />
 
         {/* Featured Bases */}
         <section className="container mx-auto px-4 py-12">
@@ -104,10 +93,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           )}
         </section>
 
-        {/* Ad Space - Middle */}
-        <section className="container mx-auto px-4 py-6">
-          <AdPlaceholder slot="homepage-middle" format="horizontal" />
-        </section>
+        <AdPlaceholder slot="homepage-middle" format="horizontal" />
 
         {/* All Bases with Filters */}
         <section className="container mx-auto px-4 py-12">
@@ -146,10 +132,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           )}
         </section>
 
-        {/* Ad Space - Bottom */}
-        <section className="container mx-auto px-4 py-6">
-          <AdPlaceholder slot="homepage-bottom" format="horizontal" />
-        </section>
+        <AdPlaceholder slot="homepage-bottom" format="horizontal" />
       </main>
 
       <Footer />

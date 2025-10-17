@@ -232,7 +232,6 @@ export async function getFilteredBases(filters: {
   }
 
   if (filters.teamSizeId && filters.teamSizeId !== "all") {
-    // Primero obtenemos los IDs de bases que tienen este team_size
     const { data: baseTeams } = await supabase
       .from("base_teams")
       .select("base_id")
@@ -242,12 +241,10 @@ export async function getFilteredBases(filters: {
       const baseIds = baseTeams.map((bt) => bt.base_id)
       query = query.in("id", baseIds)
     } else {
-      // Si no hay bases con este team_size, retornar array vacío
       return []
     }
   }
 
-  // Búsqueda por texto
   if (filters.search) {
     query = query.or(`title.ilike.%${filters.search}%,features.ilike.%${filters.search}%`)
   }
