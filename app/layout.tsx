@@ -7,12 +7,12 @@ import "./globals.css"
 import { Suspense } from "react"
 import { I18nProvider } from "@/lib/i18n/context"
 
-import { Geist as V0_Font_Geist, Geist_Mono as V0_Font_Geist_Mono, Source_Serif_4 as V0_Font_Source_Serif_4 } from 'next/font/google'
+import { DM_Sans as V0_Font_DM_Sans, Space_Mono as V0_Font_Space_Mono, Crimson_Text as V0_Font_Crimson_Text } from 'next/font/google'
 
 // Initialize fonts
-const _geist = V0_Font_Geist({ subsets: ['latin'], weight: ["100","200","300","400","500","600","700","800","900"] })
-const _geistMono = V0_Font_Geist_Mono({ subsets: ['latin'], weight: ["100","200","300","400","500","600","700","800","900"] })
-const _sourceSerif_4 = V0_Font_Source_Serif_4({ subsets: ['latin'], weight: ["200","300","400","500","600","700","800","900"] })
+const _dmSans = V0_Font_DM_Sans({ subsets: ['latin'], weight: ["100","200","300","400","500","600","700","800","900","1000"] })
+const _spaceMono = V0_Font_Space_Mono({ subsets: ['latin'], weight: ["400","700"] })
+const _crimsonText = V0_Font_Crimson_Text({ subsets: ['latin'], weight: ["400","600","700"] })
 
 export const metadata: Metadata = {
   title: "RustBaseLab - Rust Base Designs & Tutorials",
