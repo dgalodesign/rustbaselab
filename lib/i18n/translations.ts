@@ -55,7 +55,7 @@ export const translations = {
       hqMetal: "Metal HQ",
       minutes: "minutos",
       sulfur: "azufre",
-      publishedBy: "Publicado por",
+      publishedBy: "de",
       type: "Tipo",
       teamSizes: "Tamaños de Equipo",
       footprint: "Huella",
