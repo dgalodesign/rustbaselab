@@ -108,8 +108,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         {/* All Bases with Filters */}
         <section className="container mx-auto px-4 py-12 bg-rust-darkest">
           <div className="mb-8 border-b-2 border-rust-metal pb-4">
-            <h2 className="mb-2 font-mono text-3xl font-bold text-rust-light">EXPLORAR BASES</h2>
-            <p className="text-rust-muted font-mono text-sm">
+            <h2 className="mb-2 text-3xl font-bold text-rust-light">EXPLORAR BASES</h2>
+            <p className="text-rust-muted text-sm">
               Filtra por tipo, tamaño de equipo y huella para encontrar tu base perfecta
             </p>
           </div>
@@ -134,12 +134,12 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             </>
           ) : (
             <div className="text-center py-8 border-2 border-rust-metal rounded bg-rust-dark/50">
-              <p className="text-rust-muted font-mono mb-4">
+              <p className="text-rust-muted mb-4">
                 USA LOS FILTROS ARRIBA PARA EXPLORAR LAS BASES DISPONIBLES
               </p>
               <Button
                 asChild
-                className="bg-rust-orange hover:bg-rust-orange/90 text-rust-darkest border-2 border-rust-orange/50 font-mono font-bold"
+                className="bg-rust-orange hover:bg-rust-orange/90 text-rust-darkest border-2 border-rust-orange/50 font-bold"
               >
                 <Link href="/bases">VER TODAS LAS BASES</Link>
               </Button>

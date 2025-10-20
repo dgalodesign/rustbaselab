@@ -41,7 +41,7 @@ export function FilterBar({ types = [], teamSizes = [], footprints = [] }: Filte
     <div className="flex flex-wrap items-center gap-4 rounded-md border-2 border-border bg-card p-4 shadow-md">
       <div className="flex items-center gap-2">
         <SlidersHorizontal className="h-5 w-5 text-primary" />
-        <span className="text-sm font-bold font-mono uppercase tracking-wide">{t.home.filters.title}</span>
+        <span className="text-sm font-bold uppercase tracking-wide">{t.home.filters.title}</span>
       </div>
 
       <Select value={typeId} onValueChange={(value) => updateFilters("type", value)}>
