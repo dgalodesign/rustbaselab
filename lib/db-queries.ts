@@ -327,7 +327,6 @@ export async function getPopularBases(limit = 6): Promise<Base[]> {
   const supabase = await createClient()
 
   try {
-    // TODO: After running scripts/003-update-published-bases-view.sql, change this back to youtube_clicks
     const { data, error } = await supabase
       .from("published_bases")
       .select(`
@@ -336,7 +335,7 @@ export async function getPopularBases(limit = 6): Promise<Base[]> {
         type:types(type),
         footprint:footprints(footprint)
       `)
-      .order("created_at", { ascending: false })
+      .order("youtube_clicks", { ascending: false, nullsFirst: false })
       .limit(limit)
 
     if (error) {
