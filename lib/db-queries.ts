@@ -255,3 +255,59 @@ export async function getFilteredBases(filters: {
 
   return (data || []) as Base[]
 }
+
+export async function getMetaBases(limit = 6): Promise<Base[]> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from("bases")
+    .select(`
+      *,
+      creator:creators(name, channel_youtube_id),
+      type:types(type),
+      footprint:footprints(footprint)
+    `)
+    .eq("status", "published")
+    .order("created_at", { ascending: false })
+    .limit(limit)
+
+  if (error) {
+    console.error("Error fetching meta bases:", error)
+    return []
+  }
+
+  return (data || []) as Base[]
+}
+
+export async function getPopularBases(limit = 6): Promise<Base[]> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from("bases")
+    .select(`
+      *,
+      creator:creators(name, channel_youtube_id),
+      type:types(type),
+      footprint:footprints(footprint)
+    `)
+    .eq("status", "published")
+    .order("youtube_clicks", { ascending: false })
+    .limit(limit)
+
+  if (error) {
+    console.error("Error fetching popular bases:", error)
+    return []
+  }
+
+  return (data || []) as Base[]
+}
+
+export async function incrementYoutubeClicks(baseId: string): Promise<void> {
+  const supabase = await createClient()
+
+  const { error } = await supabase.rpc("increment_youtube_clicks", { base_id: baseId })
+
+  if (error) {
+    console.error("Error incrementing youtube clicks:", error)
+  }
+}
