@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { SlidersHorizontal } from "lucide-react"
+import { SlidersHorizontal, X } from "lucide-react"
 import { useTranslations } from "@/lib/i18n/context"
 
 interface FilterBarProps {
@@ -38,14 +38,14 @@ export function FilterBar({ types = [], teamSizes = [], footprints = [] }: Filte
   const hasActiveFilters = typeId !== "all" || teamSizeId !== "all" || footprintId !== "all"
 
   return (
-    <div className="flex flex-wrap items-center gap-4 rounded-lg border border-border/40 bg-card p-4">
+    <div className="flex flex-wrap items-center gap-4 rounded-md border-2 border-border bg-card p-4 shadow-md">
       <div className="flex items-center gap-2">
-        <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
-        <span className="text-sm font-medium">{t.home.filters.title}:</span>
+        <SlidersHorizontal className="h-5 w-5 text-primary" />
+        <span className="text-sm font-bold font-mono uppercase tracking-wide">{t.home.filters.title}</span>
       </div>
 
       <Select value={typeId} onValueChange={(value) => updateFilters("type", value)}>
-        <SelectTrigger className="w-[160px]">
+        <SelectTrigger className="w-[160px] border-2 font-medium">
           <SelectValue placeholder={t.home.filters.type} />
         </SelectTrigger>
         <SelectContent>
@@ -59,7 +59,7 @@ export function FilterBar({ types = [], teamSizes = [], footprints = [] }: Filte
       </Select>
 
       <Select value={teamSizeId} onValueChange={(value) => updateFilters("teamSize", value)}>
-        <SelectTrigger className="w-[160px]">
+        <SelectTrigger className="w-[160px] border-2 font-medium">
           <SelectValue placeholder={t.home.filters.teamSize} />
         </SelectTrigger>
         <SelectContent>
@@ -73,7 +73,7 @@ export function FilterBar({ types = [], teamSizes = [], footprints = [] }: Filte
       </Select>
 
       <Select value={footprintId} onValueChange={(value) => updateFilters("footprint", value)}>
-        <SelectTrigger className="w-[160px]">
+        <SelectTrigger className="w-[160px] border-2 font-medium">
           <SelectValue placeholder={t.home.filters.footprint} />
         </SelectTrigger>
         <SelectContent>
@@ -87,7 +87,8 @@ export function FilterBar({ types = [], teamSizes = [], footprints = [] }: Filte
       </Select>
 
       {hasActiveFilters && (
-        <Button variant="outline" size="sm" onClick={handleReset}>
+        <Button variant="destructive" size="sm" onClick={handleReset} className="gap-1">
+          <X className="h-3 w-3" />
           {t.home.filters.reset}
         </Button>
       )}
