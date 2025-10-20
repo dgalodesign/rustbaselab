@@ -125,7 +125,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --font-sans: 'Space Grotesk', 'Space Grotesk Fallback';
-  --font-mono: 'IBM Plex Mono', 'IBM Plex Mono Fallback';
+  --font-mono: 'Space Mono', 'Space Mono Fallback';
   --font-serif: 'Source Serif 4', 'Source Serif 4 Fallback';
   /* computed shadow variables below - do not modify */
   --shadow-2xs: var(--shadow-x) var(--shadow-y) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
