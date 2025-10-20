@@ -73,7 +73,7 @@ export function BaseCard({ base }: BaseCardProps) {
         </CardContent>
 
         <CardFooter className="border-t-2 border-border p-4">
-          <span className="text-muted-foreground text-xs font-mono">{relativeTime}</span>
+          <span className="text-muted-foreground text-xs">{relativeTime}</span>
         </CardFooter>
       </Card>
     </Link>

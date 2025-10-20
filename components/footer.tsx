@@ -16,7 +16,7 @@ export function Footer() {
               <div className="flex h-8 w-8 items-center justify-center rounded-sm bg-primary">
                 <Hammer className="h-4 w-4 text-primary-foreground" />
               </div>
-              <h3 className="font-mono text-lg font-bold">
+              <h3 className="text-lg font-bold">
                 Rust<span className="text-primary">Base</span>Lab
               </h3>
             </div>

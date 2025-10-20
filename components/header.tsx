@@ -16,7 +16,7 @@ export function Header() {
           <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-primary shadow-md">
             <Hammer className="h-5 w-5 text-primary-foreground" />
           </div>
-          <span className="font-mono text-xl font-bold tracking-tight">
+          <span className="text-xl font-bold tracking-tight">
             Rust<span className="text-primary">Base</span>Lab
           </span>
         </Link>

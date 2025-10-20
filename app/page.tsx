@@ -59,7 +59,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 <Button
                   size="lg"
                   asChild
-                  className="bg-rust-orange hover:bg-rust-orange/90 text-rust-darkest border-2 border-rust-orange/50 font-mono font-bold"
+                  className="bg-rust-orange hover:bg-rust-orange/90 text-rust-darkest border-2 border-rust-orange/50 font-bold"
                 >
                   <Link href="/bases">
                     VER TODAS LAS BASES
@@ -70,7 +70,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                   size="lg"
                   variant="outline"
                   asChild
-                  className="border-2 border-rust-metal hover:bg-rust-metal/10 font-mono bg-transparent"
+                  className="border-2 border-rust-metal hover:bg-rust-metal/10 bg-transparent"
                 >
                   <Link href="/search">BUSCAR BASES</Link>
                 </Button>
@@ -85,8 +85,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         <section className="container mx-auto px-4 py-12 bg-rust-darker">
           <div className="mb-8 flex items-center justify-between border-b-2 border-rust-metal pb-4">
             <div>
-              <h2 className="mb-2 font-mono text-3xl font-bold text-rust-light">BASES DESTACADAS</h2>
-              <p className="text-rust-muted font-mono text-sm">Diseños seleccionados de nuestra comunidad</p>
+              <h2 className="mb-2 text-3xl font-bold text-rust-light">BASES DESTACADAS</h2>
+              <p className="text-rust-muted text-sm">Diseños seleccionados de nuestra comunidad</p>
             </div>
           </div>
 
