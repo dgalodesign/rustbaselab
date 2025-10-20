@@ -1,6 +1,15 @@
 import { createClient } from "@/lib/supabase/server"
 import type { Base, Footprint, TeamSize, Tag, Creator } from "./types"
 
+async function handleSupabaseError(error: any, context: string) {
+  console.error(`[v0] Supabase error in ${context}:`, {
+    message: error?.message,
+    details: error?.details,
+    hint: error?.hint,
+    code: error?.code,
+  })
+}
+
 // This ensures only published content is fetched and provides better performance
 
 export async function getAllBases(): Promise<Base[]> {
@@ -130,16 +139,24 @@ export async function getAllFootprints(): Promise<Footprint[]> {
 }
 
 export async function getAllTeamSizes(): Promise<TeamSize[]> {
-  const supabase = await createClient()
+  try {
+    const supabase = await createClient()
 
-  const { data, error } = await supabase.from("team_sizes").select("*").order("size")
+    console.log("[v0] Fetching team sizes")
 
-  if (error) {
-    console.error("Error fetching team sizes:", error)
+    const { data, error } = await supabase.from("team_sizes").select("*").order("size")
+
+    if (error) {
+      await handleSupabaseError(error, "getAllTeamSizes")
+      return []
+    }
+
+    console.log(`[v0] Successfully fetched ${data?.length || 0} team sizes`)
+    return data || []
+  } catch (err) {
+    console.error("[v0] Unexpected error in getAllTeamSizes:", err)
     return []
   }
-
-  return data || []
 }
 
 export async function getAllTags(): Promise<Tag[]> {
@@ -297,9 +314,11 @@ export async function getFilteredBases(filters: {
 }
 
 export async function getMetaBases(limit = 6): Promise<Base[]> {
-  const supabase = await createClient()
-
   try {
+    const supabase = await createClient()
+
+    console.log("[v0] Fetching meta bases from published_bases view")
+
     const { data, error } = await supabase
       .from("published_bases")
       .select(`
@@ -312,21 +331,49 @@ export async function getMetaBases(limit = 6): Promise<Base[]> {
       .limit(limit)
 
     if (error) {
-      console.error("[v0] Error fetching meta bases:", error)
+      await handleSupabaseError(error, "getMetaBases")
       return []
     }
 
+    console.log(`[v0] Successfully fetched ${data?.length || 0} meta bases`)
     return (data || []) as Base[]
   } catch (err) {
     console.error("[v0] Unexpected error in getMetaBases:", err)
-    return []
+    try {
+      console.log("[v0] Attempting fallback to bases table")
+      const supabase = await createClient()
+      const { data, error } = await supabase
+        .from("bases")
+        .select(`
+          *,
+          creator:creators(name, channel_youtube_id),
+          type:types(type),
+          footprint:footprints(footprint)
+        `)
+        .eq("status", "published")
+        .order("created_at", { ascending: false })
+        .limit(limit)
+
+      if (error) {
+        await handleSupabaseError(error, "getMetaBases fallback")
+        return []
+      }
+
+      console.log(`[v0] Fallback successful: fetched ${data?.length || 0} bases`)
+      return (data || []) as Base[]
+    } catch (fallbackErr) {
+      console.error("[v0] Fallback also failed:", fallbackErr)
+      return []
+    }
   }
 }
 
 export async function getPopularBases(limit = 6): Promise<Base[]> {
-  const supabase = await createClient()
-
   try {
+    const supabase = await createClient()
+
+    console.log("[v0] Fetching popular bases from published_bases view")
+
     const { data, error } = await supabase
       .from("published_bases")
       .select(`
@@ -339,14 +386,40 @@ export async function getPopularBases(limit = 6): Promise<Base[]> {
       .limit(limit)
 
     if (error) {
-      console.error("[v0] Error fetching popular bases:", error)
+      await handleSupabaseError(error, "getPopularBases")
       return []
     }
 
+    console.log(`[v0] Successfully fetched ${data?.length || 0} popular bases`)
     return (data || []) as Base[]
   } catch (err) {
     console.error("[v0] Unexpected error in getPopularBases:", err)
-    return []
+    try {
+      console.log("[v0] Attempting fallback to bases table")
+      const supabase = await createClient()
+      const { data, error } = await supabase
+        .from("bases")
+        .select(`
+          *,
+          creator:creators(name, channel_youtube_id),
+          type:types(type),
+          footprint:footprints(footprint)
+        `)
+        .eq("status", "published")
+        .order("youtube_clicks", { ascending: false, nullsFirst: false })
+        .limit(limit)
+
+      if (error) {
+        await handleSupabaseError(error, "getPopularBases fallback")
+        return []
+      }
+
+      console.log(`[v0] Fallback successful: fetched ${data?.length || 0} bases`)
+      return (data || []) as Base[]
+    } catch (fallbackErr) {
+      console.error("[v0] Fallback also failed:", fallbackErr)
+      return []
+    }
   }
 }
 
