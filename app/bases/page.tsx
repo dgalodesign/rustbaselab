@@ -31,11 +31,14 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
       <Header />
 
       <main className="flex-1">
-        <section className="border-b border-border/40 bg-gradient-to-b from-background to-muted/20">
-          <div className="container mx-auto px-4 py-12">
-            <h1 className="mb-4 font-mono text-4xl font-bold md:text-5xl">Todos los Diseños de Bases</h1>
-            <p className="text-lg text-muted-foreground">
-              Explora nuestra colección completa de diseños de bases de Rust para todos los tamaños de equipo.
+        <section className="border-b-2 border-rust-metal bg-gradient-to-b from-rust-dark to-rust-darker relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/noise.png')] opacity-5" />
+          <div className="container relative mx-auto px-4 py-12">
+            <h1 className="mb-4 font-mono text-4xl font-bold md:text-5xl text-rust-light">
+              TODOS LOS DISEÑOS DE BASES
+            </h1>
+            <p className="text-lg text-rust-muted font-mono">
+              Explora nuestra colección completa de diseños de bases de Rust para todos los tamaños de equipo
             </p>
           </div>
         </section>
@@ -44,12 +47,12 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
           <AdPlaceholder slot="bases-page-top" format="horizontal" />
         </section>
 
-        <section className="container mx-auto px-4 py-12">
+        <section className="container mx-auto px-4 py-12 bg-rust-darker">
           <div className="mb-6">
             <FilterBar types={types} teamSizes={teamSizes} footprints={footprints} />
           </div>
 
-          <div className="mb-4 text-sm text-muted-foreground">Mostrando {bases.length} bases</div>
+          <div className="mb-4 text-sm text-rust-muted font-mono">MOSTRANDO {bases.length} BASES</div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {bases.map((base) => (
@@ -58,8 +61,8 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
           </div>
 
           {bases.length === 0 && (
-            <div className="py-12 text-center">
-              <p className="text-lg text-muted-foreground">No se encontraron bases con estos filtros.</p>
+            <div className="py-12 text-center border-2 border-rust-metal rounded bg-rust-dark/50">
+              <p className="text-lg text-rust-muted font-mono">NO SE ENCONTRARON BASES CON ESTOS FILTROS</p>
             </div>
           )}
         </section>

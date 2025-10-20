@@ -74,87 +74,93 @@ export default async function BasePage({ params }: BasePageProps) {
       <Header />
 
       <main className="flex-1">
-        {/* Breadcrumb */}
-        <section className="border-b border-border/40 bg-muted/20">
+        <section className="border-b-2 border-rust-metal bg-rust-darkest">
           <div className="container mx-auto px-4 py-4">
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" size="sm" asChild className="hover:bg-rust-metal/10 font-mono">
               <Link href="/">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Home
+                VOLVER AL INICIO
               </Link>
             </Button>
           </div>
         </section>
 
-        {/* Base Header */}
-        <section className="border-b border-border/40 bg-gradient-to-b from-background to-muted/20">
-          <div className="container mx-auto px-4 py-8">
+        <section className="border-b-2 border-rust-metal bg-gradient-to-b from-rust-dark to-rust-darker relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/noise.png')] opacity-5" />
+          <div className="container relative mx-auto px-4 py-8">
             <div className="mb-4 flex flex-wrap items-center gap-2">
               {base.type?.type && (
-                <Badge variant="outline" className="bg-amber-500/10 text-amber-500 border-amber-500/20">
-                  {base.type.type}
+                <Badge
+                  variant="outline"
+                  className="bg-rust-orange/10 text-rust-orange border-2 border-rust-orange/30 font-mono font-bold"
+                >
+                  {base.type.type.toUpperCase()}
                 </Badge>
               )}
               {base.footprint?.footprint && (
-                <Badge variant="outline" className="bg-blue-500/10 text-blue-500 border-blue-500/20">
-                  {base.footprint.footprint}
+                <Badge
+                  variant="outline"
+                  className="bg-rust-blue/10 text-rust-blue border-2 border-rust-blue/30 font-mono font-bold"
+                >
+                  {base.footprint.footprint.toUpperCase()}
                 </Badge>
               )}
             </div>
 
-            <h1 className="mb-4 font-mono text-4xl font-bold text-balance md:text-5xl">{base.title}</h1>
-            {base.features && <p className="mb-6 text-lg text-muted-foreground text-pretty">{base.features}</p>}
+            <h1 className="mb-4 font-mono text-4xl font-bold text-balance md:text-5xl text-rust-light">
+              {base.title.toUpperCase()}
+            </h1>
+            {base.features && <p className="mb-6 text-lg text-rust-muted text-pretty">{base.features}</p>}
 
-            <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-6 text-sm text-rust-muted font-mono">
               {base.build_time_min && (
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4" />
-                  <span>Build Time: {base.build_time_min} min</span>
+                  <span>TIEMPO: {base.build_time_min} MIN</span>
                 </div>
               )}
               {base.raid_cost_sulfur && (
                 <div className="flex items-center gap-2">
                   <Hammer className="h-4 w-4" />
-                  <span>Raid Cost: {base.raid_cost_sulfur.toLocaleString()} Sulfur</span>
+                  <span>RAID: {base.raid_cost_sulfur.toLocaleString()} SULFUR</span>
                 </div>
               )}
               {base.created_at && (
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
-                  <span>Added: {new Date(base.created_at).toLocaleDateString()}</span>
+                  <span>AÑADIDO: {new Date(base.created_at).toLocaleDateString()}</span>
                 </div>
               )}
             </div>
           </div>
         </section>
 
-        {/* Ad Space - Top */}
         <section className="container mx-auto px-4 py-6">
           <AdPlaceholder slot="base-detail-top" format="horizontal" />
         </section>
 
-        {/* Video and Details */}
-        <section className="container mx-auto px-4 py-8">
+        <section className="container mx-auto px-4 py-8 bg-rust-darker">
           <div className="grid gap-8 lg:grid-cols-3">
-            {/* Main Content */}
             <div className="lg:col-span-2">
               {base.video_youtube_id && (
                 <div className="mb-8">
-                  <h2 className="mb-4 text-2xl font-bold">Video Tutorial</h2>
+                  <h2 className="mb-4 text-2xl font-bold font-mono text-rust-light border-b-2 border-rust-metal pb-2">
+                    VIDEO TUTORIAL
+                  </h2>
                   <YouTubeEmbed url={`https://www.youtube.com/watch?v=${base.video_youtube_id}`} title={base.title} />
                 </div>
               )}
 
-              <Card>
+              <Card className="border-2 border-rust-metal bg-rust-dark/50">
                 <CardContent className="p-6">
-                  <h3 className="mb-4 text-xl font-bold">About This Base</h3>
-                  <div className="space-y-4 text-muted-foreground">
+                  <h3 className="mb-4 text-xl font-bold font-mono text-rust-light">SOBRE ESTA BASE</h3>
+                  <div className="space-y-4 text-rust-muted">
                     {base.features && <p>{base.features}</p>}
-                    <p>This base design provides a solid foundation for your Rust gameplay.</p>
+                    <p>Este diseño de base proporciona una base sólida para tu gameplay en Rust.</p>
                     {base.video_youtube_id && (
                       <p>
-                        Watch the full video tutorial above to see the complete building process, including tips for
-                        optimal placement and defensive strategies.
+                        Mira el tutorial completo arriba para ver el proceso de construcción completo, incluyendo
+                        consejos para colocación óptima y estrategias defensivas.
                       </p>
                     )}
                   </div>
@@ -162,21 +168,20 @@ export default async function BasePage({ params }: BasePageProps) {
               </Card>
             </div>
 
-            {/* Sidebar */}
             <div className="space-y-6">
-              <Card>
+              <Card className="border-2 border-rust-metal bg-rust-dark/50">
                 <CardContent className="p-6">
-                  <h3 className="mb-4 text-lg font-bold">Materials Required</h3>
+                  <h3 className="mb-4 text-lg font-bold font-mono text-rust-light">MATERIALES REQUERIDOS</h3>
                   <div className="space-y-2 text-sm">
-                    <div className="rounded-lg bg-muted/50 p-3 space-y-2">
+                    <div className="rounded border-2 border-rust-metal bg-rust-darkest p-3 space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Build Cost:</span>
-                        <span className="font-mono font-semibold text-xs">{formatMaterials()}</span>
+                        <span className="text-rust-muted font-mono">COSTO:</span>
+                        <span className="font-mono font-semibold text-xs text-rust-light">{formatMaterials()}</span>
                       </div>
                       {(base.upkeep_stone || base.upkeep_metal || base.upkeep_hq) && (
-                        <div className="flex items-center justify-between pt-2 border-t border-border/40">
-                          <span className="text-muted-foreground">Upkeep:</span>
-                          <span className="font-mono font-semibold text-xs">{formatUpkeep()}</span>
+                        <div className="flex items-center justify-between pt-2 border-t-2 border-rust-metal">
+                          <span className="text-rust-muted font-mono">UPKEEP:</span>
+                          <span className="font-mono font-semibold text-xs text-rust-light">{formatUpkeep()}</span>
                         </div>
                       )}
                     </div>
@@ -184,54 +189,59 @@ export default async function BasePage({ params }: BasePageProps) {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="border-2 border-rust-metal bg-rust-dark/50">
                 <CardContent className="p-6">
-                  <h3 className="mb-4 text-lg font-bold">Base Stats</h3>
+                  <h3 className="mb-4 text-lg font-bold font-mono text-rust-light">ESTADÍSTICAS</h3>
                   <div className="space-y-3 text-sm">
                     {base.type?.type && (
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Type:</span>
-                        <Badge variant="outline" className="bg-amber-500/10 text-amber-500 border-amber-500/20">
-                          {base.type.type}
+                        <span className="text-rust-muted font-mono">TIPO:</span>
+                        <Badge
+                          variant="outline"
+                          className="bg-rust-orange/10 text-rust-orange border-2 border-rust-orange/30 font-mono font-bold"
+                        >
+                          {base.type.type.toUpperCase()}
                         </Badge>
                       </div>
                     )}
                     {base.footprint?.footprint && (
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Footprint:</span>
-                        <Badge variant="outline" className="bg-blue-500/10 text-blue-500 border-blue-500/20">
-                          {base.footprint.footprint}
+                        <span className="text-rust-muted font-mono">FOOTPRINT:</span>
+                        <Badge
+                          variant="outline"
+                          className="bg-rust-blue/10 text-rust-blue border-2 border-rust-blue/30 font-mono font-bold"
+                        >
+                          {base.footprint.footprint.toUpperCase()}
                         </Badge>
                       </div>
                     )}
                     {base.build_time_min && (
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Build Time:</span>
-                        <span className="font-medium">{base.build_time_min} min</span>
+                        <span className="text-rust-muted font-mono">TIEMPO:</span>
+                        <span className="font-medium text-rust-light font-mono">{base.build_time_min} MIN</span>
                       </div>
                     )}
                     {base.raid_cost_sulfur && (
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Raid Cost:</span>
-                        <span className="font-medium">{base.raid_cost_sulfur.toLocaleString()} Sulfur</span>
+                        <span className="text-rust-muted font-mono">RAID:</span>
+                        <span className="font-medium text-rust-light font-mono">
+                          {base.raid_cost_sulfur.toLocaleString()} SULFUR
+                        </span>
                       </div>
                     )}
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Ad Space - Sidebar */}
               <AdPlaceholder slot="base-detail-sidebar" format="square" />
             </div>
           </div>
         </section>
 
-        {/* Ad Space - Bottom */}
         <section className="container mx-auto px-4 py-6">
           <AdPlaceholder slot="base-detail-bottom" format="horizontal" />
         </section>
 
-        {/* Related Bases */}
         <RelatedBases bases={relatedBases} />
       </main>
 
