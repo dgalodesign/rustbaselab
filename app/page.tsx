@@ -48,7 +48,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 <Sparkles className="h-4 w-4" />
                 <span className="font-semibold">MEJORES DISEÑOS DE BASES</span>
               </div>
-              <h1 className="mb-6 font-mono text-4xl font-bold leading-tight text-balance md:text-6xl text-rust-light">
+              <h1 className="mb-6 text-4xl font-bold leading-tight text-balance md:text-6xl text-rust-light">
                 CONSTRUYE MEJOR, SOBREVIVE MÁS
               </h1>
               <p className="mb-8 text-lg text-rust-muted text-pretty md:text-xl">
