@@ -291,8 +291,7 @@ export async function getPopularBases(limit = 6): Promise<Base[]> {
       footprint:footprints(footprint)
     `)
     .eq("status", "published")
-    .order("youtube_clicks", { ascending: false }) // Intentar ordenar por youtube_clicks
-    .order("created_at", { ascending: false }) // Usar created_at temporalmente si falla
+    .order("youtube_clicks", { ascending: false })
     .limit(limit)
 
   if (error) {
