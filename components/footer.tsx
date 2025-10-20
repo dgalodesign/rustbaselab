@@ -58,7 +58,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 pt-8 border-t border-border">
-          <p className="text-center text-xs text-muted-foreground font-mono">
+          <p className="text-center text-xs text-muted-foreground">
             Built for the Rust community • Powered by RustBaseLab DS
           </p>
         </div>
