@@ -88,7 +88,7 @@ export default async function HomePage() {
 
         <AdPlaceholder slot="homepage-middle" format="horizontal" />
 
-        <section className="container mx-auto px-4 py-12 bg-accent/5">
+        <section className="container mx-auto px-4 py-12 bg-background">
           <div className="mb-8 flex items-center justify-between border-b-2 border-border pb-4">
             <div>
               <div className="flex items-center gap-2 mb-2">
@@ -112,7 +112,7 @@ export default async function HomePage() {
           )}
         </section>
 
-        <section className="container mx-auto px-4 py-12">
+        <section className="container mx-auto px-4 py-12 bg-background">
           <div className="mb-8 border-b-2 border-border pb-4">
             <h2 className="mb-2 text-3xl font-bold">TIPOS DE BASES</h2>
             <p className="text-muted-foreground text-sm">Explora bases por categoría</p>
@@ -134,7 +134,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section className="container mx-auto px-4 py-12 bg-accent/5">
+        <section className="container mx-auto px-4 py-12 bg-background">
           <div className="mb-8 border-b-2 border-border pb-4">
             <h2 className="mb-2 text-3xl font-bold">TAMAÑOS DE EQUIPO</h2>
             <p className="text-muted-foreground text-sm">Encuentra bases para tu grupo</p>
