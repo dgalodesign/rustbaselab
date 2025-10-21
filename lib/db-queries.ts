@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+import { createPublicClient } from "@/lib/supabase/public-client"
 import type { Base, Footprint, TeamSize, Tag, Creator } from "./types"
 
 async function handleSupabaseError(error: any, context: string) {
@@ -13,7 +13,7 @@ async function handleSupabaseError(error: any, context: string) {
 // This ensures only published content is fetched and provides better performance
 
 export async function getAllBases(): Promise<Base[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   try {
     const { data, error } = await supabase
@@ -37,7 +37,7 @@ export async function getAllBases(): Promise<Base[]> {
 }
 
 export async function getBaseBySlug(slug: string): Promise<Base | null> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   try {
     const { data, error } = await supabase.from("published_bases").select("*").eq("slug", slug).single()
@@ -55,7 +55,7 @@ export async function getBaseBySlug(slug: string): Promise<Base | null> {
 }
 
 export async function getBaseById(id: string): Promise<Base | null> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   try {
     const { data, error } = await supabase
@@ -82,7 +82,7 @@ export async function getBaseById(id: string): Promise<Base | null> {
 }
 
 export async function searchBases(query: string): Promise<Base[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   try {
     const { data, error } = await supabase
@@ -104,7 +104,7 @@ export async function searchBases(query: string): Promise<Base[]> {
 }
 
 export async function getBasesByType(typeId: string): Promise<Base[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   try {
     const { data, error } = await supabase
@@ -126,7 +126,7 @@ export async function getBasesByType(typeId: string): Promise<Base[]> {
 }
 
 export async function getAllFootprints(): Promise<Footprint[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   const { data, error } = await supabase.from("footprints").select("*").order("footprint")
 
@@ -140,7 +140,7 @@ export async function getAllFootprints(): Promise<Footprint[]> {
 
 export async function getAllTeamSizes(): Promise<TeamSize[]> {
   try {
-    const supabase = await createClient()
+    const supabase = createPublicClient()
 
     console.log("[v0] Fetching team sizes")
 
@@ -160,7 +160,7 @@ export async function getAllTeamSizes(): Promise<TeamSize[]> {
 }
 
 export async function getAllTags(): Promise<Tag[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   const { data, error } = await supabase.from("tags").select("*").order("tag")
 
@@ -173,7 +173,7 @@ export async function getAllTags(): Promise<Tag[]> {
 }
 
 export async function getAllCreators(): Promise<Creator[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   const { data, error } = await supabase.from("creators").select("*").order("name")
 
@@ -186,7 +186,7 @@ export async function getAllCreators(): Promise<Creator[]> {
 }
 
 export async function getFeaturedBases(): Promise<Base[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   try {
     const { data, error } = await supabase
@@ -211,7 +211,7 @@ export async function getFeaturedBases(): Promise<Base[]> {
 }
 
 export async function getRelatedBases(currentBaseId: string, typeId?: string | null): Promise<Base[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   try {
     let query = supabase.from("published_bases").select("*").neq("id", currentBaseId)
@@ -240,7 +240,7 @@ export async function incrementBaseViews(id: string): Promise<void> {
 }
 
 export async function getAllTypes(): Promise<Array<{ id: string; type: string }>> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   const { data, error } = await supabase.from("types").select("*").order("type")
 
@@ -258,7 +258,7 @@ export async function getFilteredBases(filters: {
   footprintId?: string
   search?: string
 }): Promise<Base[]> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   try {
     let query = supabase.from("published_bases").select(`
@@ -315,7 +315,7 @@ export async function getFilteredBases(filters: {
 
 export async function getMetaBases(limit = 6): Promise<Base[]> {
   try {
-    const supabase = await createClient()
+    const supabase = createPublicClient()
 
     console.log("[v0] Fetching meta bases from published_bases view")
 
@@ -341,7 +341,7 @@ export async function getMetaBases(limit = 6): Promise<Base[]> {
     console.error("[v0] Unexpected error in getMetaBases:", err)
     try {
       console.log("[v0] Attempting fallback to bases table")
-      const supabase = await createClient()
+      const supabase = createPublicClient()
       const { data, error } = await supabase
         .from("bases")
         .select(`
@@ -370,7 +370,7 @@ export async function getMetaBases(limit = 6): Promise<Base[]> {
 
 export async function getPopularBases(limit = 6): Promise<Base[]> {
   try {
-    const supabase = await createClient()
+    const supabase = createPublicClient()
 
     console.log("[v0] Fetching popular bases from published_bases view")
 
@@ -396,7 +396,7 @@ export async function getPopularBases(limit = 6): Promise<Base[]> {
     console.error("[v0] Unexpected error in getPopularBases:", err)
     try {
       console.log("[v0] Attempting fallback to bases table")
-      const supabase = await createClient()
+      const supabase = createPublicClient()
       const { data, error } = await supabase
         .from("bases")
         .select(`
@@ -424,7 +424,7 @@ export async function getPopularBases(limit = 6): Promise<Base[]> {
 }
 
 export async function incrementYoutubeClicks(baseId: string): Promise<void> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   try {
     const { error } = await supabase.rpc("increment_youtube_clicks", { base_id: baseId })
