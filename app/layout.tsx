@@ -5,10 +5,6 @@ import "./globals.css"
 import { Suspense } from "react"
 import { I18nProvider } from "@/lib/i18n/context"
 
-const _geistMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-})
 import { Inter, JetBrains_Mono, Geist as V0_Font_Geist, Geist_Mono as V0_Font_Geist_Mono, Source_Serif_4 as V0_Font_Source_Serif_4 } from 'next/font/google'
 
 // Initialize fonts
@@ -24,7 +20,7 @@ const inter = Inter({
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-mono",
   display: "swap",
 })
 
