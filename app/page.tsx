@@ -7,7 +7,7 @@ import { Sparkles, ArrowRight, Flame, TrendingUp } from "lucide-react"
 import Link from "next/link"
 import { getMetaBases, getPopularBases, getAllTypes, getAllTeamSizes } from "@/lib/db-queries"
 
-export const revalidate = 3600 // Revalidate every 1 hour
+export const dynamic = "force-dynamic"
 
 export default async function HomePage() {
   const [metaBases, popularBases, types, teamSizes] = await Promise.all([

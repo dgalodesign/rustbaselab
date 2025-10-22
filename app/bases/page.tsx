@@ -5,7 +5,7 @@ import { FilterBar } from "@/components/filter-bar"
 import { AdPlaceholder } from "@/components/ad-placeholder"
 import { getFilteredBases, getAllTypes, getAllTeamSizes, getAllFootprints } from "@/lib/db-queries"
 
-export const revalidate = 3600 // Revalidate every 1 hour
+export const dynamic = "force-dynamic"
 
 interface BasesPageProps {
   searchParams: Promise<{
