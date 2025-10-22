@@ -10,18 +10,43 @@ import { getMetaBases, getPopularBases, getAllTypes, getAllTeamSizes } from "@/l
 export const dynamic = "force-dynamic"
 
 export default async function HomePage() {
-  const [metaBases, popularBases, types, teamSizes] = await Promise.all([
-    getMetaBases(6),
-    getPopularBases(6),
-    getAllTypes(),
-    getAllTeamSizes(),
-  ])
+  let metaBases = []
+  let popularBases = []
+  let types = []
+  let teamSizes = []
+  let hasError = false
+
+  try {
+    const results = await Promise.all([getMetaBases(6), getPopularBases(6), getAllTypes(), getAllTeamSizes()])
+
+    metaBases = results[0]
+    popularBases = results[1]
+    types = results[2]
+    teamSizes = results[3]
+
+    console.log("[v0] Homepage data loaded successfully")
+  } catch (error) {
+    console.error("[v0] Error loading homepage data:", error)
+    hasError = true
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
 
       <main className="flex-1">
+        {hasError && (
+          <div className="container mx-auto px-4 py-8">
+            <div className="rounded-lg border-2 border-destructive bg-destructive/10 p-6 text-center">
+              <h2 className="mb-2 text-xl font-bold text-destructive">Error de Conexión</h2>
+              <p className="text-muted-foreground">
+                No se pudo conectar a la base de datos. Por favor, verifica que las variables de entorno estén
+                configuradas correctamente en Vercel.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Hero Section */}
         <section className="border-b-2 border-primary/20 bg-gradient-to-b from-background via-background/95 to-background/90 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,255,0.1),transparent)]" />
