@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
+import Script from "next/script"
 import "./globals.css"
 import { Suspense } from "react"
 import { I18nProvider } from "@/lib/i18n/context"
@@ -20,7 +21,7 @@ const inter = Inter({
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-mono",
   display: "swap",
 })
 
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     description: "Discover the best Rust base designs for solo, duo, trio, and zerg gameplay.",
     type: "website",
   },
-    generator: 'v0.app'
+  generator: "v0.app",
 }
 
 export default function RootLayout({
@@ -48,6 +49,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6148269016507542"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         <I18nProvider>
           <Suspense fallback={null}>{children}</Suspense>
