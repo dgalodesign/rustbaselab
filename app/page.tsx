@@ -1,13 +1,98 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
-import { AdPlaceholder } from "@/components/ad-placeholder"
 import { Button } from "@/components/ui/button"
-import { Sparkles, ArrowRight, Flame, TrendingUp } from "lucide-react"
+import {
+  Sparkles,
+  ArrowRight,
+  Flame,
+  TrendingUp,
+  Home,
+  Shield,
+  Castle,
+  Building2,
+  Mountain,
+  Tent,
+  User,
+  Users,
+  Users2,
+  UsersRound,
+  Crown,
+  Warehouse,
+  Factory,
+  Landmark,
+  Church,
+  Store,
+  Building,
+} from "lucide-react"
 import Link from "next/link"
 import { getMetaBases, getPopularBases, getAllTypes, getAllTeamSizes } from "@/lib/db-queries"
 
 export const dynamic = "force-dynamic"
+
+const typeIcons: Record<string, any> = {
+  starter: Home,
+  bunker: Shield,
+  tower: Castle,
+  compound: Building2,
+  cave: Mountain,
+  warehouse: Warehouse,
+  factory: Factory,
+  fortress: Landmark,
+  church: Church,
+  shop: Store,
+  building: Building,
+  base: Tent,
+  default: Tent,
+}
+
+const teamSizeIcons: Record<string, any> = {
+  solo: User,
+  duo: Users,
+  trio: Users2,
+  quad: UsersRound,
+  zerg: Crown,
+  default: Users,
+}
+
+function getTypeIcon(typeName: string) {
+  // Normalizar el nombre: lowercase, sin espacios, sin guiones
+  const normalized = typeName
+    .toLowerCase()
+    .trim()
+    .replace(/[\s-_]/g, "")
+
+  // Buscar coincidencia exacta primero
+  if (typeIcons[normalized]) {
+    return typeIcons[normalized]
+  }
+
+  // Buscar coincidencia parcial (si el tipo contiene alguna palabra clave)
+  for (const [key, icon] of Object.entries(typeIcons)) {
+    if (normalized.includes(key) || key.includes(normalized)) {
+      return icon
+    }
+  }
+
+  // Si no hay coincidencia, usar el icono por defecto
+  return typeIcons.default
+}
+
+function getTeamSizeIcon(sizeName: string) {
+  const key = sizeName.toLowerCase()
+  return teamSizeIcons[key] || teamSizeIcons.default
+}
+
+function sortTeamSizes(sizes: any[]) {
+  const order = ["solo", "duo", "trio", "quad", "zerg"]
+  return [...sizes].sort((a, b) => {
+    const aIndex = order.indexOf(a.size.toLowerCase())
+    const bIndex = order.indexOf(b.size.toLowerCase())
+    if (aIndex === -1) return 1
+    if (bIndex === -1) return -1
+    return aIndex - bIndex
+  })
+}
 
 export default async function HomePage() {
   let metaBases = []
@@ -24,6 +109,10 @@ export default async function HomePage() {
     types = results[2]
     teamSizes = results[3]
 
+    console.log(
+      "[v0] Types from database:",
+      types.map((t) => t.type),
+    )
     console.log("[v0] Homepage data loaded successfully")
   } catch (error) {
     console.error("[v0] Error loading homepage data:", error)
@@ -87,8 +176,6 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <AdPlaceholder slot="homepage-top" format="horizontal" />
-
         <section className="container mx-auto px-4 py-12">
           <div className="mb-8 flex items-center justify-between border-b-2 border-border pb-4">
             <div>
@@ -112,8 +199,6 @@ export default async function HomePage() {
             </div>
           )}
         </section>
-
-        <AdPlaceholder slot="homepage-middle" format="horizontal" />
 
         <section className="container mx-auto px-4 py-12 bg-background">
           <div className="mb-8 flex items-center justify-between border-b-2 border-border pb-4">
@@ -146,18 +231,25 @@ export default async function HomePage() {
           </div>
 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {types.map((type) => (
-              <Link
-                key={type.id}
-                href={`/bases?type=${type.id}`}
-                className="group relative overflow-hidden rounded-lg border-2 border-border bg-card p-6 transition-all hover:border-primary hover:shadow-lg hover:shadow-primary/20"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold uppercase">{type.type}</span>
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </div>
-              </Link>
-            ))}
+            {types.map((type) => {
+              const Icon = getTypeIcon(type.type)
+              return (
+                <Link
+                  key={type.id}
+                  href={`/bases?type=${type.id}`}
+                  className="group relative overflow-hidden rounded-lg border-2 border-border bg-card p-6 transition-all hover:border-primary hover:shadow-lg hover:shadow-primary/20 hover:scale-105"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="relative flex flex-col items-center gap-3 text-center">
+                    <div className="rounded-lg bg-primary/10 p-3 border-2 border-primary/20 group-hover:border-primary/50 transition-colors">
+                      <Icon className="h-8 w-8 text-primary" />
+                    </div>
+                    <span className="text-lg font-bold uppercase">{type.type}</span>
+                    <ArrowRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+                  </div>
+                </Link>
+              )
+            })}
           </div>
         </section>
 
@@ -167,23 +259,28 @@ export default async function HomePage() {
             <p className="text-muted-foreground text-sm">Encuentra bases para tu grupo</p>
           </div>
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {teamSizes.map((size) => (
-              <Link
-                key={size.id}
-                href={`/bases?teamSize=${size.id}`}
-                className="group relative overflow-hidden rounded-lg border-2 border-border bg-card p-6 transition-all hover:border-secondary hover:shadow-lg hover:shadow-secondary/20"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold uppercase">{size.size}</span>
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </div>
-              </Link>
-            ))}
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {sortTeamSizes(teamSizes).map((size) => {
+              const Icon = getTeamSizeIcon(size.size)
+              return (
+                <Link
+                  key={size.id}
+                  href={`/bases?teamSize=${size.id}`}
+                  className="group relative overflow-hidden rounded-lg border-2 border-border bg-card p-6 transition-all hover:border-secondary hover:shadow-lg hover:shadow-secondary/20 hover:scale-105"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="relative flex flex-col items-center gap-3 text-center">
+                    <div className="rounded-lg bg-secondary/10 p-3 border-2 border-secondary/20 group-hover:border-secondary/50 transition-colors">
+                      <Icon className="h-8 w-8 text-secondary" />
+                    </div>
+                    <span className="text-lg font-bold uppercase">{size.size}</span>
+                    <ArrowRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-secondary" />
+                  </div>
+                </Link>
+              )
+            })}
           </div>
         </section>
-
-        <AdPlaceholder slot="homepage-bottom" format="horizontal" />
       </main>
 
       <Footer />

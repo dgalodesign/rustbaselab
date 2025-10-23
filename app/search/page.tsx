@@ -3,7 +3,6 @@ import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { SearchInput } from "@/components/search-input"
 import { FilterBar } from "@/components/filter-bar"
-import { AdPlaceholder } from "@/components/ad-placeholder"
 import { getFilteredBases, getAllTypes, getAllTeamSizes, getAllTags } from "@/lib/db-queries"
 import { SearchIcon } from "lucide-react"
 
@@ -58,11 +57,6 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           </div>
         </section>
 
-        {/* Ad Space - Top */}
-        <section className="container mx-auto px-4 py-6">
-          <AdPlaceholder slot="search-page-top" format="horizontal" />
-        </section>
-
         {/* Search Results */}
         <section className="container mx-auto px-4 py-12">
           <div className="mb-6">
@@ -105,11 +99,6 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               </p>
             </div>
           ) : null}
-        </section>
-
-        {/* Ad Space - Bottom */}
-        <section className="container mx-auto px-4 py-6">
-          <AdPlaceholder slot="search-page-bottom" format="horizontal" />
         </section>
       </main>
 

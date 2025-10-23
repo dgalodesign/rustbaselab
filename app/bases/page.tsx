@@ -2,7 +2,6 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { FilterBar } from "@/components/filter-bar"
-import { AdPlaceholder } from "@/components/ad-placeholder"
 import { getFilteredBases, getAllTypes, getAllTeamSizes, getAllFootprints } from "@/lib/db-queries"
 
 export const dynamic = "force-dynamic"
@@ -43,10 +42,6 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
           </div>
         </section>
 
-        <section className="container mx-auto px-4 py-6">
-          <AdPlaceholder slot="bases-page-top" format="horizontal" />
-        </section>
-
         <section className="container mx-auto px-4 py-12">
           <div className="mb-6">
             <FilterBar types={types} teamSizes={teamSizes} footprints={footprints} />
@@ -65,10 +60,6 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
               <p className="text-lg text-muted-foreground font-mono">NO SE ENCONTRARON BASES CON ESTOS FILTROS</p>
             </div>
           )}
-        </section>
-
-        <section className="container mx-auto px-4 py-6">
-          <AdPlaceholder slot="bases-page-bottom" format="horizontal" />
         </section>
       </main>
 

@@ -3,7 +3,6 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { YouTubeEmbed } from "@/components/youtube-embed"
 import { RelatedBases } from "@/components/related-bases"
-import { AdPlaceholder } from "@/components/ad-placeholder"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -137,10 +136,6 @@ export default async function BasePage({ params }: BasePageProps) {
           </div>
         </section>
 
-        <section className="container mx-auto px-4 py-6">
-          <AdPlaceholder slot="base-detail-top" format="horizontal" />
-        </section>
-
         <section className="container mx-auto px-4 py-8 bg-muted/30">
           <div className="grid gap-8 lg:grid-cols-3">
             <div className="lg:col-span-2">
@@ -234,14 +229,8 @@ export default async function BasePage({ params }: BasePageProps) {
                   </div>
                 </CardContent>
               </Card>
-
-              <AdPlaceholder slot="base-detail-sidebar" format="square" />
             </div>
           </div>
-        </section>
-
-        <section className="container mx-auto px-4 py-6">
-          <AdPlaceholder slot="base-detail-bottom" format="horizontal" />
         </section>
 
         <RelatedBases bases={relatedBases} />
