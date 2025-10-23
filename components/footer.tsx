@@ -10,7 +10,7 @@ export function Footer() {
   return (
     <footer className="border-t-2 border-border bg-card mt-16">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-4">
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="flex h-8 w-8 items-center justify-center rounded-sm bg-primary">
@@ -39,6 +39,38 @@ export function Footer() {
               <li>
                 <Link href="/search" className="text-muted-foreground transition-colors hover:text-primary font-medium">
                   {t.nav.search}
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-muted-foreground transition-colors hover:text-primary font-medium">
+                  Acerca de
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="mb-4 text-sm font-bold uppercase tracking-wide">{t.footer.legal}</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link
+                  href="/privacy"
+                  className="text-muted-foreground transition-colors hover:text-primary font-medium"
+                >
+                  Privacidad
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-muted-foreground transition-colors hover:text-primary font-medium">
+                  Términos
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-muted-foreground transition-colors hover:text-primary font-medium"
+                >
+                  Contacto
                 </Link>
               </li>
             </ul>

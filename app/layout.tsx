@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { Suspense } from "react"
 import { I18nProvider } from "@/lib/i18n/context"
+import { CookieConsent } from "@/components/cookie-consent"
 
 import { Inter, JetBrains_Mono, IBM_Plex_Sans as V0_Font_IBM_Plex_Sans, IBM_Plex_Mono as V0_Font_IBM_Plex_Mono, IBM_Plex_Serif as V0_Font_IBM_Plex_Serif } from 'next/font/google'
 
@@ -52,6 +53,7 @@ export default function RootLayout({
         <I18nProvider>
           <Suspense fallback={null}>{children}</Suspense>
         </I18nProvider>
+        <CookieConsent />
         <Analytics />
       </body>
     </html>
