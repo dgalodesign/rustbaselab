@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
+import Script from "next/script"
 import "./globals.css"
 import { Suspense } from "react"
 import { I18nProvider } from "@/lib/i18n/context"
@@ -48,14 +49,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <head>
-        <script
+      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
+        <Script
+          id="google-adsense"
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6148269016507542"
           crossOrigin="anonymous"
+          strategy="beforeInteractive"
         />
-      </head>
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         <I18nProvider>
           <Suspense fallback={null}>{children}</Suspense>
         </I18nProvider>
