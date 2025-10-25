@@ -1,10 +1,15 @@
+"use client"
+
 import Link from "next/link"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Home, Search } from "lucide-react"
+import { useTranslations } from "@/lib/i18n/context"
 
 export default function NotFound() {
+  const { t } = useTranslations()
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -22,10 +27,10 @@ export default function NotFound() {
 
             {/* Message */}
             <div className="space-y-4">
-              <h2 className="font-display text-3xl font-bold text-foreground uppercase">Página No Encontrada</h2>
+              <h2 className="font-display text-3xl font-bold text-foreground uppercase">Page Not Found</h2>
               <p className="text-lg text-muted-foreground text-pretty">
-                La página que buscas no existe o ha sido movida. Puede que el enlace esté roto o que la base haya sido
-                eliminada.
+                The page you're looking for doesn't exist or has been moved. The link might be broken or the base may
+                have been deleted.
               </p>
             </div>
 
@@ -38,7 +43,7 @@ export default function NotFound() {
               >
                 <Link href="/">
                   <Home className="mr-2 h-5 w-5" />
-                  Ir al Inicio
+                  Go Home
                 </Link>
               </Button>
 
@@ -50,7 +55,7 @@ export default function NotFound() {
               >
                 <Link href="/bases">
                   <Search className="mr-2 h-5 w-5" />
-                  Ver Todas las Bases
+                  View All Bases
                 </Link>
               </Button>
             </div>

@@ -44,7 +44,7 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="card-content" className={cn("flex flex-col px-4 py-3 gap-2", className)} {...props} />
+  return <div data-slot="card-content" className={cn("flex flex-col px-4 py-3 gap-3", className)} {...props} />
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<"div">) {

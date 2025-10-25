@@ -51,7 +51,7 @@ export function BaseCard({ base }: BaseCardProps) {
           </h3>
 
           <div className="flex items-center justify-between text-muted-foreground my-0 text-base">
-            <span className="truncate font-medium">
+            <span className="truncate font-medium text-sm">
               {t.base.publishedBy} <span className="text-foreground">{creatorName}</span>
             </span>
           </div>

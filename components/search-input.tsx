@@ -5,15 +5,17 @@ import { Search, X } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "@/lib/i18n/context"
 
 interface SearchInputProps {
   initialQuery?: string
   placeholder?: string
 }
 
-export function SearchInput({ initialQuery = "", placeholder = "Search bases..." }: SearchInputProps) {
+export function SearchInput({ initialQuery = "", placeholder }: SearchInputProps) {
   const [query, setQuery] = useState(initialQuery)
   const router = useRouter()
+  const { t } = useTranslations()
 
   useEffect(() => {
     const debounce = setTimeout(() => {
@@ -36,7 +38,7 @@ export function SearchInput({ initialQuery = "", placeholder = "Search bases..."
       <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       <Input
         type="text"
-        placeholder={placeholder}
+        placeholder={placeholder || t.search.placeholder}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         className="pl-10 pr-10"

@@ -80,7 +80,7 @@ export default async function BasePage({ params }: BasePageProps) {
             <Button variant="ghost" size="sm" asChild className="hover:bg-muted font-mono">
               <Link href="/">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                VOLVER AL INICIO
+                BACK TO HOME
               </Link>
             </Button>
           </div>
@@ -117,7 +117,7 @@ export default async function BasePage({ params }: BasePageProps) {
               {base.build_time_min && (
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4" />
-                  <span>TIEMPO: {base.build_time_min} MIN</span>
+                  <span>TIME: {base.build_time_min} MIN</span>
                 </div>
               )}
               {base.raid_cost_sulfur && (
@@ -129,7 +129,7 @@ export default async function BasePage({ params }: BasePageProps) {
               {base.created_at && (
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
-                  <span>AÑADIDO: {new Date(base.created_at).toLocaleDateString()}</span>
+                  <span>ADDED: {new Date(base.created_at).toLocaleDateString()}</span>
                 </div>
               )}
             </div>
@@ -150,14 +150,14 @@ export default async function BasePage({ params }: BasePageProps) {
 
               <Card className="border-2 border-border bg-muted/50">
                 <CardContent className="p-6">
-                  <h3 className="mb-4 text-xl font-bold font-display text-foreground">SOBRE ESTA BASE</h3>
+                  <h3 className="mb-4 text-xl font-bold font-display text-foreground">ABOUT THIS BASE</h3>
                   <div className="space-y-4 text-muted-foreground">
                     {base.features && <p>{base.features}</p>}
-                    <p>Este diseño de base proporciona una base sólida para tu gameplay en Rust.</p>
+                    <p>This base design provides a solid foundation for your Rust gameplay.</p>
                     {base.video_youtube_id && (
                       <p>
-                        Mira el tutorial completo arriba para ver el proceso de construcción completo, incluyendo
-                        consejos para colocación óptima y estrategias defensivas.
+                        Watch the complete tutorial above to see the full building process, including tips for optimal
+                        placement and defensive strategies.
                       </p>
                     )}
                   </div>
@@ -168,11 +168,11 @@ export default async function BasePage({ params }: BasePageProps) {
             <div className="space-y-6">
               <Card className="border-2 border-border bg-muted/50">
                 <CardContent className="p-6">
-                  <h3 className="mb-4 text-lg font-bold font-display text-foreground">MATERIALES REQUERIDOS</h3>
+                  <h3 className="mb-4 text-lg font-bold font-display text-foreground">REQUIRED MATERIALS</h3>
                   <div className="space-y-2 text-sm">
                     <div className="rounded border-2 border-border bg-background p-3 space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground font-mono">COSTO:</span>
+                        <span className="text-muted-foreground font-mono">COST:</span>
                         <span className="font-mono font-semibold text-xs text-foreground">{formatMaterials()}</span>
                       </div>
                       {(base.upkeep_stone || base.upkeep_metal || base.upkeep_hq) && (
@@ -188,11 +188,11 @@ export default async function BasePage({ params }: BasePageProps) {
 
               <Card className="border-2 border-border bg-muted/50">
                 <CardContent className="p-6">
-                  <h3 className="mb-4 text-lg font-bold font-display text-foreground">ESTADÍSTICAS</h3>
+                  <h3 className="mb-4 text-lg font-bold font-display text-foreground">STATISTICS</h3>
                   <div className="space-y-3 text-sm">
                     {base.type?.type && (
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground font-mono">TIPO:</span>
+                        <span className="text-muted-foreground font-mono">TYPE:</span>
                         <Badge
                           variant="outline"
                           className="bg-primary/10 text-primary border-2 border-primary/30 font-mono font-bold"
@@ -214,7 +214,7 @@ export default async function BasePage({ params }: BasePageProps) {
                     )}
                     {base.build_time_min && (
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground font-mono">TIEMPO:</span>
+                        <span className="text-muted-foreground font-mono">TIME:</span>
                         <span className="font-medium text-foreground font-mono">{base.build_time_min} MIN</span>
                       </div>
                     )}

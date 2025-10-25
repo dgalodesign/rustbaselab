@@ -43,7 +43,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/about" className="text-muted-foreground transition-colors hover:text-primary font-medium">
-                  Acerca de
+                  {t.footer.about}
                 </Link>
               </li>
             </ul>
@@ -57,12 +57,12 @@ export function Footer() {
                   href="/privacy"
                   className="text-muted-foreground transition-colors hover:text-primary font-medium"
                 >
-                  Privacidad
+                  {t.footer.privacy}
                 </Link>
               </li>
               <li>
                 <Link href="/terms" className="text-muted-foreground transition-colors hover:text-primary font-medium">
-                  Términos
+                  {t.footer.terms}
                 </Link>
               </li>
               <li>
@@ -70,7 +70,7 @@ export function Footer() {
                   href="/contact"
                   className="text-muted-foreground transition-colors hover:text-primary font-medium"
                 >
-                  Contacto
+                  {t.footer.contact}
                 </Link>
               </li>
             </ul>

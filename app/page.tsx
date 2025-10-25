@@ -130,10 +130,10 @@ export default async function HomePage() {
         {hasError && (
           <div className="container mx-auto px-4 py-8">
             <div className="rounded-lg border-2 border-destructive bg-destructive/10 p-6 text-center">
-              <h2 className="mb-2 text-xl font-bold text-destructive">Error de Conexión</h2>
+              <h2 className="mb-2 text-xl font-bold text-destructive">Connection Error</h2>
               <p className="text-muted-foreground">
-                No se pudo conectar a la base de datos. Por favor, verifica que las variables de entorno estén
-                configuradas correctamente en Vercel.
+                Could not connect to the database. Please verify that environment variables are correctly configured in
+                Vercel.
               </p>
             </div>
           </div>
@@ -146,14 +146,14 @@ export default async function HomePage() {
             <div className="mx-auto max-w-3xl text-center">
               <div className="mb-4 inline-flex items-center gap-2 rounded-lg border-2 border-primary/30 bg-primary/10 px-4 py-1.5 text-sm text-primary">
                 <Sparkles className="h-4 w-4" />
-                <span className="font-semibold">MEJORES DISEÑOS DE BASES</span>
+                <span className="font-semibold">BEST RUST BASE DESIGNS</span>
               </div>
               <h1 className="mb-6 text-4xl font-bold font-display leading-tight text-balance md:text-6xl">
-                CONSTRUYE MEJOR, SOBREVIVE MÁS
+                BUILD BETTER, SURVIVE LONGER
               </h1>
               <p className="mb-8 text-lg text-muted-foreground text-pretty md:text-xl">
-                Descubre diseños profesionales de bases de Rust con tutoriales en video detallados. Desde bases para
-                principiantes hasta fortalezas masivas.
+                Discover professional Rust base designs with detailed video tutorials. From beginner bases to massive
+                fortresses.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <Button
@@ -162,7 +162,7 @@ export default async function HomePage() {
                   className="bg-primary hover:bg-primary/90 text-primary-foreground border-2 border-primary/50 font-bold"
                 >
                   <Link href="/bases">
-                    VER TODAS LAS BASES
+                    VIEW ALL BASES
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
@@ -172,7 +172,7 @@ export default async function HomePage() {
                   asChild
                   className="border-2 border-border hover:bg-accent bg-transparent"
                 >
-                  <Link href="/search">BUSCAR BASES</Link>
+                  <Link href="/search">SEARCH BASES</Link>
                 </Button>
               </div>
             </div>
@@ -182,8 +182,8 @@ export default async function HomePage() {
         <section className="container mx-auto px-4 py-16">
           <SectionHeader
             icon={Flame}
-            title="BASES META"
-            description="Las bases más recientes y actualizadas"
+            title="META BASES"
+            description="The most recent and updated bases"
             className="border-none pb-0"
           />
 
@@ -195,7 +195,7 @@ export default async function HomePage() {
 
           {metaBases.length === 0 && (
             <div className="py-12 text-center border-2 border-border rounded-lg bg-card">
-              <p className="text-lg text-muted-foreground font-mono">NO HAY BASES META DISPONIBLES</p>
+              <p className="text-lg text-muted-foreground font-mono">NO META BASES AVAILABLE</p>
             </div>
           )}
         </section>
@@ -203,8 +203,8 @@ export default async function HomePage() {
         <section className="container mx-auto px-4 bg-background py-16">
           <SectionHeader
             icon={TrendingUp}
-            title="BASES MÁS POPULARES"
-            description="Las bases más vistas por la comunidad"
+            title="MOST POPULAR BASES"
+            description="The most viewed bases by the community"
           />
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -215,13 +215,13 @@ export default async function HomePage() {
 
           {popularBases.length === 0 && (
             <div className="py-12 text-center border-2 border-border rounded-lg bg-card">
-              <p className="text-lg text-muted-foreground font-mono">NO HAY BASES POPULARES DISPONIBLES</p>
+              <p className="text-lg text-muted-foreground font-mono">NO POPULAR BASES AVAILABLE</p>
             </div>
           )}
         </section>
 
         <section className="container mx-auto px-4 bg-background py-16">
-          <SectionHeader icon={Grid3x3} title="TIPOS DE BASES" description="Explora bases por categoría" />
+          <SectionHeader icon={Grid3x3} title="BASE TYPES" description="Explore bases by category" />
 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {types.map((type) => {
@@ -247,7 +247,7 @@ export default async function HomePage() {
         </section>
 
         <section className="container mx-auto px-4 bg-background py-16">
-          <SectionHeader icon={UsersIcon} title="TAMAÑOS DE EQUIPO" description="Encuentra bases para tu grupo" />
+          <SectionHeader icon={UsersIcon} title="TEAM SIZES" description="Find bases for your group" />
 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {sortTeamSizes(teamSizes).map((size) => {
