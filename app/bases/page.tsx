@@ -35,8 +35,8 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
         <section className="border-b-2 border-border bg-gradient-to-b from-background to-background/95 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,255,0.1),transparent)]" />
           <div className="container relative mx-auto px-4 py-12">
-            <h1 className="mb-4 font-mono text-4xl font-bold md:text-5xl">TODOS LOS DISEÑOS DE BASES</h1>
-            <p className="text-lg text-muted-foreground font-mono">
+            <h1 className="mb-4 font-display text-4xl font-bold md:text-5xl">TODOS LOS DISEÑOS DE BASES</h1>
+            <p className="text-lg text-muted-foreground">
               Explora nuestra colección completa de diseños de bases de Rust para todos los tamaños de equipo
             </p>
           </div>
@@ -47,7 +47,7 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
             <FilterBar types={types} teamSizes={teamSizes} footprints={footprints} />
           </div>
 
-          <div className="mb-4 text-sm text-muted-foreground font-mono">MOSTRANDO {bases.length} BASES</div>
+          <div className="mb-4 text-sm text-muted-foreground">MOSTRANDO {bases.length} BASES</div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {bases.map((base) => (
@@ -57,7 +57,7 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
 
           {bases.length === 0 && (
             <div className="py-12 text-center border-2 border-border rounded-lg bg-card">
-              <p className="text-lg text-muted-foreground font-mono">NO SE ENCONTRARON BASES CON ESTOS FILTROS</p>
+              <p className="text-lg text-muted-foreground">NO SE ENCONTRARON BASES CON ESTOS FILTROS</p>
             </div>
           )}
         </section>

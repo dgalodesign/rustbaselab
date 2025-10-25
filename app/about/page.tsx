@@ -19,7 +19,7 @@ export default function AboutPage() {
       <main className="container mx-auto px-4 py-12">
         {/* Hero Section */}
         <div className="max-w-4xl mx-auto text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-black mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-black font-display mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
             Acerca de RustBaseLab
           </h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
@@ -34,7 +34,7 @@ export default function AboutPage() {
               <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
                 <Target className="h-6 w-6 text-primary" />
               </div>
-              <h2 className="text-2xl font-bold">Nuestra Misión</h2>
+              <h2 className="text-2xl font-bold font-display">Nuestra Misión</h2>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-4">
               RustBaseLab nació de la necesidad de tener un lugar centralizado donde los jugadores de Rust puedan
@@ -50,14 +50,14 @@ export default function AboutPage() {
 
         {/* Features Grid */}
         <div className="max-w-4xl mx-auto mb-16">
-          <h2 className="text-2xl font-bold mb-8 text-center">¿Qué ofrecemos?</h2>
+          <h2 className="text-2xl font-bold font-display mb-8 text-center">¿Qué ofrecemos?</h2>
           <div className="grid gap-6 md:grid-cols-2">
             <div className="rounded-lg border border-border bg-card p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                   <Users className="h-5 w-5 text-primary" />
                 </div>
-                <h3 className="text-lg font-bold">Bases para Todos</h3>
+                <h3 className="text-lg font-bold font-display">Bases para Todos</h3>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Desde bases solo hasta diseños para zergs, organizadas por tamaño de equipo y tipo de jugador.
@@ -69,7 +69,7 @@ export default function AboutPage() {
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary/10">
                   <Zap className="h-5 w-5 text-secondary" />
                 </div>
-                <h3 className="text-lg font-bold">Tutoriales en Video</h3>
+                <h3 className="text-lg font-bold font-display">Tutoriales en Video</h3>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Cada base incluye un tutorial en video paso a paso para que puedas construirla sin complicaciones.
@@ -81,7 +81,7 @@ export default function AboutPage() {
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10">
                   <Shield className="h-5 w-5 text-accent" />
                 </div>
-                <h3 className="text-lg font-bold">Diseños Probados</h3>
+                <h3 className="text-lg font-bold font-display">Diseños Probados</h3>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Todas las bases han sido probadas y validadas por la comunidad de Rust.
@@ -93,7 +93,7 @@ export default function AboutPage() {
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                   <ArrowRight className="h-5 w-5 text-primary" />
                 </div>
-                <h3 className="text-lg font-bold">Fácil Navegación</h3>
+                <h3 className="text-lg font-bold font-display">Fácil Navegación</h3>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Filtra por tipo de base, tamaño de equipo y encuentra exactamente lo que necesitas.
@@ -105,7 +105,7 @@ export default function AboutPage() {
         {/* Community Section */}
         <div className="max-w-4xl mx-auto mb-16">
           <div className="rounded-lg border border-border bg-card p-8 text-center">
-            <h2 className="text-2xl font-bold mb-4">Construido para la Comunidad</h2>
+            <h2 className="text-2xl font-bold font-display mb-4">Construido para la Comunidad</h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
               RustBaseLab es un proyecto comunitario. Si tienes un diseño de base que quieres compartir o sugerencias
               para mejorar el sitio, nos encantaría escucharte.
@@ -120,7 +120,7 @@ export default function AboutPage() {
 
         {/* CTA Section */}
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl font-bold mb-4">¿Listo para construir tu próxima base?</h2>
+          <h2 className="text-2xl font-bold font-display mb-4">¿Listo para construir tu próxima base?</h2>
           <p className="text-muted-foreground mb-6">Explora nuestro catálogo completo de diseños de bases para Rust.</p>
           <Link href="/bases">
             <Button size="lg" className="font-bold">

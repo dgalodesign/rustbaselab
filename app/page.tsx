@@ -2,6 +2,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { Button } from "@/components/ui/button"
+import { SectionHeader } from "@/components/section-header"
 import {
   Sparkles,
   ArrowRight,
@@ -24,6 +25,8 @@ import {
   Church,
   Store,
   Building,
+  Grid3x3,
+  UsersIcon,
 } from "lucide-react"
 import Link from "next/link"
 import { getMetaBases, getPopularBases, getAllTypes, getAllTeamSizes } from "@/lib/db-queries"
@@ -141,11 +144,11 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,255,0.1),transparent)]" />
           <div className="container relative mx-auto px-4 py-16 md:py-24">
             <div className="mx-auto max-w-3xl text-center">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-lg border-2 border-primary/30 bg-primary/10 px-4 py-1.5 text-sm text-primary font-mono">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-lg border-2 border-primary/30 bg-primary/10 px-4 py-1.5 text-sm text-primary">
                 <Sparkles className="h-4 w-4" />
                 <span className="font-semibold">MEJORES DISEÑOS DE BASES</span>
               </div>
-              <h1 className="mb-6 text-4xl font-bold leading-tight text-balance md:text-6xl">
+              <h1 className="mb-6 text-4xl font-bold font-display leading-tight text-balance md:text-6xl">
                 CONSTRUYE MEJOR, SOBREVIVE MÁS
               </h1>
               <p className="mb-8 text-lg text-muted-foreground text-pretty md:text-xl">
@@ -176,16 +179,13 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section className="container mx-auto px-4 py-12">
-          <div className="mb-8 flex items-center justify-between border-b-2 border-border pb-4">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Flame className="h-6 w-6 text-primary" />
-                <h2 className="text-3xl font-bold">BASES META</h2>
-              </div>
-              <p className="text-muted-foreground text-sm">Las bases más recientes y actualizadas</p>
-            </div>
-          </div>
+        <section className="container mx-auto px-4 py-16">
+          <SectionHeader
+            icon={Flame}
+            title="BASES META"
+            description="Las bases más recientes y actualizadas"
+            className="border-none pb-0"
+          />
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {metaBases.map((base) => (
@@ -200,16 +200,12 @@ export default async function HomePage() {
           )}
         </section>
 
-        <section className="container mx-auto px-4 py-12 bg-background">
-          <div className="mb-8 flex items-center justify-between border-b-2 border-border pb-4">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <TrendingUp className="h-6 w-6 text-secondary" />
-                <h2 className="text-3xl font-bold">BASES MÁS POPULARES</h2>
-              </div>
-              <p className="text-muted-foreground text-sm">Las bases más vistas por la comunidad</p>
-            </div>
-          </div>
+        <section className="container mx-auto px-4 bg-background py-16">
+          <SectionHeader
+            icon={TrendingUp}
+            title="BASES MÁS POPULARES"
+            description="Las bases más vistas por la comunidad"
+          />
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {popularBases.map((base) => (
@@ -224,11 +220,8 @@ export default async function HomePage() {
           )}
         </section>
 
-        <section className="container mx-auto px-4 py-12 bg-background">
-          <div className="mb-8 border-b-2 border-border pb-4">
-            <h2 className="mb-2 text-3xl font-bold">TIPOS DE BASES</h2>
-            <p className="text-muted-foreground text-sm">Explora bases por categoría</p>
-          </div>
+        <section className="container mx-auto px-4 bg-background py-16">
+          <SectionHeader icon={Grid3x3} title="TIPOS DE BASES" description="Explora bases por categoría" />
 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {types.map((type) => {
@@ -253,11 +246,8 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section className="container mx-auto px-4 py-12 bg-background">
-          <div className="mb-8 border-b-2 border-border pb-4">
-            <h2 className="mb-2 text-3xl font-bold">TAMAÑOS DE EQUIPO</h2>
-            <p className="text-muted-foreground text-sm">Encuentra bases para tu grupo</p>
-          </div>
+        <section className="container mx-auto px-4 bg-background py-16">
+          <SectionHeader icon={UsersIcon} title="TAMAÑOS DE EQUIPO" description="Encuentra bases para tu grupo" />
 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {sortTeamSizes(teamSizes).map((size) => {

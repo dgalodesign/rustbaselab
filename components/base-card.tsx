@@ -46,34 +46,21 @@ export function BaseCard({ base }: BaseCardProps) {
         </CardHeader>
 
         <CardContent className="p-4 space-y-3">
-          <h3 className="line-clamp-2 font-bold text-lg text-balance group-hover:text-primary transition-colors">
+          <h3 className="line-clamp-2 font-bold font-display text-balance group-hover:text-primary transition-colors my-0 text-xl">
             {base.title}
           </h3>
 
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
+          <div className="flex items-center justify-between text-muted-foreground my-0 text-base">
             <span className="truncate font-medium">
               {t.base.publishedBy} <span className="text-foreground">{creatorName}</span>
             </span>
           </div>
 
-          <div className="flex items-center gap-4 text-xs text-muted-foreground">
-            {base.team_sizes && base.team_sizes.length > 0 && (
-              <div className="flex items-center gap-1">
-                <Users className="h-3 w-3" />
-                <span>{base.team_sizes[0].size}</span>
-              </div>
-            )}
-            {base.footprint && (
-              <div className="flex items-center gap-1">
-                <Grid3x3 className="h-3 w-3" />
-                <span>{base.footprint.footprint}</span>
-              </div>
-            )}
-          </div>
+          
         </CardContent>
 
         <CardFooter className="border-t-2 border-border p-4">
-          <span className="text-muted-foreground text-xs">{relativeTime}</span>
+          <span className="text-muted-foreground text-sm">{relativeTime}</span>
         </CardFooter>
       </Card>
     </Link>

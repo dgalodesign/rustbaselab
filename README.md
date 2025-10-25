@@ -6,7 +6,7 @@ Catálogo de diseños de bases para el videojuego Rust. Sitio web moderno con di
 
 - 🎮 Diseño gamer con efectos neón (cyan, magenta, púrpura)
 - 🌐 Internacionalización (Español/Inglés)
-- 🔍 Búsqueda y filtros avanzados
+- ���� Búsqueda y filtros avanzados
 - 📱 Responsive design (mobile-first)
 - ⚡ Performance optimizado con Next.js 15
 - 🗄️ Integración con Supabase

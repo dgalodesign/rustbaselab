@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { Search, Hammer } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { LanguageSelector } from "@/components/language-selector"
 import { useTranslations } from "@/lib/i18n/context"
 
 export function Header() {
@@ -37,7 +36,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <LanguageSelector />
           <Button variant="outline" size="sm" asChild className="border-2 bg-transparent">
             <Link href="/search">
               <Search className="h-4 w-4" />

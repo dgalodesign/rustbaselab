@@ -45,7 +45,7 @@ export function CookieConsent() {
             </div>
 
             <div className="flex-1 space-y-3">
-              <h3 className="text-lg font-bold">Usamos cookies</h3>
+              <h3 className="text-lg font-bold font-display">Usamos cookies</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Este sitio utiliza cookies para mejorar tu experiencia, mostrar anuncios personalizados (Google AdSense)
                 y analizar el tráfico (Google Analytics). Al aceptar, consientes el uso de estas tecnologías.{" "}

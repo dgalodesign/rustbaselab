@@ -11,7 +11,7 @@ export default function PrivacyPage() {
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
       <main className="flex-1 container mx-auto px-4 py-12 max-w-4xl">
-        <h1 className="text-4xl font-bold mb-8 text-balance">Política de Privacidad</h1>
+        <h1 className="text-4xl font-bold font-display mb-8 text-balance">Política de Privacidad</h1>
 
         <div className="prose prose-invert max-w-none space-y-6 text-muted-foreground">
           <p className="text-sm text-muted-foreground">
@@ -20,7 +20,7 @@ export default function PrivacyPage() {
           </p>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">1. Información que Recopilamos</h2>
+            <h2 className="text-2xl font-bold font-display text-foreground">1. Información que Recopilamos</h2>
             <p>En RustBaseLab, recopilamos información limitada para mejorar tu experiencia en nuestro sitio web:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Información de navegación (páginas visitadas, tiempo de permanencia)</li>
@@ -30,7 +30,7 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">2. Uso de Cookies</h2>
+            <h2 className="text-2xl font-bold font-display text-foreground">2. Uso de Cookies</h2>
             <p>Utilizamos cookies y tecnologías similares para mejorar tu experiencia de navegación:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
@@ -49,7 +49,7 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">3. Google AdSense</h2>
+            <h2 className="text-2xl font-bold font-display text-foreground">3. Google AdSense</h2>
             <p>
               Este sitio utiliza Google AdSense para mostrar anuncios. Google utiliza cookies para servir anuncios
               basados en tus visitas previas a este sitio web y otros sitios en Internet.
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">4. Google Analytics</h2>
+            <h2 className="text-2xl font-bold font-display text-foreground">4. Google Analytics</h2>
             <p>
               Utilizamos Google Analytics para analizar el uso de nuestro sitio web. Google Analytics recopila
               información de forma anónima sobre cómo los visitantes usan nuestro sitio.
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">5. Almacenamiento de Datos</h2>
+            <h2 className="text-2xl font-bold font-display text-foreground">5. Almacenamiento de Datos</h2>
             <p>
               Utilizamos Supabase para almacenar información sobre las bases de Rust mostradas en el sitio. No
               almacenamos información personal de los usuarios.
@@ -97,7 +97,7 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">6. Enlaces a Terceros</h2>
+            <h2 className="text-2xl font-bold font-display text-foreground">6. Enlaces a Terceros</h2>
             <p>
               Nuestro sitio contiene enlaces a sitios web de terceros (como YouTube para videos). No somos responsables
               de las prácticas de privacidad de estos sitios.
@@ -105,7 +105,7 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">7. Tus Derechos</h2>
+            <h2 className="text-2xl font-bold font-display text-foreground">7. Tus Derechos</h2>
             <p>Tienes derecho a:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Acceder a la información que tenemos sobre ti</li>
@@ -116,7 +116,7 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">8. Cambios a esta Política</h2>
+            <h2 className="text-2xl font-bold font-display text-foreground">8. Cambios a esta Política</h2>
             <p>
               Podemos actualizar esta política de privacidad ocasionalmente. Te notificaremos de cualquier cambio
               publicando la nueva política en esta página.
@@ -124,7 +124,7 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">9. Contacto</h2>
+            <h2 className="text-2xl font-bold font-display text-foreground">9. Contacto</h2>
             <p>
               Si tienes preguntas sobre esta política de privacidad, puedes contactarnos a través de nuestra{" "}
               <a href="/contact" className="text-primary hover:underline">

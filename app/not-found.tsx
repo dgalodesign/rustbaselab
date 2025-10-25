@@ -14,15 +14,15 @@ export default function NotFound() {
           <div className="mx-auto max-w-2xl space-y-8">
             {/* Error Code */}
             <div className="relative">
-              <h1 className="font-mono text-9xl font-bold text-primary/20 select-none">404</h1>
+              <h1 className="font-display text-9xl font-bold text-primary/20 select-none">404</h1>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="font-mono text-2xl font-bold text-primary animate-pulse">ERROR</span>
+                <span className="font-display text-2xl font-bold text-primary animate-pulse">ERROR</span>
               </div>
             </div>
 
             {/* Message */}
             <div className="space-y-4">
-              <h2 className="font-mono text-3xl font-bold text-foreground uppercase">Página No Encontrada</h2>
+              <h2 className="font-display text-3xl font-bold text-foreground uppercase">Página No Encontrada</h2>
               <p className="text-lg text-muted-foreground text-pretty">
                 La página que buscas no existe o ha sido movida. Puede que el enlace esté roto o que la base haya sido
                 eliminada.

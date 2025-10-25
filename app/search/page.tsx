@@ -45,7 +45,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
                 <SearchIcon className="h-8 w-8 text-primary" />
               </div>
-              <h1 className="mb-4 font-mono text-4xl font-bold md:text-5xl">Buscar Diseños de Bases</h1>
+              <h1 className="mb-4 font-display text-4xl font-bold md:text-5xl">Buscar Diseños de Bases</h1>
               <p className="mb-8 text-lg text-muted-foreground">
                 Encuentra el diseño perfecto de base de Rust buscando por palabras clave o usando filtros.
               </p>
@@ -91,7 +91,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-muted">
                 <SearchIcon className="h-10 w-10 text-muted-foreground" />
               </div>
-              <h3 className="mb-2 text-xl font-semibold">No se encontraron bases</h3>
+              <h3 className="mb-2 text-xl font-semibold font-display">No se encontraron bases</h3>
               <p className="text-muted-foreground">
                 {query
                   ? `No se encontraron resultados para "${query}". Intenta con diferentes palabras clave o ajusta los filtros.`

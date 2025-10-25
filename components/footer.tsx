@@ -16,7 +16,7 @@ export function Footer() {
               <div className="flex h-8 w-8 items-center justify-center rounded-sm bg-primary">
                 <Hammer className="h-4 w-4 text-primary-foreground" />
               </div>
-              <h3 className="text-lg font-bold">
+              <h3 className="text-lg font-bold font-display">
                 Rust<span className="text-primary">Base</span>Lab
               </h3>
             </div>
@@ -24,7 +24,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-bold uppercase tracking-wide">{t.footer.quickLinks}</h4>
+            <h4 className="mb-4 text-sm font-bold font-display uppercase tracking-wide">{t.footer.quickLinks}</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/" className="text-muted-foreground transition-colors hover:text-primary font-medium">
@@ -50,7 +50,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-bold uppercase tracking-wide">{t.footer.legal}</h4>
+            <h4 className="mb-4 text-sm font-bold font-display uppercase tracking-wide">{t.footer.legal}</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
@@ -77,7 +77,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-bold uppercase tracking-wide">RustBaseLab</h4>
+            <h4 className="mb-4 text-sm font-bold font-display uppercase tracking-wide">RustBaseLab</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <span className="text-muted-foreground">© {new Date().getFullYear()}</span>

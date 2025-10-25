@@ -108,7 +108,7 @@ export default async function BasePage({ params }: BasePageProps) {
               )}
             </div>
 
-            <h1 className="mb-4 font-mono text-4xl font-bold text-balance md:text-5xl text-foreground">
+            <h1 className="mb-4 font-display text-4xl font-bold text-balance md:text-5xl text-foreground">
               {base.title.toUpperCase()}
             </h1>
             {base.features && <p className="mb-6 text-lg text-muted-foreground text-pretty">{base.features}</p>}
@@ -141,7 +141,7 @@ export default async function BasePage({ params }: BasePageProps) {
             <div className="lg:col-span-2">
               {base.video_youtube_id && (
                 <div className="mb-8">
-                  <h2 className="mb-4 text-2xl font-bold font-mono text-foreground border-b-2 border-border pb-2">
+                  <h2 className="mb-4 text-2xl font-bold font-display text-foreground border-b-2 border-border pb-2">
                     VIDEO TUTORIAL
                   </h2>
                   <YouTubeEmbed url={`https://www.youtube.com/watch?v=${base.video_youtube_id}`} title={base.title} />
@@ -150,7 +150,7 @@ export default async function BasePage({ params }: BasePageProps) {
 
               <Card className="border-2 border-border bg-muted/50">
                 <CardContent className="p-6">
-                  <h3 className="mb-4 text-xl font-bold font-mono text-foreground">SOBRE ESTA BASE</h3>
+                  <h3 className="mb-4 text-xl font-bold font-display text-foreground">SOBRE ESTA BASE</h3>
                   <div className="space-y-4 text-muted-foreground">
                     {base.features && <p>{base.features}</p>}
                     <p>Este diseño de base proporciona una base sólida para tu gameplay en Rust.</p>
@@ -168,7 +168,7 @@ export default async function BasePage({ params }: BasePageProps) {
             <div className="space-y-6">
               <Card className="border-2 border-border bg-muted/50">
                 <CardContent className="p-6">
-                  <h3 className="mb-4 text-lg font-bold font-mono text-foreground">MATERIALES REQUERIDOS</h3>
+                  <h3 className="mb-4 text-lg font-bold font-display text-foreground">MATERIALES REQUERIDOS</h3>
                   <div className="space-y-2 text-sm">
                     <div className="rounded border-2 border-border bg-background p-3 space-y-2">
                       <div className="flex items-center justify-between">
@@ -188,7 +188,7 @@ export default async function BasePage({ params }: BasePageProps) {
 
               <Card className="border-2 border-border bg-muted/50">
                 <CardContent className="p-6">
-                  <h3 className="mb-4 text-lg font-bold font-mono text-foreground">ESTADÍSTICAS</h3>
+                  <h3 className="mb-4 text-lg font-bold font-display text-foreground">ESTADÍSTICAS</h3>
                   <div className="space-y-3 text-sm">
                     {base.type?.type && (
                       <div className="flex items-center justify-between">
