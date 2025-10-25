@@ -28,7 +28,8 @@ export function FilterBar({ types = [], teamSizes = [], footprints = [] }: Filte
     } else {
       params.set(key, value)
     }
-    router.push(`?${params.toString()}`)
+    const queryString = params.toString()
+    router.push(`${window.location.pathname}${queryString ? `?${queryString}` : ""}`)
   }
 
   const handleReset = () => {
