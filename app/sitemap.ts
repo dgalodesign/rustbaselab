@@ -4,8 +4,7 @@ import { createPublicClient } from "@/lib/supabase/public-client"
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = createPublicClient()
 
-  // Base URL del sitio
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://rustbaselab.com"
+  const baseUrl = "https://rustbaselab.com"
 
   // Páginas estáticas
   const staticPages: MetadataRoute.Sitemap = [
