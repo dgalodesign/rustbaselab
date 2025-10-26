@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next"
-import { createClient } from "@/lib/supabase/server"
+import { createPublicClient } from "@/lib/supabase/public-client"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   // Base URL del sitio
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://rustbaselab.com"
