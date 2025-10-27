@@ -25,12 +25,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Obtener todas las bases publicadas para el sitemap
   const { data: bases } = await supabase
     .from("published_bases")
-    .select("id, updated_at")
+    .select("slug, updated_at")
     .order("updated_at", { ascending: false })
 
   const basePages: MetadataRoute.Sitemap =
     bases?.map((base) => ({
-      url: `${baseUrl}/base/${base.id}`,
+      url: `${baseUrl}/base/${base.slug}`,
       lastModified: new Date(base.updated_at),
       changeFrequency: "weekly" as const,
       priority: 0.8,

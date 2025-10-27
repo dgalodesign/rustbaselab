@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge"
 import type { Base } from "@/lib/types"
 import { useTranslations } from "@/lib/i18n/context"
 import { getRelativeTime } from "@/lib/utils/date"
-import { Users, Grid3x3 } from "lucide-react"
 
 interface BaseCardProps {
   base: Base
@@ -23,7 +22,7 @@ export function BaseCard({ base }: BaseCardProps) {
   const relativeTime = base.created_at ? getRelativeTime(base.created_at, locale) : ""
 
   return (
-    <Link href={`/base/${base.id}`} className="group">
+    <Link href={`/base/${base.slug}`} className="group">
       <Card className="industrial-card group overflow-hidden transition-all hover:border-primary hover:shadow-xl border-2">
         <CardHeader className="p-0">
           <div className="relative aspect-video overflow-hidden bg-muted">
@@ -55,8 +54,6 @@ export function BaseCard({ base }: BaseCardProps) {
               {t.base.publishedBy} <span className="text-foreground">{creatorName}</span>
             </span>
           </div>
-
-          
         </CardContent>
 
         <CardFooter className="border-t-2 border-border p-4">

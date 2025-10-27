@@ -141,10 +141,10 @@ export default async function HomePage() {
 
         {/* Hero Section */}
         <section className="border-b-2 border-primary/20 bg-gradient-to-b from-background via-background/95 to-background/90 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,255,0.1),transparent)]" />
+          <div className="absolute inset-0" />
           <div className="container relative mx-auto px-4 py-16 md:py-24">
             <div className="mx-auto max-w-3xl text-center">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-lg border-2 border-primary/30 bg-primary/10 px-4 py-1.5 text-sm text-primary">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-lg border-2 border-primary/30 bg-primary/10 px-4 py-1.5 text-sm text-accent">
                 <Sparkles className="h-4 w-4" />
                 <span className="font-semibold">BEST RUST BASE DESIGNS</span>
               </div>
@@ -235,7 +235,7 @@ export default async function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="relative flex flex-col items-center gap-3 text-center">
                     <div className="rounded-lg bg-primary/10 p-3 border-2 border-primary/20 group-hover:border-primary/50 transition-colors">
-                      <Icon className="h-8 w-8 text-primary" />
+                      <Icon className="h-8 w-8 text-primary-foregroundry" />
                     </div>
                     <span className="text-lg font-bold uppercase">{type.type}</span>
                     <ArrowRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />

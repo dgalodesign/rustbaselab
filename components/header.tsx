@@ -1,9 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import { Search, Hammer } from "lucide-react"
+import { Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "@/lib/i18n/context"
+import Image from "next/image"
 
 export function Header() {
   const { t } = useTranslations()
@@ -11,13 +12,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b-2 border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-105">
-          <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-primary shadow-md">
-            <Hammer className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <span className="text-xl font-bold tracking-tight">
-            Rust<span className="text-primary">Base</span>Lab
-          </span>
+        <Link href="/" className="flex items-center transition-transform hover:scale-105">
+          <Image src="/logo.svg" alt="RustBaseLab" width={160} height={40} className="h-8 w-auto" priority />
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">

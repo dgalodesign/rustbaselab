@@ -40,7 +40,16 @@ export async function getBaseBySlug(slug: string): Promise<Base | null> {
   const supabase = createPublicClient()
 
   try {
-    const { data, error } = await supabase.from("published_bases").select("*").eq("slug", slug).single()
+    const { data, error } = await supabase
+      .from("published_bases")
+      .select(`
+        *,
+        creator:creators(name, channel_youtube_id),
+        type:types(type),
+        footprint:footprints(footprint)
+      `)
+      .eq("slug", slug)
+      .single()
 
     if (error) {
       console.error("[v0] Error fetching base by slug:", error)

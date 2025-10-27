@@ -6,7 +6,7 @@ import { RelatedBases } from "@/components/related-bases"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { getBaseById, getRelatedBases, incrementBaseViews } from "@/lib/db-queries"
+import { getBaseBySlug, getRelatedBases, incrementBaseViews } from "@/lib/db-queries"
 import { Clock, Hammer, Calendar, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import type { Metadata } from "next"
@@ -15,13 +15,13 @@ export const dynamic = "force-dynamic"
 
 interface BasePageProps {
   params: Promise<{
-    id: string
+    slug: string
   }>
 }
 
 export async function generateMetadata({ params }: BasePageProps): Promise<Metadata> {
-  const { id } = await params
-  const base = await getBaseById(id)
+  const { slug } = await params
+  const base = await getBaseBySlug(slug)
 
   if (!base) {
     return {
@@ -41,16 +41,16 @@ export async function generateMetadata({ params }: BasePageProps): Promise<Metad
 }
 
 export default async function BasePage({ params }: BasePageProps) {
-  const { id } = await params
-  const base = await getBaseById(id)
+  const { slug } = await params
+  const base = await getBaseBySlug(slug)
 
   if (!base) {
     notFound()
   }
 
-  await incrementBaseViews(id)
+  await incrementBaseViews(base.id)
 
-  const relatedBases = await getRelatedBases(id, base.type_id || null)
+  const relatedBases = await getRelatedBases(base.id, base.type_id || null)
 
   const formatMaterials = () => {
     const materials = []
@@ -76,7 +76,7 @@ export default async function BasePage({ params }: BasePageProps) {
 
       <main className="flex-1">
         <section className="border-b-2 border-border bg-background">
-          <div className="container mx-auto px-4 py-4">
+          <div className="container mx-auto px-4 py-4 font-mono font-sans">
             <Button variant="ghost" size="sm" asChild className="hover:bg-muted font-mono">
               <Link href="/">
                 <ArrowLeft className="mr-2 h-4 w-4" />
@@ -129,14 +129,14 @@ export default async function BasePage({ params }: BasePageProps) {
               {base.created_at && (
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
-                  <span>ADDED: {new Date(base.created_at).toLocaleDateString()}</span>
+                  <span>{new Date(base.created_at).toLocaleDateString()}</span>
                 </div>
               )}
             </div>
           </div>
         </section>
 
-        <section className="container mx-auto px-4 py-8 bg-muted/30">
+        <section className="container mx-auto px-4 py-8">
           <div className="grid gap-8 lg:grid-cols-3">
             <div className="lg:col-span-2">
               {base.video_youtube_id && (
@@ -172,13 +172,13 @@ export default async function BasePage({ params }: BasePageProps) {
                   <div className="space-y-2 text-sm">
                     <div className="rounded border-2 border-border bg-background p-3 space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground font-mono">COST:</span>
-                        <span className="font-mono font-semibold text-xs text-foreground">{formatMaterials()}</span>
+                        <span className="text-muted-foreground">MATERIALS:</span>
+                        <span className="font-semibold text-xs text-foreground">{formatMaterials()}</span>
                       </div>
                       {(base.upkeep_stone || base.upkeep_metal || base.upkeep_hq) && (
                         <div className="flex items-center justify-between pt-2 border-t-2 border-border">
-                          <span className="text-muted-foreground font-mono">UPKEEP:</span>
-                          <span className="font-mono font-semibold text-xs text-foreground">{formatUpkeep()}</span>
+                          <span className="text-muted-foreground">UPKEEP:</span>
+                          <span className="font-semibold text-xs text-foreground">{formatUpkeep()}</span>
                         </div>
                       )}
                     </div>
@@ -192,7 +192,7 @@ export default async function BasePage({ params }: BasePageProps) {
                   <div className="space-y-3 text-sm">
                     {base.type?.type && (
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground font-mono">TYPE:</span>
+                        <span className="text-muted-foreground">TYPE:</span>
                         <Badge
                           variant="outline"
                           className="bg-primary/10 text-primary border-2 border-primary/30 font-mono font-bold"
@@ -203,7 +203,7 @@ export default async function BasePage({ params }: BasePageProps) {
                     )}
                     {base.footprint?.footprint && (
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground font-mono">FOOTPRINT:</span>
+                        <span className="text-muted-foreground">FOOTPRINT:</span>
                         <Badge
                           variant="outline"
                           className="bg-secondary/10 text-secondary border-2 border-secondary/30 font-mono font-bold"
