@@ -4,6 +4,7 @@ export const translations = {
       home: "Inicio",
       allBases: "Todas las Bases",
       search: "Buscar",
+      feedback: "Feedback",
     },
     home: {
       hero: {
@@ -75,8 +76,8 @@ export const translations = {
       allRightsReserved: "Todos los derechos reservados.",
       about: "Acerca de",
       privacy: "Privacidad",
-      terms: "Términos",
-      contact: "Contacto",
+      terms: "Terms",
+      contact: "Contact",
     },
     about: {
       title: "Acerca de RustBaseLab",
@@ -317,6 +318,7 @@ export const translations = {
       home: "Home",
       allBases: "All Bases",
       search: "Search",
+      feedback: "Feedback",
     },
     home: {
       hero: {

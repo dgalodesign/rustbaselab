@@ -129,7 +129,7 @@ export default async function BasePage({ params }: BasePageProps) {
               {base.created_at && (
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
-                  <span>{new Date(base.created_at).toLocaleDateString()}</span>
+                  <span className="font-sans" className="font-sans" className="" className="font-sans" className="">{new Date(base.created_at).toLocaleDateString()}</span>
                 </div>
               )}
             </div>

@@ -38,6 +38,11 @@ export function Header() {
               <span className="ml-2 hidden sm:inline">{t.nav.search}</span>
             </Link>
           </Button>
+          <Button variant="outline" size="sm" asChild className="border-2 bg-transparent">
+            <Link href="/feedback">
+              <span>{t.nav.feedback}</span>
+            </Link>
+          </Button>
         </div>
       </div>
     </header>
