@@ -6,7 +6,7 @@ import { RelatedBases } from "@/components/related-bases"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { getBaseBySlug, getRelatedBases, incrementBaseViews } from "@/lib/db-queries"
+import { getBaseBySlug, getRelatedBases, incrementBaseViews, incrementYoutubeClicks } from "@/lib/db-queries"
 import { Clock, Hammer, Calendar, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import type { Metadata } from "next"
@@ -49,6 +49,7 @@ export default async function BasePage({ params }: BasePageProps) {
   }
 
   await incrementBaseViews(base.id)
+  await incrementYoutubeClicks(base.id)
 
   const relatedBases = await getRelatedBases(base.id, base.type_id || null)
 
@@ -129,7 +130,7 @@ export default async function BasePage({ params }: BasePageProps) {
               {base.created_at && (
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
-                  <span className="font-sans" className="font-sans" className="" className="font-sans" className="">{new Date(base.created_at).toLocaleDateString()}</span>
+                  <span className="font-sans">{new Date(base.created_at).toLocaleDateString()}</span>
                 </div>
               )}
             </div>
