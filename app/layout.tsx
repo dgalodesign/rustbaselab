@@ -30,10 +30,6 @@ export const metadata: Metadata = {
   description:
     "Discover the best Rust base designs for solo, duo, trio, and zerg gameplay. Video tutorials and building guides.",
   keywords: "rust, rust base, rust base design, rust tutorial, rust building, rust solo base, rust duo base",
-  icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
-    apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
-  },
   openGraph: {
     title: "RustBaseLab - Rust Base Designs & Tutorials",
     description: "Discover the best Rust base designs for solo, duo, trio, and zerg gameplay.",

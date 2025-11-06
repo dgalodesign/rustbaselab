@@ -3,13 +3,19 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { YouTubeEmbed } from "@/components/youtube-embed"
 import { RelatedBases } from "@/components/related-bases"
+import { BackToHome } from "@/components/back-to-home"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { getBaseBySlug, getRelatedBases, incrementBaseViews, incrementYoutubeClicks } from "@/lib/db-queries"
-import { Clock, Hammer, Calendar, ArrowLeft } from "lucide-react"
-import Link from "next/link"
+import {
+  getBaseBySlug,
+  getRelatedBases,
+  getBasesByCreator,
+  incrementBaseViews,
+  incrementYoutubeClicks,
+} from "@/lib/db-queries"
+import { Clock, Hammer, Calendar, Users, TagIcon } from "lucide-react"
 import type { Metadata } from "next"
+import { createPublicClient } from "@/lib/supabase/public-client"
 
 export const dynamic = "force-dynamic"
 
@@ -51,7 +57,22 @@ export default async function BasePage({ params }: BasePageProps) {
   await incrementBaseViews(base.id)
   await incrementYoutubeClicks(base.id)
 
-  const relatedBases = await getRelatedBases(base.id, base.type_id || null)
+  const supabase = createPublicClient()
+  const { data: baseTeams } = await supabase
+    .from("base_teams")
+    .select("team_size_id, team_sizes(size)")
+    .eq("base_id", base.id)
+
+  const teamSizes = baseTeams?.map((bt: any) => bt.team_sizes?.size).filter(Boolean) || []
+  const teamSizeIds = baseTeams?.map((bt: any) => bt.team_size_id).filter(Boolean) || []
+
+  const { data: baseTags } = await supabase.from("base_tags").select("tags(tag, description)").eq("base_id", base.id)
+
+  const tags = baseTags?.map((bt: any) => bt.tags).filter(Boolean) || []
+
+  const relatedBases = await getRelatedBases(base.id, teamSizeIds)
+
+  const creatorBases = base.creator_id ? await getBasesByCreator(base.creator_id, base.id) : []
 
   const formatMaterials = () => {
     const materials = []
@@ -77,13 +98,8 @@ export default async function BasePage({ params }: BasePageProps) {
 
       <main className="flex-1">
         <section className="border-b-2 border-border bg-background">
-          <div className="container mx-auto px-4 py-4 font-mono font-sans">
-            <Button variant="ghost" size="sm" asChild className="hover:bg-muted font-mono">
-              <Link href="/">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                BACK TO HOME
-              </Link>
-            </Button>
+          <div className="container mx-auto px-4 py-4">
+            <BackToHome />
           </div>
         </section>
 
@@ -107,6 +123,15 @@ export default async function BasePage({ params }: BasePageProps) {
                   {base.footprint.footprint.toUpperCase()}
                 </Badge>
               )}
+              {teamSizes.map((size: string, index: number) => (
+                <Badge
+                  key={index}
+                  variant="outline"
+                  className="bg-accent/10 text-accent border-2 border-accent/30 font-mono font-bold"
+                >
+                  {size.toUpperCase()}
+                </Badge>
+              ))}
             </div>
 
             <h1 className="mb-4 font-display text-4xl font-bold text-balance md:text-5xl text-foreground">
@@ -115,6 +140,12 @@ export default async function BasePage({ params }: BasePageProps) {
             {base.features && <p className="mb-6 text-lg text-muted-foreground text-pretty">{base.features}</p>}
 
             <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground font-mono">
+              {base.creator?.name && (
+                <div className="flex items-center gap-2">
+                  <Users className="h-4 w-4" />
+                  <span>BY: {base.creator.name.toUpperCase()}</span>
+                </div>
+              )}
               {base.build_time_min && (
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4" />
@@ -134,6 +165,17 @@ export default async function BasePage({ params }: BasePageProps) {
                 </div>
               )}
             </div>
+
+            {tags.length > 0 && (
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <TagIcon className="h-4 w-4 text-muted-foreground" />
+                {tags.map((tag: any, index: number) => (
+                  <Badge key={index} variant="secondary" className="font-mono">
+                    {tag.tag.toUpperCase()}
+                  </Badge>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
@@ -234,7 +276,21 @@ export default async function BasePage({ params }: BasePageProps) {
           </div>
         </section>
 
-        <RelatedBases bases={relatedBases} />
+        {relatedBases.length > 0 && (
+          <RelatedBases
+            bases={relatedBases}
+            title="SIMILAR TEAM SIZE BASES"
+            description="Bases designed for similar team sizes"
+          />
+        )}
+
+        {creatorBases.length > 0 && base.creator?.name && (
+          <RelatedBases
+            bases={creatorBases}
+            title={`MORE FROM ${base.creator.name.toUpperCase()}`}
+            description={`Other base designs by ${base.creator.name}`}
+          />
+        )}
       </main>
 
       <Footer />

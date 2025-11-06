@@ -2,6 +2,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { FilterBar } from "@/components/filter-bar"
+import { BackToHome } from "@/components/back-to-home"
 import { getFilteredBases, getAllTypes, getAllTeamSizes, getAllFootprints } from "@/lib/db-queries"
 
 export const dynamic = "force-dynamic"
@@ -32,6 +33,12 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
       <Header />
 
       <main className="flex-1">
+        <section className="border-b-2 border-border bg-background">
+          <div className="container mx-auto px-4 py-4">
+            <BackToHome />
+          </div>
+        </section>
+
         <section className="border-b-2 border-border bg-gradient-to-b from-background to-background/95 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,255,0.1),transparent)]" />
           <div className="container relative mx-auto px-4 py-12">

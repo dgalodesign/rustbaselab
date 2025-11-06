@@ -219,17 +219,59 @@ export async function getFeaturedBases(): Promise<Base[]> {
   }
 }
 
-export async function getRelatedBases(currentBaseId: string, typeId?: string | null): Promise<Base[]> {
+export async function getRelatedBases(currentBaseId: string, teamSizeIds?: string[]): Promise<Base[]> {
   const supabase = createPublicClient()
 
   try {
-    let query = supabase.from("published_bases").select("*").neq("id", currentBaseId)
+    // If we have team size IDs, find bases with matching team sizes
+    if (teamSizeIds && teamSizeIds.length > 0) {
+      const { data: baseTeams, error: teamError } = await supabase
+        .from("base_teams")
+        .select("base_id")
+        .in("team_size_id", teamSizeIds)
+        .neq("base_id", currentBaseId)
 
-    if (typeId) {
-      query = query.eq("type_id", typeId)
+      if (teamError) {
+        console.error("[v0] Error fetching related bases by team size:", teamError)
+        return []
+      }
+
+      if (baseTeams && baseTeams.length > 0) {
+        const baseIds = baseTeams.map((bt) => bt.base_id)
+
+        const { data, error } = await supabase
+          .from("published_bases")
+          .select(`
+            *,
+            creator:creators(name, channel_youtube_id),
+            type:types(type),
+            footprint:footprints(footprint)
+          `)
+          .in("id", baseIds)
+          .order("created_at", { ascending: false })
+          .limit(3)
+
+        if (error) {
+          console.error("[v0] Error fetching related bases:", error)
+          return []
+        }
+
+        return (data || []) as Base[]
+      }
     }
 
-    const { data, error } = await query.order("created_at", { ascending: false }).limit(3)
+    // Fallback: return recent bases if no team size match
+    const { data, error } = await supabase
+      .from("published_bases")
+      .select(`
+        *,
+        creator:creators(name, channel_youtube_id),
+        type:types(type),
+        footprint:footprints(footprint)
+      `)
+      .neq("id", currentBaseId)
+      .order("created_at", { ascending: false })
+      .limit(3)
 
     if (error) {
       console.error("[v0] Error fetching related bases:", error)
@@ -443,5 +485,34 @@ export async function incrementYoutubeClicks(baseId: string): Promise<void> {
     }
   } catch (err) {
     console.error("[v0] Unexpected error in incrementYoutubeClicks:", err)
+  }
+}
+
+export async function getBasesByCreator(creatorId: string, currentBaseId: string, limit = 3): Promise<Base[]> {
+  const supabase = createPublicClient()
+
+  try {
+    const { data, error } = await supabase
+      .from("published_bases")
+      .select(`
+        *,
+        creator:creators(name, channel_youtube_id),
+        type:types(type),
+        footprint:footprints(footprint)
+      `)
+      .eq("creator_id", creatorId)
+      .neq("id", currentBaseId)
+      .order("created_at", { ascending: false })
+      .limit(limit)
+
+    if (error) {
+      console.error("[v0] Error fetching bases by creator:", error)
+      return []
+    }
+
+    return (data || []) as Base[]
+  } catch (err) {
+    console.error("[v0] Unexpected error in getBasesByCreator:", err)
+    return []
   }
 }

@@ -166,14 +166,6 @@ export default async function HomePage() {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  asChild
-                  className="border-2 border-border hover:bg-accent bg-transparent"
-                >
-                  <Link href="/search">SEARCH BASES</Link>
-                </Button>
               </div>
             </div>
           </div>

@@ -1,9 +1,7 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { ArrowLeft } from "lucide-react"
+import { BackToHome } from "@/components/back-to-home"
 
 export const metadata: Metadata = {
   title: "Feedback | RustBaseLab",
@@ -17,12 +15,7 @@ export default function FeedbackPage() {
 
       <main className="container mx-auto px-4 py-12">
         <div className="mb-8">
-          <Link href="/">
-            <Button variant="ghost" className="gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Home
-            </Button>
-          </Link>
+          <BackToHome />
         </div>
 
         <div className="mx-auto max-w-4xl">
