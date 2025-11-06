@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useTranslations } from "@/lib/i18n/context"
-import { Hammer } from "lucide-react"
 
 export function Footer() {
   const { t } = useTranslations()
@@ -12,14 +12,9 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid gap-8 md:grid-cols-4">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-sm bg-primary">
-                <Hammer className="h-4 w-4 text-primary-foreground" />
-              </div>
-              <h3 className="text-lg font-bold font-display">
-                Rust<span className="text-primary">Base</span>Lab
-              </h3>
-            </div>
+            <Link href="/" className="flex items-center mb-4 transition-transform hover:scale-105">
+              <Image src="/logo.svg" alt="RustBaseLab" width={160} height={40} className="h-8 w-auto" />
+            </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">{t.footer.description}</p>
           </div>
 
@@ -37,8 +32,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/search" className="text-muted-foreground transition-colors hover:text-primary font-medium">
-                  {t.nav.search}
+                <Link
+                  href="/feedback"
+                  className="text-muted-foreground transition-colors hover:text-primary font-medium"
+                >
+                  {t.nav.feedback}
                 </Link>
               </li>
               <li>

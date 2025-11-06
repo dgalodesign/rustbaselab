@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "@/lib/i18n/context"
 import Image from "next/image"
@@ -32,12 +31,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" asChild className="border-2 bg-transparent">
-            <Link href="/search">
-              <Search className="h-4 w-4" />
-              <span className="ml-2 hidden sm:inline">{t.nav.search}</span>
-            </Link>
-          </Button>
           <Button variant="outline" size="sm" asChild className="border-2 bg-transparent">
             <Link href="/feedback">
               <span>{t.nav.feedback}</span>

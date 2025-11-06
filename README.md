@@ -27,7 +27,7 @@ Catálogo de diseños de bases para el videojuego Rust. Sitio web moderno con di
 rustbaselab/
 ├── app/                    # Páginas y rutas
 │   ├── page.tsx           # Homepage
-│   ├── bases/             # Catálogo de bases
+│   ��── bases/             # Catálogo de bases
 │   ├── base/[id]/         # Detalle de base
 │   ├── search/            # Búsqueda
 │   ├── not-found.tsx      # Página 404
