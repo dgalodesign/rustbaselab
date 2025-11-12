@@ -23,7 +23,7 @@ export function RelatedBases({ bases, title, description }: RelatedBasesProps) {
 
   return (
     <section className="container mx-auto px-4 py-12">
-      <SectionHeader title={displayTitle} description={displayDescription} variant="simple" />
+      <SectionHeader title={displayTitle} description={displayDescription} />
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {bases.map((base) => (
           <BaseCard key={base.id} base={base} />
