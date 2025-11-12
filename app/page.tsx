@@ -30,6 +30,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { getMetaBases, getPopularBases, getAllTypes, getAllTeamSizes } from "@/lib/db-queries"
+import type { Base, BaseType, TeamSize } from "@/types"
 
 export const dynamic = "force-dynamic"
 
@@ -98,10 +99,10 @@ function sortTeamSizes(sizes: any[]) {
 }
 
 export default async function HomePage() {
-  let metaBases = []
-  let popularBases = []
-  let types = []
-  let teamSizes = []
+  let metaBases: Base[] = []
+  let popularBases: Base[] = []
+  let types: BaseType[] = []
+  let teamSizes: TeamSize[] = []
   let hasError = false
 
   try {
