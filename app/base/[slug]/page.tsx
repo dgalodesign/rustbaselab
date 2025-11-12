@@ -68,21 +68,21 @@ export default async function BasePage({ params }: BasePageProps) {
 
   const supabase = createPublicClient()
 
-  const { data: baseTeams } = await supabase
+  const { data: baseTeamsData } = await supabase
     .from("base_teams")
     .select("team_size_id, team_sizes(size)")
     .eq("base_id", base.id)
-    .returns<BaseTeamResult[]>()
 
+  const baseTeams = baseTeamsData as BaseTeamResult[] | null
   const teamSizes = baseTeams?.map((bt) => bt.team_sizes?.size).filter(Boolean) || []
   const teamSizeIds = baseTeams?.map((bt) => bt.team_size_id).filter(Boolean) || []
 
-  const { data: baseTags } = await supabase
+  const { data: baseTagsData } = await supabase
     .from("base_tags")
     .select("tags(tag, description)")
     .eq("base_id", base.id)
-    .returns<BaseTagResult[]>()
 
+  const baseTags = baseTagsData as BaseTagResult[] | null
   const tags = baseTags?.map((bt) => bt.tags).filter(Boolean) || []
 
   const relatedBases = await getRelatedBases(base.id, teamSizeIds)
