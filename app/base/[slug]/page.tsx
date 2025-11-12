@@ -74,7 +74,8 @@ export default async function BasePage({ params }: BasePageProps) {
     .eq("base_id", base.id)
 
   const baseTeams = baseTeamsData as BaseTeamResult[] | null
-  const teamSizes = baseTeams?.map((bt) => bt.team_sizes?.size).filter(Boolean) || []
+  const teamSizes = (baseTeams?.map((bt) => bt.team_sizes?.size).filter((size): size is string => size !== undefined) ||
+    []) as string[]
   const teamSizeIds = baseTeams?.map((bt) => bt.team_size_id).filter(Boolean) || []
 
   const { data: baseTagsData } = await supabase
@@ -83,7 +84,9 @@ export default async function BasePage({ params }: BasePageProps) {
     .eq("base_id", base.id)
 
   const baseTags = baseTagsData as BaseTagResult[] | null
-  const tags = baseTags?.map((bt) => bt.tags).filter(Boolean) || []
+  const tags =
+    baseTags?.map((bt) => bt.tags).filter((tag): tag is { tag: string; description: string | null } => tag !== null) ||
+    []
 
   const relatedBases = await getRelatedBases(base.id, teamSizeIds)
 
@@ -184,7 +187,7 @@ export default async function BasePage({ params }: BasePageProps) {
             {tags.length > 0 && (
               <div className="mt-4 flex flex-wrap items-center gap-2">
                 <TagIcon className="h-4 w-4 text-muted-foreground" />
-                {tags.map((tag, index: number) => (
+                {tags.map((tag, index) => (
                   <Badge key={index} variant="secondary" className="font-mono">
                     {tag.tag.toUpperCase()}
                   </Badge>
