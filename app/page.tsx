@@ -30,7 +30,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { getMetaBases, getPopularBases, getAllTypes, getAllTeamSizes } from "@/lib/db-queries"
-import type { Base, BaseType, TeamSize } from "@/types"
+import type { Base, BaseType, TeamSize } from "@/lib/types"
 
 export const dynamic = "force-dynamic"
 
