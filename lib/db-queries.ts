@@ -1,16 +1,7 @@
 import { createPublicClient } from "@/lib/supabase/public-client"
 import type { Base, Footprint, TeamSize, Tag, Creator } from "./types"
-
-async function handleSupabaseError(error: any, context: string) {
-  console.error(`[v0] Supabase error in ${context}:`, {
-    message: error?.message,
-    details: error?.details,
-    hint: error?.hint,
-    code: error?.code,
-  })
-}
-
-// This ensures only published content is fetched and provides better performance
+import { logger } from "./logger"
+import { handleDatabaseError } from "./error-handler"
 
 export async function getAllBases(): Promise<Base[]> {
   const supabase = createPublicClient()
@@ -25,13 +16,12 @@ export async function getAllBases(): Promise<Base[]> {
       .order("created_at", { ascending: false })
 
     if (error) {
-      console.error("[v0] Error fetching bases:", error)
-      return []
+      handleDatabaseError(error, "getAllBases")
     }
 
     return (data || []) as Base[]
   } catch (err) {
-    console.error("[v0] Unexpected error in getAllBases:", err)
+    logger.error("Error in getAllBases", err)
     return []
   }
 }
@@ -52,13 +42,12 @@ export async function getBaseBySlug(slug: string): Promise<Base | null> {
       .single()
 
     if (error) {
-      console.error("[v0] Error fetching base by slug:", error)
-      return null
+      handleDatabaseError(error, "getBaseBySlug")
     }
 
     return data as Base
   } catch (err) {
-    console.error("[v0] Unexpected error in getBaseBySlug:", err)
+    logger.error("Error in getBaseBySlug", err)
     return null
   }
 }
@@ -79,13 +68,12 @@ export async function getBaseById(id: string): Promise<Base | null> {
       .single()
 
     if (error) {
-      console.error("[v0] Error fetching base by id:", error)
-      return null
+      handleDatabaseError(error, "getBaseById")
     }
 
     return data as Base
   } catch (err) {
-    console.error("[v0] Unexpected error in getBaseById:", err)
+    logger.error("Error in getBaseById", err)
     return null
   }
 }
@@ -101,13 +89,12 @@ export async function searchBases(query: string): Promise<Base[]> {
       .order("created_at", { ascending: false })
 
     if (error) {
-      console.error("[v0] Error searching bases:", error)
-      return []
+      handleDatabaseError(error, "searchBases")
     }
 
     return (data || []) as Base[]
   } catch (err) {
-    console.error("[v0] Unexpected error in searchBases:", err)
+    logger.error("Error in searchBases", err)
     return []
   }
 }
@@ -123,13 +110,12 @@ export async function getBasesByType(typeId: string): Promise<Base[]> {
       .order("created_at", { ascending: false })
 
     if (error) {
-      console.error("[v0] Error fetching bases by type:", error)
-      return []
+      handleDatabaseError(error, "getBasesByType")
     }
 
     return (data || []) as Base[]
   } catch (err) {
-    console.error("[v0] Unexpected error in getBasesByType:", err)
+    logger.error("Error in getBasesByType", err)
     return []
   }
 }
@@ -140,7 +126,7 @@ export async function getAllFootprints(): Promise<Footprint[]> {
   const { data, error } = await supabase.from("footprints").select("*").order("footprint")
 
   if (error) {
-    console.error("Error fetching footprints:", error)
+    logger.error("Error fetching footprints", error)
     return []
   }
 
@@ -151,19 +137,15 @@ export async function getAllTeamSizes(): Promise<TeamSize[]> {
   try {
     const supabase = createPublicClient()
 
-    console.log("[v0] Fetching team sizes")
-
     const { data, error } = await supabase.from("team_sizes").select("*").order("size")
 
     if (error) {
-      await handleSupabaseError(error, "getAllTeamSizes")
-      return []
+      handleDatabaseError(error, "getAllTeamSizes")
     }
 
-    console.log(`[v0] Successfully fetched ${data?.length || 0} team sizes`)
     return data || []
   } catch (err) {
-    console.error("[v0] Unexpected error in getAllTeamSizes:", err)
+    logger.error("Error in getAllTeamSizes", err)
     return []
   }
 }
@@ -174,7 +156,7 @@ export async function getAllTags(): Promise<Tag[]> {
   const { data, error } = await supabase.from("tags").select("*").order("tag")
 
   if (error) {
-    console.error("Error fetching tags:", error)
+    logger.error("Error fetching tags", error)
     return []
   }
 
@@ -187,7 +169,7 @@ export async function getAllCreators(): Promise<Creator[]> {
   const { data, error } = await supabase.from("creators").select("*").order("name")
 
   if (error) {
-    console.error("Error fetching creators:", error)
+    logger.error("Error fetching creators", error)
     return []
   }
 
@@ -208,13 +190,12 @@ export async function getFeaturedBases(): Promise<Base[]> {
       .limit(6)
 
     if (error) {
-      console.error("[v0] Error fetching featured bases:", error)
-      return []
+      handleDatabaseError(error, "getFeaturedBases")
     }
 
     return (data || []) as Base[]
   } catch (err) {
-    console.error("[v0] Unexpected error in getFeaturedBases:", err)
+    logger.error("Error in getFeaturedBases", err)
     return []
   }
 }
@@ -223,7 +204,6 @@ export async function getRelatedBases(currentBaseId: string, teamSizeIds?: strin
   const supabase = createPublicClient()
 
   try {
-    // If we have team size IDs, find bases with matching team sizes
     if (teamSizeIds && teamSizeIds.length > 0) {
       const { data: baseTeams, error: teamError } = await supabase
         .from("base_teams")
@@ -232,7 +212,7 @@ export async function getRelatedBases(currentBaseId: string, teamSizeIds?: strin
         .neq("base_id", currentBaseId)
 
       if (teamError) {
-        console.error("[v0] Error fetching related bases by team size:", teamError)
+        logger.error("Error fetching related bases by team size", teamError)
         return []
       }
 
@@ -252,7 +232,7 @@ export async function getRelatedBases(currentBaseId: string, teamSizeIds?: strin
           .limit(3)
 
         if (error) {
-          console.error("[v0] Error fetching related bases:", error)
+          logger.error("Error fetching related bases", error)
           return []
         }
 
@@ -260,7 +240,6 @@ export async function getRelatedBases(currentBaseId: string, teamSizeIds?: strin
       }
     }
 
-    // Fallback: return recent bases if no team size match
     const { data, error } = await supabase
       .from("published_bases")
       .select(`
@@ -274,20 +253,19 @@ export async function getRelatedBases(currentBaseId: string, teamSizeIds?: strin
       .limit(3)
 
     if (error) {
-      console.error("[v0] Error fetching related bases:", error)
+      logger.error("Error fetching related bases", error)
       return []
     }
 
     return (data || []) as Base[]
   } catch (err) {
-    console.error("[v0] Unexpected error in getRelatedBases:", err)
+    logger.error("Error in getRelatedBases", err)
     return []
   }
 }
 
 export async function incrementBaseViews(id: string): Promise<void> {
-  // For now, we'll skip this as it requires a custom RPC function in Supabase
-  console.log("View increment skipped for base:", id)
+  logger.debug("View increment skipped for base:", id)
 }
 
 export async function getAllTypes(): Promise<Array<{ id: string; type: string }>> {
@@ -296,7 +274,7 @@ export async function getAllTypes(): Promise<Array<{ id: string; type: string }>
   const { data, error } = await supabase.from("types").select("*").order("type")
 
   if (error) {
-    console.error("Error fetching types:", error)
+    logger.error("Error fetching types", error)
     return []
   }
 
@@ -334,7 +312,7 @@ export async function getFilteredBases(filters: {
         .eq("team_size_id", filters.teamSizeId)
 
       if (teamError) {
-        console.error("[v0] Error fetching base teams:", teamError)
+        logger.error("Error fetching base teams", teamError)
         return []
       }
 
@@ -353,13 +331,12 @@ export async function getFilteredBases(filters: {
     const { data, error } = await query.order("created_at", { ascending: false })
 
     if (error) {
-      console.error("[v0] Error fetching filtered bases:", error)
-      return []
+      handleDatabaseError(error, "getFilteredBases")
     }
 
     return (data || []) as Base[]
   } catch (err) {
-    console.error("[v0] Unexpected error in getFilteredBases:", err)
+    logger.error("Error in getFilteredBases", err)
     return []
   }
 }
@@ -367,8 +344,6 @@ export async function getFilteredBases(filters: {
 export async function getMetaBases(limit = 6): Promise<Base[]> {
   try {
     const supabase = createPublicClient()
-
-    console.log("[v0] Fetching meta bases from published_bases view")
 
     const { data, error } = await supabase
       .from("published_bases")
@@ -382,16 +357,13 @@ export async function getMetaBases(limit = 6): Promise<Base[]> {
       .limit(limit)
 
     if (error) {
-      await handleSupabaseError(error, "getMetaBases")
-      return []
+      handleDatabaseError(error, "getMetaBases")
     }
 
-    console.log(`[v0] Successfully fetched ${data?.length || 0} meta bases`)
     return (data || []) as Base[]
   } catch (err) {
-    console.error("[v0] Unexpected error in getMetaBases:", err)
+    logger.error("Error in getMetaBases, attempting fallback", err)
     try {
-      console.log("[v0] Attempting fallback to bases table")
       const supabase = createPublicClient()
       const { data, error } = await supabase
         .from("bases")
@@ -406,14 +378,12 @@ export async function getMetaBases(limit = 6): Promise<Base[]> {
         .limit(limit)
 
       if (error) {
-        await handleSupabaseError(error, "getMetaBases fallback")
-        return []
+        handleDatabaseError(error, "getMetaBases fallback")
       }
 
-      console.log(`[v0] Fallback successful: fetched ${data?.length || 0} bases`)
       return (data || []) as Base[]
     } catch (fallbackErr) {
-      console.error("[v0] Fallback also failed:", fallbackErr)
+      logger.error("Fallback also failed in getMetaBases", fallbackErr)
       return []
     }
   }
@@ -422,8 +392,6 @@ export async function getMetaBases(limit = 6): Promise<Base[]> {
 export async function getPopularBases(limit = 6): Promise<Base[]> {
   try {
     const supabase = createPublicClient()
-
-    console.log("[v0] Fetching popular bases from published_bases view")
 
     const { data, error } = await supabase
       .from("published_bases")
@@ -437,16 +405,13 @@ export async function getPopularBases(limit = 6): Promise<Base[]> {
       .limit(limit)
 
     if (error) {
-      await handleSupabaseError(error, "getPopularBases")
-      return []
+      handleDatabaseError(error, "getPopularBases")
     }
 
-    console.log(`[v0] Successfully fetched ${data?.length || 0} popular bases`)
     return (data || []) as Base[]
   } catch (err) {
-    console.error("[v0] Unexpected error in getPopularBases:", err)
+    logger.error("Error in getPopularBases, attempting fallback", err)
     try {
-      console.log("[v0] Attempting fallback to bases table")
       const supabase = createPublicClient()
       const { data, error } = await supabase
         .from("bases")
@@ -461,14 +426,12 @@ export async function getPopularBases(limit = 6): Promise<Base[]> {
         .limit(limit)
 
       if (error) {
-        await handleSupabaseError(error, "getPopularBases fallback")
-        return []
+        handleDatabaseError(error, "getPopularBases fallback")
       }
 
-      console.log(`[v0] Fallback successful: fetched ${data?.length || 0} bases`)
       return (data || []) as Base[]
     } catch (fallbackErr) {
-      console.error("[v0] Fallback also failed:", fallbackErr)
+      logger.error("Fallback also failed in getPopularBases", fallbackErr)
       return []
     }
   }
@@ -481,10 +444,10 @@ export async function incrementYoutubeClicks(baseId: string): Promise<void> {
     const { error } = await supabase.rpc("increment_youtube_clicks", { base_id: baseId })
 
     if (error) {
-      console.error("[v0] Error incrementing youtube clicks:", error)
+      logger.error("Error incrementing youtube clicks", error)
     }
   } catch (err) {
-    console.error("[v0] Unexpected error in incrementYoutubeClicks:", err)
+    logger.error("Error in incrementYoutubeClicks", err)
   }
 }
 
@@ -506,13 +469,12 @@ export async function getBasesByCreator(creatorId: string, currentBaseId: string
       .limit(limit)
 
     if (error) {
-      console.error("[v0] Error fetching bases by creator:", error)
-      return []
+      handleDatabaseError(error, "getBasesByCreator")
     }
 
     return (data || []) as Base[]
   } catch (err) {
-    console.error("[v0] Unexpected error in getBasesByCreator:", err)
+    logger.error("Error in getBasesByCreator", err)
     return []
   }
 }

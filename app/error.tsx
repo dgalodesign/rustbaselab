@@ -2,10 +2,11 @@
 
 import { useEffect } from "react"
 import { SupabaseConfigWarning } from "@/components/supabase-config-warning"
+import { logger } from "@/lib/logger"
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
-    console.error("[v0] Application error:", error)
+    logger.error("Application error", error)
   }, [error])
 
   const isSupabaseConfigError =

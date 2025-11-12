@@ -111,14 +111,7 @@ export default async function HomePage() {
     popularBases = results[1]
     types = results[2]
     teamSizes = results[3]
-
-    console.log(
-      "[v0] Types from database:",
-      types.map((t) => t.type),
-    )
-    console.log("[v0] Homepage data loaded successfully")
   } catch (error) {
-    console.error("[v0] Error loading homepage data:", error)
     hasError = true
   }
 
