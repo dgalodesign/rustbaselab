@@ -25,6 +25,15 @@ interface BasePageProps {
   }>
 }
 
+interface BaseTeamResult {
+  team_size_id: string
+  team_sizes: { size: string } | null
+}
+
+interface BaseTagResult {
+  tags: { tag: string; description: string | null } | null
+}
+
 export async function generateMetadata({ params }: BasePageProps): Promise<Metadata> {
   const { slug } = await params
   const base = await getBaseBySlug(slug)
@@ -58,17 +67,23 @@ export default async function BasePage({ params }: BasePageProps) {
   await incrementYoutubeClicks(base.id)
 
   const supabase = createPublicClient()
+
   const { data: baseTeams } = await supabase
     .from("base_teams")
     .select("team_size_id, team_sizes(size)")
     .eq("base_id", base.id)
+    .returns<BaseTeamResult[]>()
 
-  const teamSizes = baseTeams?.map((bt: any) => bt.team_sizes?.size).filter(Boolean) || []
-  const teamSizeIds = baseTeams?.map((bt: any) => bt.team_size_id).filter(Boolean) || []
+  const teamSizes = baseTeams?.map((bt) => bt.team_sizes?.size).filter(Boolean) || []
+  const teamSizeIds = baseTeams?.map((bt) => bt.team_size_id).filter(Boolean) || []
 
-  const { data: baseTags } = await supabase.from("base_tags").select("tags(tag, description)").eq("base_id", base.id)
+  const { data: baseTags } = await supabase
+    .from("base_tags")
+    .select("tags(tag, description)")
+    .eq("base_id", base.id)
+    .returns<BaseTagResult[]>()
 
-  const tags = baseTags?.map((bt: any) => bt.tags).filter(Boolean) || []
+  const tags = baseTags?.map((bt) => bt.tags).filter(Boolean) || []
 
   const relatedBases = await getRelatedBases(base.id, teamSizeIds)
 
@@ -169,7 +184,7 @@ export default async function BasePage({ params }: BasePageProps) {
             {tags.length > 0 && (
               <div className="mt-4 flex flex-wrap items-center gap-2">
                 <TagIcon className="h-4 w-4 text-muted-foreground" />
-                {tags.map((tag: any, index: number) => (
+                {tags.map((tag, index: number) => (
                   <Badge key={index} variant="secondary" className="font-mono">
                     {tag.tag.toUpperCase()}
                   </Badge>
