@@ -1,6 +1,15 @@
 import type { MetadataRoute } from "next"
 import { createPublicClient } from "@/lib/supabase/public-client"
 
+interface BaseData {
+  slug: string
+  updated_at: string
+}
+
+interface TypeData {
+  id: string
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = createPublicClient()
 
@@ -29,7 +38,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .order("updated_at", { ascending: false })
 
   const basePages: MetadataRoute.Sitemap =
-    bases?.map((base) => ({
+    bases?.map((base: BaseData) => ({
       url: `${baseUrl}/base/${base.slug}`,
       lastModified: new Date(base.updated_at),
       changeFrequency: "weekly" as const,
@@ -40,7 +49,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { data: types } = await supabase.from("types").select("id")
 
   const typePages: MetadataRoute.Sitemap =
-    types?.map((type) => ({
+    types?.map((type: TypeData) => ({
       url: `${baseUrl}/bases?type=${type.id}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
