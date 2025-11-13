@@ -125,20 +125,20 @@ export default async function BasePage({ params }: BasePageProps) {
           <div className="absolute inset-0 bg-[url('/noise.png')] opacity-5" />
           <div className="container relative mx-auto px-4 py-8">
             <div className="mb-4 flex flex-wrap items-center gap-2">
-              {base.type?.type && (
+              {base.type?.name && (
                 <Badge
                   variant="outline"
                   className="bg-primary/10 text-primary border-2 border-primary/30 font-mono font-bold"
                 >
-                  {base.type.type.toUpperCase()}
+                  {base.type.name.toUpperCase()}
                 </Badge>
               )}
-              {base.footprint?.footprint && (
+              {base.footprint?.name && (
                 <Badge
                   variant="outline"
                   className="bg-secondary/10 text-secondary border-2 border-secondary/30 font-mono font-bold"
                 >
-                  {base.footprint.footprint.toUpperCase()}
+                  {base.footprint.name.toUpperCase()}
                 </Badge>
               )}
               {teamSizes.map((size: string, index: number) => (
@@ -251,25 +251,25 @@ export default async function BasePage({ params }: BasePageProps) {
                 <CardContent className="p-6">
                   <h3 className="mb-4 text-lg font-bold font-display text-foreground">STATISTICS</h3>
                   <div className="space-y-3 text-sm">
-                    {base.type?.type && (
+                    {base.type?.name && (
                       <div className="flex items-center justify-between">
                         <span className="text-muted-foreground">TYPE:</span>
                         <Badge
                           variant="outline"
                           className="bg-primary/10 text-primary border-2 border-primary/30 font-mono font-bold"
                         >
-                          {base.type.type.toUpperCase()}
+                          {base.type.name.toUpperCase()}
                         </Badge>
                       </div>
                     )}
-                    {base.footprint?.footprint && (
+                    {base.footprint?.name && (
                       <div className="flex items-center justify-between">
                         <span className="text-muted-foreground">FOOTPRINT:</span>
                         <Badge
                           variant="outline"
                           className="bg-secondary/10 text-secondary border-2 border-secondary/30 font-mono font-bold"
                         >
-                          {base.footprint.footprint.toUpperCase()}
+                          {base.footprint.name.toUpperCase()}
                         </Badge>
                       </div>
                     )}
