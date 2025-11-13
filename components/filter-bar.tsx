@@ -7,9 +7,9 @@ import { SlidersHorizontal, X } from "lucide-react"
 import { useTranslations } from "@/lib/i18n/context"
 
 interface FilterBarProps {
-  types?: Array<{ id: string; type: string }>
-  teamSizes?: Array<{ id: string; size: string }>
-  footprints?: Array<{ id: string; footprint: string }>
+  types?: Array<{ id: string; name: string }>
+  teamSizes?: Array<{ id: string; name: string }>
+  footprints?: Array<{ id: string; name: string }>
 }
 
 export function FilterBar({ types = [], teamSizes = [], footprints = [] }: FilterBarProps) {
@@ -53,7 +53,7 @@ export function FilterBar({ types = [], teamSizes = [], footprints = [] }: Filte
           <SelectItem value="all">{t.home.filters.allTypes}</SelectItem>
           {types.map((type) => (
             <SelectItem key={type.id} value={type.id}>
-              {type.type}
+              {type.name}
             </SelectItem>
           ))}
         </SelectContent>
@@ -67,7 +67,7 @@ export function FilterBar({ types = [], teamSizes = [], footprints = [] }: Filte
           <SelectItem value="all">{t.home.filters.allTeamSizes}</SelectItem>
           {teamSizes.map((size) => (
             <SelectItem key={size.id} value={size.id}>
-              {size.size}
+              {size.name}
             </SelectItem>
           ))}
         </SelectContent>
@@ -81,7 +81,7 @@ export function FilterBar({ types = [], teamSizes = [], footprints = [] }: Filte
           <SelectItem value="all">{t.home.filters.allFootprints}</SelectItem>
           {footprints.map((footprint) => (
             <SelectItem key={footprint.id} value={footprint.id}>
-              {footprint.footprint}
+              {footprint.name}
             </SelectItem>
           ))}
         </SelectContent>
