@@ -23,26 +23,26 @@ export interface Base {
   type_id: string | null
   footprint_id: string | null
   creator_id: string | null
-  type?: { type: string }
-  footprint?: { footprint: string }
+  type?: { name: string }
+  footprint?: { name: string }
   creator?: { name: string; channel_youtube_id: string }
-  team_sizes?: Array<{ team_size: { size: string } }>
+  team_sizes?: Array<{ team_size: { name: string } }>
   tags?: Array<{ tag: { tag: string; description: string } }>
 }
 
 export interface BaseType {
   id: string
-  type: string
+  name: string
 }
 
 export interface Footprint {
   id: string
-  footprint: string
+  name: string
 }
 
 export interface TeamSize {
   id: string
-  size: string
+  name: string
 }
 
 export interface Tag {
