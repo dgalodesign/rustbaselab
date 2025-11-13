@@ -268,7 +268,7 @@ export async function incrementBaseViews(id: string): Promise<void> {
   logger.debug("View increment skipped for base:", id)
 }
 
-export async function getAllTypes(): Promise<Array<{ id: string; type: string }>> {
+export async function getAllTypes(): Promise<Array<{ id: string; name: string }>> {
   const supabase = createPublicClient()
 
   const { data, error } = await supabase.from("types").select("*").order("name")
