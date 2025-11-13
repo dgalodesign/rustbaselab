@@ -35,8 +35,8 @@ export async function getBaseBySlug(slug: string): Promise<Base | null> {
       .select(`
         *,
         creator:creators(name, channel_youtube_id),
-        type:types(type),
-        footprint:footprints(footprint)
+        type:types(name),
+        footprint:footprints(name)
       `)
       .eq("slug", slug)
       .single()
@@ -61,8 +61,8 @@ export async function getBaseById(id: string): Promise<Base | null> {
       .select(`
         *,
         creator:creators(name, channel_youtube_id),
-        type:types(type),
-        footprint:footprints(footprint)
+        type:types(name),
+        footprint:footprints(name)
       `)
       .eq("id", id)
       .single()
@@ -123,7 +123,7 @@ export async function getBasesByType(typeId: string): Promise<Base[]> {
 export async function getAllFootprints(): Promise<Footprint[]> {
   const supabase = createPublicClient()
 
-  const { data, error } = await supabase.from("footprints").select("*").order("footprint")
+  const { data, error } = await supabase.from("footprints").select("*").order("name")
 
   if (error) {
     logger.error("Error fetching footprints", error)
@@ -137,7 +137,7 @@ export async function getAllTeamSizes(): Promise<TeamSize[]> {
   try {
     const supabase = createPublicClient()
 
-    const { data, error } = await supabase.from("team_sizes").select("*").order("size")
+    const { data, error } = await supabase.from("team_sizes").select("*").order("name")
 
     if (error) {
       handleDatabaseError(error, "getAllTeamSizes")
@@ -224,8 +224,8 @@ export async function getRelatedBases(currentBaseId: string, teamSizeIds?: strin
           .select(`
             *,
             creator:creators(name, channel_youtube_id),
-            type:types(type),
-            footprint:footprints(footprint)
+            type:types(name),
+            footprint:footprints(name)
           `)
           .in("id", baseIds)
           .order("created_at", { ascending: false })
@@ -245,8 +245,8 @@ export async function getRelatedBases(currentBaseId: string, teamSizeIds?: strin
       .select(`
         *,
         creator:creators(name, channel_youtube_id),
-        type:types(type),
-        footprint:footprints(footprint)
+        type:types(name),
+        footprint:footprints(name)
       `)
       .neq("id", currentBaseId)
       .order("created_at", { ascending: false })
@@ -271,7 +271,7 @@ export async function incrementBaseViews(id: string): Promise<void> {
 export async function getAllTypes(): Promise<Array<{ id: string; type: string }>> {
   const supabase = createPublicClient()
 
-  const { data, error } = await supabase.from("types").select("*").order("type")
+  const { data, error } = await supabase.from("types").select("*").order("name")
 
   if (error) {
     logger.error("Error fetching types", error)
@@ -293,8 +293,8 @@ export async function getFilteredBases(filters: {
     let query = supabase.from("published_bases").select(`
       *,
       creator:creators(name, channel_youtube_id),
-      type:types(type),
-      footprint:footprints(footprint)
+      type:types(name),
+      footprint:footprints(name)
     `)
 
     if (filters.typeId && filters.typeId !== "all") {
@@ -350,8 +350,8 @@ export async function getMetaBases(limit = 6): Promise<Base[]> {
       .select(`
         *,
         creator:creators(name, channel_youtube_id),
-        type:types(type),
-        footprint:footprints(footprint)
+        type:types(name),
+        footprint:footprints(name)
       `)
       .order("created_at", { ascending: false })
       .limit(limit)
@@ -370,8 +370,8 @@ export async function getMetaBases(limit = 6): Promise<Base[]> {
         .select(`
           *,
           creator:creators(name, channel_youtube_id),
-          type:types(type),
-          footprint:footprints(footprint)
+          type:types(name),
+          footprint:footprints(name)
         `)
         .eq("status", "published")
         .order("created_at", { ascending: false })
@@ -398,8 +398,8 @@ export async function getPopularBases(limit = 6): Promise<Base[]> {
       .select(`
         *,
         creator:creators(name, channel_youtube_id),
-        type:types(type),
-        footprint:footprints(footprint)
+        type:types(name),
+        footprint:footprints(name)
       `)
       .order("youtube_clicks", { ascending: false, nullsFirst: false })
       .limit(limit)
@@ -418,8 +418,8 @@ export async function getPopularBases(limit = 6): Promise<Base[]> {
         .select(`
           *,
           creator:creators(name, channel_youtube_id),
-          type:types(type),
-          footprint:footprints(footprint)
+          type:types(name),
+          footprint:footprints(name)
         `)
         .eq("status", "published")
         .order("youtube_clicks", { ascending: false, nullsFirst: false })
@@ -460,8 +460,8 @@ export async function getBasesByCreator(creatorId: string, currentBaseId: string
       .select(`
         *,
         creator:creators(name, channel_youtube_id),
-        type:types(type),
-        footprint:footprints(footprint)
+        type:types(name),
+        footprint:footprints(name)
       `)
       .eq("creator_id", creatorId)
       .neq("id", currentBaseId)

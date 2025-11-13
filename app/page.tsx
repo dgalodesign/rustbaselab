@@ -60,6 +60,8 @@ const teamSizeIcons: Record<string, any> = {
 }
 
 function getTypeIcon(typeName: string) {
+  if (!typeName) return typeIcons.default
+
   // Normalizar el nombre: lowercase, sin espacios, sin guiones
   const normalized = typeName
     .toLowerCase()
@@ -83,6 +85,8 @@ function getTypeIcon(typeName: string) {
 }
 
 function getTeamSizeIcon(sizeName: string) {
+  if (!sizeName) return teamSizeIcons.default
+
   const key = sizeName.toLowerCase()
   return teamSizeIcons[key] || teamSizeIcons.default
 }
@@ -90,8 +94,8 @@ function getTeamSizeIcon(sizeName: string) {
 function sortTeamSizes(sizes: any[]) {
   const order = ["solo", "duo", "trio", "quad", "zerg"]
   return [...sizes].sort((a, b) => {
-    const aIndex = order.indexOf(a.size.toLowerCase())
-    const bIndex = order.indexOf(b.size.toLowerCase())
+    const aIndex = order.indexOf(a.name?.toLowerCase() || "")
+    const bIndex = order.indexOf(b.name?.toLowerCase() || "")
     if (aIndex === -1) return 1
     if (bIndex === -1) return -1
     return aIndex - bIndex
@@ -211,7 +215,7 @@ export default async function HomePage() {
 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {types.map((type) => {
-              const Icon = getTypeIcon(type.type)
+              const Icon = getTypeIcon(type.name)
               return (
                 <Link
                   key={type.id}
@@ -223,7 +227,7 @@ export default async function HomePage() {
                     <div className="rounded-lg bg-primary/10 p-3 border-2 border-primary/20 group-hover:border-primary/50 transition-colors">
                       <Icon className="h-8 w-8 text-primary-foregroundry" />
                     </div>
-                    <span className="text-lg font-bold uppercase">{type.type}</span>
+                    <span className="text-lg font-bold uppercase">{type.name}</span>
                     <ArrowRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
                   </div>
                 </Link>
@@ -237,7 +241,7 @@ export default async function HomePage() {
 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {sortTeamSizes(teamSizes).map((size) => {
-              const Icon = getTeamSizeIcon(size.size)
+              const Icon = getTeamSizeIcon(size.name)
               return (
                 <Link
                   key={size.id}
@@ -249,7 +253,7 @@ export default async function HomePage() {
                     <div className="rounded-lg bg-secondary/10 p-3 border-2 border-secondary/20 group-hover:border-secondary/50 transition-colors">
                       <Icon className="h-8 w-8 text-secondary" />
                     </div>
-                    <span className="text-lg font-bold uppercase">{size.size}</span>
+                    <span className="text-lg font-bold uppercase">{size.name}</span>
                     <ArrowRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-secondary" />
                   </div>
                 </Link>
