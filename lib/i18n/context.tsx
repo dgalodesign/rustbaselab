@@ -7,7 +7,7 @@ import { defaultLocale } from "./config"
 interface I18nContextType {
   locale: Locale
   setLocale: (locale: Locale) => void
-  t: typeof translations.en
+  t: typeof translations[Locale]
 }
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined)
@@ -18,11 +18,11 @@ export function I18nProvider({
 }: { children: ReactNode; initialLocale?: Locale }) {
   const [locale, setLocale] = useState<Locale>(defaultLocale)
 
-  const value: I18nContextType = {
+  const value = {
     locale,
     setLocale,
     t: translations[locale],
-  }
+  } as I18nContextType
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>
 }
