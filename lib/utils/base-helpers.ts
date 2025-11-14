@@ -37,7 +37,7 @@ export function getTeamSizeDisplay(base: Base): string {
   if (!base.team_sizes || base.team_sizes.length === 0) return "Any"
 
   return base.team_sizes
-    .map((ts) => ts.team_size?.size)
+    .map((ts) => ts.team_size?.name)
     .filter(Boolean)
     .join(", ")
 }
@@ -45,7 +45,7 @@ export function getTeamSizeDisplay(base: Base): string {
 export function getTagsDisplay(base: Base): string[] {
   if (!base.tags || base.tags.length === 0) return []
 
-  return base.tags.map((t) => t.tag?.tag).filter(Boolean) as string[]
+  return base.tags.map((t) => t.tag?.name).filter(Boolean) as string[]
 }
 
 export function getCategoryColor(typeName: string | undefined): string {
