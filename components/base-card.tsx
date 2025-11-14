@@ -37,7 +37,7 @@ export function BaseCard({ base }: BaseCardProps) {
             {base.type && (
               <div className="absolute top-2 right-2">
                 <Badge variant="secondary" className="bg-primary/90 text-primary-foreground font-mono text-xs">
-                  {base.type.type}
+                  {base.type.name}
                 </Badge>
               </div>
             )}
