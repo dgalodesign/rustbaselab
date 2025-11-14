@@ -217,7 +217,7 @@ export async function getRelatedBases(currentBaseId: string, teamSizeIds?: strin
       }
 
       if (baseTeams && baseTeams.length > 0) {
-        const baseIds = baseTeams.map((bt) => bt.base_id)
+        const baseIds = baseTeams.map((bt: { base_id: string }) => bt.base_id)
 
         const { data, error } = await supabase
           .from("published_bases")
@@ -317,7 +317,7 @@ export async function getFilteredBases(filters: {
       }
 
       if (baseTeams && baseTeams.length > 0) {
-        const baseIds = baseTeams.map((bt) => bt.base_id)
+        const baseIds = baseTeams.map((bt: { base_id: string }) => bt.base_id)
         query = query.in("id", baseIds)
       } else {
         return []
