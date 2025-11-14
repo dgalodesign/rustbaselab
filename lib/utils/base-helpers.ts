@@ -45,7 +45,7 @@ export function getTeamSizeDisplay(base: Base): string {
 export function getTagsDisplay(base: Base): string[] {
   if (!base.tags || base.tags.length === 0) return []
 
-  return base.tags.map((t) => t.tag?.name).filter(Boolean) as string[]
+  return base.tags.map((t) => t.tag?.tag).filter(Boolean) as string[]
 }
 
 export function getCategoryColor(typeName: string | undefined): string {
