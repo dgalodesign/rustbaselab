@@ -31,6 +31,11 @@ export function BaseCard({ base }: BaseCardProps) {
               alt={base.title}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-110"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement
+                target.src = `/placeholder.svg?height=400&width=600&query=${encodeURIComponent(base.title)}`
+              }}
+              unoptimized={thumbnailUrl.includes('placeholder.svg')}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
 
