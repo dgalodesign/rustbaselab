@@ -129,6 +129,11 @@ export default async function BasePage({ params }: BasePageProps) {
         return { success: false, error: "Configuration missing" }
       }
 
+      if (!base) {
+        console.error("[v0] Base not found")
+        return { success: false, error: "Base not found" }
+      }
+
       const title = "Update Material Cost"
       const message = base.title
 
