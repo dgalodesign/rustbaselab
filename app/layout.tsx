@@ -6,6 +6,7 @@ import { Suspense } from "react"
 import { I18nProvider } from "@/lib/i18n/context"
 import { CookieConsent } from "@/components/cookie-consent"
 import Script from "next/script"
+import { Toaster } from "sonner"
 
 import { Inter, Space_Grotesk, Geist as V0_Font_Geist, Geist_Mono as V0_Font_Geist_Mono, Source_Serif_4 as V0_Font_Source_Serif_4 } from 'next/font/google'
 
@@ -46,20 +47,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <head>
+      <head />
+      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6148269016507542"
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
-      </head>
-      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
         <I18nProvider>
           <Suspense fallback={null}>{children}</Suspense>
         </I18nProvider>
         <CookieConsent />
         <Analytics />
+        <Toaster position="bottom-right" />
       </body>
     </html>
   )

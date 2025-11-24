@@ -1,13 +1,7 @@
 import { createClient } from "@supabase/supabase-js"
 import { logger } from "@/lib/logger"
 
-let clientInstance: ReturnType<typeof createClient> | null = null
-
 export function createPublicClient() {
-  if (clientInstance) {
-    return clientInstance
-  }
-
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
@@ -18,15 +12,22 @@ export function createPublicClient() {
     return createMockClient()
   }
 
+  // Validate URL format to prevent "Failed to fetch" errors due to invalid URLs
   try {
-    clientInstance = createClient(supabaseUrl, supabaseAnonKey, {
+    new URL(supabaseUrl)
+  } catch (e) {
+    logger.error(`Invalid Supabase URL: ${supabaseUrl}`, e)
+    return createMockClient()
+  }
+
+  try {
+    const client = createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
         persistSession: false,
         autoRefreshToken: false,
       },
     })
-    logger.info("Supabase client created successfully")
-    return clientInstance
+    return client
   } catch (error) {
     logger.error("Failed to create Supabase client", error)
     return createMockClient()

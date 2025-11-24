@@ -28,6 +28,12 @@ export function Header() {
           >
             {t.nav.allBases}
           </Link>
+          <Link
+            href="/favorites"
+            className="text-sm font-medium transition-colors hover:text-primary border-b-2 border-transparent hover:border-primary pb-1"
+          >
+            Favorites
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">

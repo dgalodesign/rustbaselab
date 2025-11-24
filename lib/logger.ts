@@ -5,7 +5,7 @@ interface LoggerConfig {
   prefix: string
 }
 
-const isDevelopment = process.env.NODE_ENV === "development"
+const isDevelopment = typeof process !== "undefined" && process.env && process.env.NODE_ENV === "development"
 
 class Logger {
   private config: LoggerConfig = {
