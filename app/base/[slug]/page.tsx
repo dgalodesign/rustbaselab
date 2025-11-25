@@ -281,7 +281,7 @@ export default async function BasePage({ params }: BasePageProps) {
                     id: base.id,
                     title: base.title,
                     slug: base.slug,
-                    image_url: base.image_url,
+                    image_url: base.image_main_url,
                     type: base.type?.name,
                     team_size: teamSizes,
                   }}
