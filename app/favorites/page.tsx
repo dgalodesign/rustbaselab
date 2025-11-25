@@ -62,9 +62,9 @@ export default function FavoritesPage() {
                           {base.type.name}
                         </Badge>
                       )}
-                      {base.team_size?.map((size) => (
-                        <Badge key={size} variant="secondary" className="font-mono text-xs">
-                          {size}
+                      {base.team_sizes?.map((size) => (
+                        <Badge key={size.team_size.name} variant="secondary" className="font-mono text-xs">
+                          {size.team_size.name}
                         </Badge>
                       ))}
                     </div>
