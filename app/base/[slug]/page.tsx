@@ -266,10 +266,6 @@ export default async function BasePage({ params }: BasePageProps) {
                     {teamSizes.length > 0 ? teamSizes.join("/") : "any"} teams with an initial footprint of{" "}
                     {base.footprint?.name || "standard"}.
                   </p>
-                  {base.description && <p>{base.description}</p>}
-
-                  {base.features && <p>{base.features}</p>}
-
                   <p>This base design provides a solid foundation for your Rust gameplay.</p>
 
                   {base.video_youtube_id && (
