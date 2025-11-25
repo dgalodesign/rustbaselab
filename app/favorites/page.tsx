@@ -57,9 +57,9 @@ export default function FavoritesPage() {
                   <CardContent className="p-4">
                     <h3 className="mb-2 line-clamp-1 font-display text-lg font-bold text-foreground">{base.title}</h3>
                     <div className="flex flex-wrap gap-2">
-                      {base.type && (
+                      {base.type?.name && (
                         <Badge variant="outline" className="font-mono text-xs">
-                          {base.type}
+                          {base.type.name}
                         </Badge>
                       )}
                       {base.team_size?.map((size) => (
