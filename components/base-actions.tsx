@@ -1,16 +1,17 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useFavorites, type FavoriteBase } from "@/hooks/use-favorites"
+import { useFavorites } from "@/hooks/use-favorites"
+import type { Base } from "@/lib/types"
 import { Share2, Heart } from "lucide-react"
 import { toast } from "sonner"
 
 interface BaseActionsProps {
-  base: FavoriteBase
+  base: Base
 }
 
 export function BaseActions({ base }: BaseActionsProps) {
-  const { isFavorite, toggleFavorite } = useFavorites()
+  const { isFavorite, addFavorite, removeFavorite } = useFavorites()
   const isFav = isFavorite(base.id)
 
   const handleShare = async () => {
@@ -25,12 +26,13 @@ export function BaseActions({ base }: BaseActionsProps) {
   }
 
   const handleFavorite = () => {
-    toggleFavorite(base)
     if (isFav) {
+      removeFavorite(base.id)
       toast.success("Removed from favorites", {
         description: "Base removed from your collection",
       })
     } else {
+      addFavorite(base)
       toast.success("Added to favorites", {
         description: "Base saved to your collection",
       })
