@@ -37,12 +37,15 @@ const requiredEnvVars = [
 ]
 
 if (process.env.NODE_ENV === 'production') {
-  const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar])
-  
+  const missingEnvVars = requiredEnvVars.filter(
+    (envVar) => !process.env[envVar] || process.env[envVar].trim() === ''
+  )
+
   if (missingEnvVars.length > 0) {
     throw new Error(
       `Missing required environment variables: ${missingEnvVars.join(', ')}\n` +
-      'Please configure these in your Vercel project settings.'
+      'Please configure these in your Vercel project settings.\n' +
+      'Go to: Vercel Dashboard → Your Project → Settings → Environment Variables'
     )
   }
 }

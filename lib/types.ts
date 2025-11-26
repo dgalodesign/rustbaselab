@@ -12,9 +12,11 @@ export interface Base {
   materials_stone: number | null
   materials_metal: number | null
   materials_hq: number | null
+  materials_wood: number | null
   upkeep_stone: number | null
   upkeep_metal: number | null
   upkeep_hq: number | null
+  upkeep_wood: number | null
   build_time_min: number | null
   raid_cost_sulfur: number | null
   raid_costs: any | null
