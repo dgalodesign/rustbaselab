@@ -19,7 +19,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-bold font-display uppercase tracking-wide">{t.footer.quickLinks}</h4>
+            <h3 className="mb-4 text-sm font-bold font-display uppercase tracking-wide">{t.footer.quickLinks}</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/" className="text-muted-foreground transition-colors hover:text-primary font-medium">
@@ -48,7 +48,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-bold font-display uppercase tracking-wide">{t.footer.legal}</h4>
+            <h3 className="mb-4 text-sm font-bold font-display uppercase tracking-wide">{t.footer.legal}</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
@@ -75,7 +75,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-bold font-display uppercase tracking-wide">RustBaseLab</h4>
+            <h3 className="mb-4 text-sm font-bold font-display uppercase tracking-wide">RustBaseLab</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <span className="text-muted-foreground">© {new Date().getFullYear()}</span>
