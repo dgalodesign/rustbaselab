@@ -276,16 +276,7 @@ export default async function BasePage({ params }: BasePageProps) {
                   )}
                 </div>
 
-                <BaseActions
-                  base={{
-                    id: base.id,
-                    title: base.title,
-                    slug: base.slug,
-                    image_url: base.image_main_url,
-                    type: base.type?.name,
-                    team_size: teamSizes,
-                  }}
-                />
+                <BaseActions base={base} />
               </div>
             </div>
 
