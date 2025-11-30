@@ -1,7 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
 
-export const runtime = "edge"
-
 interface NotionRequestBody {
   baseId: string
   baseTitle: string
