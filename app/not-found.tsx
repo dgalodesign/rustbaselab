@@ -39,7 +39,7 @@ export default function NotFound() {
               <Button
                 asChild
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-background font-mono font-bold uppercase min-w-[200px]"
+                className="bg-primary hover:bg-primary/90 text-background font-bold uppercase min-w-[200px]"
               >
                 <Link href="/">
                   <Home className="mr-2 h-5 w-5" />
@@ -51,7 +51,7 @@ export default function NotFound() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="border-2 border-secondary text-secondary hover:bg-secondary/10 font-mono font-bold uppercase min-w-[200px] bg-transparent"
+                className="border-2 border-secondary text-secondary hover:bg-secondary/10 font-bold uppercase min-w-[200px] bg-transparent"
               >
                 <Link href="/bases">
                   <Search className="mr-2 h-5 w-5" />
@@ -62,7 +62,7 @@ export default function NotFound() {
 
             {/* Decorative Elements */}
             <div className="pt-8 opacity-50">
-              <div className="flex justify-center gap-2 text-xs font-mono text-muted-foreground">
+              <div className="flex justify-center gap-2 text-xs text-muted-foreground">
                 <span className="animate-pulse">▓</span>
                 <span className="animate-pulse delay-100">▓</span>
                 <span className="animate-pulse delay-200">▓</span>

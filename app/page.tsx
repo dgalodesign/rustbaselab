@@ -185,7 +185,7 @@ export default async function HomePage() {
 
           {metaBases.length === 0 && (
             <div className="py-12 text-center border-2 border-border rounded-lg bg-card">
-              <p className="text-lg text-muted-foreground font-mono">NO META BASES AVAILABLE</p>
+              <p className="text-lg text-muted-foreground">NO META BASES AVAILABLE</p>
             </div>
           )}
         </section>
@@ -205,7 +205,7 @@ export default async function HomePage() {
 
           {popularBases.length === 0 && (
             <div className="py-12 text-center border-2 border-border rounded-lg bg-card">
-              <p className="text-lg text-muted-foreground font-mono">NO POPULAR BASES AVAILABLE</p>
+              <p className="text-lg text-muted-foreground">NO POPULAR BASES AVAILABLE</p>
             </div>
           )}
         </section>

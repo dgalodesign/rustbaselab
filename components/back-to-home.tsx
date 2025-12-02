@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react"
 
 export function BackToHome() {
   return (
-    <Button variant="ghost" size="sm" asChild className="hover:bg-muted font-mono">
+    <Button variant="ghost" size="sm" asChild className="hover:bg-muted">
       <Link href="/">
         <ArrowLeft className="mr-2 h-4 w-4" />
         BACK TO HOME
