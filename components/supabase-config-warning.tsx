@@ -8,7 +8,7 @@ export function SupabaseConfigWarning({ errorMessage }: { errorMessage?: string 
     errorMessage?.includes("ENCRYPTED") || errorMessage?.includes("==") || errorMessage?.includes("+")
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-950 p-4">
+    <main className="flex min-h-screen items-center justify-center bg-zinc-950 p-4">
       <div className="w-full max-w-2xl space-y-6 rounded-lg border border-amber-500/20 bg-zinc-900 p-8">
         <div className="flex items-center gap-3 text-amber-500">
           <AlertCircle className="h-6 w-6" />
@@ -90,6 +90,6 @@ export function SupabaseConfigWarning({ errorMessage }: { errorMessage?: string 
           Recargar después de reconectar
         </Button>
       </div>
-    </div>
+    </main>
   )
 }

@@ -40,7 +40,7 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
         </section>
 
         <section className="border-b-2 border-border bg-gradient-to-b from-background to-background/95 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,255,0.1),transparent)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,255,0.1),transparent)]" aria-hidden="true" />
           <div className="container relative mx-auto px-4 py-12">
             <h1 className="mb-4 font-display text-4xl font-bold md:text-5xl">ALL BASE DESIGNS</h1>
             <p className="text-lg text-muted-foreground">

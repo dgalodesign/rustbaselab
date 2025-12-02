@@ -139,7 +139,7 @@ export default async function HomePage() {
 
         {/* Hero Section */}
         <section className="border-b-2 border-primary/20 bg-gradient-to-b from-background via-background/95 to-background/90 relative overflow-hidden">
-          <div className="absolute inset-0" />
+          <div className="absolute inset-0" aria-hidden="true" />
           <div className="container relative mx-auto px-4 py-16 md:py-24">
             <div className="mx-auto max-w-3xl text-center">
               <div className="mb-4 inline-flex items-center gap-2 rounded-lg border-2 border-primary/30 bg-primary/10 px-4 py-1.5 text-sm text-accent">
@@ -222,7 +222,7 @@ export default async function HomePage() {
                   href={`/bases?type=${type.id}`}
                   className="group relative overflow-hidden rounded-lg border-2 border-border bg-card p-6 transition-all hover:border-primary hover:shadow-lg hover:shadow-primary/20 hover:scale-105"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                   <div className="relative flex flex-col items-center gap-3 text-center">
                     <div className="rounded-lg bg-primary/10 p-3 border-2 border-primary/20 group-hover:border-primary/50 transition-colors">
                       <Icon className="h-8 w-8 text-primary-foregroundry" />
@@ -248,7 +248,7 @@ export default async function HomePage() {
                   href={`/bases?teamSize=${size.id}`}
                   className="group relative overflow-hidden rounded-lg border-2 border-border bg-card p-6 transition-all hover:border-secondary hover:shadow-lg hover:shadow-secondary/20 hover:scale-105"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                   <div className="relative flex flex-col items-center gap-3 text-center">
                     <div className="rounded-lg bg-secondary/10 p-3 border-2 border-secondary/20 group-hover:border-secondary/50 transition-colors">
                       <Icon className="h-8 w-8 text-secondary" />

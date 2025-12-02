@@ -175,7 +175,7 @@ export default async function BasePage({ params }: BasePageProps) {
         </section>
 
         <section className="border-b-2 border-border bg-background relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/noise.png')] opacity-5" />
+          <div className="absolute inset-0 bg-[url('/noise.png')] opacity-5" aria-hidden="true" />
           <div className="container relative mx-auto px-4 py-8">
             <div className="mb-4 flex flex-wrap items-center gap-2">
               {base.type?.name && (
