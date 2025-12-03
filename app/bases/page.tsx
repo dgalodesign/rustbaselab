@@ -3,7 +3,9 @@ import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { FilterBar } from "@/components/filter-bar"
 import { BackToHome } from "@/components/back-to-home"
+import { StructuredData } from "@/components/structured-data"
 import { getFilteredBases, getAllTypes, getAllTeamSizes, getAllFootprints } from "@/lib/db-queries"
+import type { Metadata } from "next"
 
 export const dynamic = "force-dynamic"
 
@@ -13,6 +15,37 @@ interface BasesPageProps {
     teamSize?: string
     footprint?: string
   }>
+}
+
+export async function generateMetadata({ searchParams }: BasesPageProps): Promise<Metadata> {
+  const params = await searchParams
+  const typeId = params.type
+  const teamSizeId = params.teamSize
+  const footprintId = params.footprint
+
+  let title = "All Rust Base Designs"
+  let description = "Browse our complete collection of Rust base designs for all team sizes and playstyles."
+
+  if (typeId && typeId !== "all") {
+    title = `${typeId} Rust Bases`
+    description = `Explore ${typeId} base designs for Rust with detailed video tutorials.`
+  } else if (teamSizeId && teamSizeId !== "all") {
+    title = `Rust ${teamSizeId} Bases`
+    description = `Find the best Rust base designs for ${teamSizeId} teams with building guides.`
+  }
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title: `${title} | RustBaseLab`,
+      description,
+      url: "https://rustbaselab.com/bases",
+    },
+    alternates: {
+      canonical: "https://rustbaselab.com/bases",
+    },
+  }
 }
 
 export default async function BasesPage({ searchParams }: BasesPageProps) {
@@ -32,6 +65,17 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
     <div className="flex min-h-screen flex-col">
       <Header />
 
+      {/* Structured Data for SEO */}
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Rust Base Designs Collection",
+          description: "Browse our complete collection of Rust base designs for all team sizes.",
+          url: "https://rustbaselab.com/bases",
+        }}
+      />
+
       <main className="flex-1">
         <section className="border-b-2 border-border bg-background">
           <div className="container mx-auto px-4 py-4">
@@ -40,7 +84,7 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
         </section>
 
         <section className="border-b-2 border-border bg-gradient-to-b from-background to-background/95 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,255,0.1),transparent)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,255,0.1),transparent)]" aria-hidden="true" />
           <div className="container relative mx-auto px-4 py-12">
             <h1 className="mb-4 font-display text-4xl font-bold md:text-5xl">ALL BASE DESIGNS</h1>
             <p className="text-lg text-muted-foreground">

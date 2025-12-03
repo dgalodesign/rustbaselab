@@ -10,7 +10,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
   }, [error])
 
   const errorMessage = error?.message || error?.toString() || "An unknown error occurred"
-  
+
   const isSupabaseConfigError =
     errorMessage.includes("SUPABASE_") ||
     errorMessage.includes("INVALID_SUPABASE_URL") ||
@@ -21,7 +21,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-950 p-4">
+    <main className="flex min-h-screen items-center justify-center bg-zinc-950 p-4">
       <div className="w-full max-w-md space-y-4 rounded-lg border border-zinc-800 bg-zinc-900 p-6">
         <h2 className="text-lg font-semibold text-amber-500">Error</h2>
         <p className="text-sm text-zinc-400">{errorMessage}</p>
@@ -32,6 +32,6 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
           Intentar de nuevo
         </button>
       </div>
-    </div>
+    </main>
   )
 }

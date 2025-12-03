@@ -3,6 +3,7 @@ import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { Button } from "@/components/ui/button"
 import { SectionHeader } from "@/components/section-header"
+import { StructuredData } from "@/components/structured-data"
 import {
   Sparkles,
   ArrowRight,
@@ -31,8 +32,42 @@ import {
 import Link from "next/link"
 import { getMetaBases, getPopularBases, getAllTypes, getAllTeamSizes } from "@/lib/db-queries"
 import type { Base, BaseType, TeamSize } from "@/lib/types"
+import type { Metadata } from "next"
 
 export const dynamic = "force-dynamic"
+
+export const metadata: Metadata = {
+  title: "Rust Base Designs & Building Tutorials",
+  description:
+    "Discover professional Rust base designs for solo, duo, trio, and zerg teams. Watch detailed video tutorials and learn advanced building techniques. Find the perfect base for your playstyle.",
+  keywords: [
+    "rust base designs",
+    "rust building guide",
+    "rust solo base",
+    "rust duo base",
+    "rust trio base",
+    "rust zerg base",
+    "rust base tutorial",
+    "rust fortifications",
+  ],
+  openGraph: {
+    title: "RustBaseLab - Professional Rust Base Designs",
+    description: "Discover the best Rust base designs with video tutorials for all team sizes.",
+    url: "https://rustbaselab.com",
+    images: [
+      {
+        url: "/logo.svg",
+        width: 1200,
+        height: 630,
+        alt: "RustBaseLab - Rust Base Designs",
+      },
+    ],
+  },
+  alternates: {
+    canonical: "https://rustbaselab.com",
+  },
+}
+
 
 const typeIcons: Record<string, any> = {
   starter: Home,
@@ -124,6 +159,39 @@ export default async function HomePage() {
     <div className="flex min-h-screen flex-col">
       <Header />
 
+      {/* Structured Data for SEO */}
+      <StructuredData
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "RustBaseLab",
+            url: "https://rustbaselab.com",
+            logo: "https://rustbaselab.com/logo.svg",
+            description:
+              "Professional Rust base designs and building tutorials for all team sizes. Learn advanced building techniques and defensive strategies.",
+            sameAs: [
+              // Añadir redes sociales cuando estén disponibles
+            ],
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "RustBaseLab",
+            url: "https://rustbaselab.com",
+            description: "Discover the best Rust base designs with video tutorials for all team sizes.",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: {
+                "@type": "EntryPoint",
+                urlTemplate: "https://rustbaselab.com/bases?search={search_term_string}",
+              },
+              "query-input": "required name=search_term_string",
+            },
+          },
+        ]}
+      />
+
       <main className="flex-1">
         {hasError && (
           <div className="container mx-auto px-4 py-8">
@@ -139,7 +207,7 @@ export default async function HomePage() {
 
         {/* Hero Section */}
         <section className="border-b-2 border-primary/20 bg-gradient-to-b from-background via-background/95 to-background/90 relative overflow-hidden">
-          <div className="absolute inset-0" />
+          <div className="absolute inset-0" aria-hidden="true" />
           <div className="container relative mx-auto px-4 py-16 md:py-24">
             <div className="mx-auto max-w-3xl text-center">
               <div className="mb-4 inline-flex items-center gap-2 rounded-lg border-2 border-primary/30 bg-primary/10 px-4 py-1.5 text-sm text-accent">
@@ -185,7 +253,7 @@ export default async function HomePage() {
 
           {metaBases.length === 0 && (
             <div className="py-12 text-center border-2 border-border rounded-lg bg-card">
-              <p className="text-lg text-muted-foreground font-mono">NO META BASES AVAILABLE</p>
+              <p className="text-lg text-muted-foreground">NO META BASES AVAILABLE</p>
             </div>
           )}
         </section>
@@ -205,7 +273,7 @@ export default async function HomePage() {
 
           {popularBases.length === 0 && (
             <div className="py-12 text-center border-2 border-border rounded-lg bg-card">
-              <p className="text-lg text-muted-foreground font-mono">NO POPULAR BASES AVAILABLE</p>
+              <p className="text-lg text-muted-foreground">NO POPULAR BASES AVAILABLE</p>
             </div>
           )}
         </section>
@@ -222,7 +290,7 @@ export default async function HomePage() {
                   href={`/bases?type=${type.id}`}
                   className="group relative overflow-hidden rounded-lg border-2 border-border bg-card p-6 transition-all hover:border-primary hover:shadow-lg hover:shadow-primary/20 hover:scale-105"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                   <div className="relative flex flex-col items-center gap-3 text-center">
                     <div className="rounded-lg bg-primary/10 p-3 border-2 border-primary/20 group-hover:border-primary/50 transition-colors">
                       <Icon className="h-8 w-8 text-primary-foregroundry" />
@@ -248,7 +316,7 @@ export default async function HomePage() {
                   href={`/bases?teamSize=${size.id}`}
                   className="group relative overflow-hidden rounded-lg border-2 border-border bg-card p-6 transition-all hover:border-secondary hover:shadow-lg hover:shadow-secondary/20 hover:scale-105"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                   <div className="relative flex flex-col items-center gap-3 text-center">
                     <div className="rounded-lg bg-secondary/10 p-3 border-2 border-secondary/20 group-hover:border-secondary/50 transition-colors">
                       <Icon className="h-8 w-8 text-secondary" />

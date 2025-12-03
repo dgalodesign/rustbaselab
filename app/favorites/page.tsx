@@ -58,12 +58,12 @@ export default function FavoritesPage() {
                     <h3 className="mb-2 line-clamp-1 font-display text-lg font-bold text-foreground">{base.title}</h3>
                     <div className="flex flex-wrap gap-2">
                       {base.type?.name && (
-                        <Badge variant="outline" className="font-mono text-xs">
+                        <Badge variant="outline" className="text-xs">
                           {base.type.name}
                         </Badge>
                       )}
                       {base.team_sizes?.map((size) => (
-                        <Badge key={size.team_size.name} variant="secondary" className="font-mono text-xs">
+                        <Badge key={size.team_size.name} variant="secondary" className="text-xs">
                           {size.team_size.name}
                         </Badge>
                       ))}

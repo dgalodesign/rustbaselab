@@ -8,6 +8,12 @@ interface BaseData {
 
 interface TypeData {
   id: string
+  name: string
+}
+
+interface TeamSizeData {
+  id: string
+  name: string
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -15,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const baseUrl = "https://rustbaselab.com"
 
-  // Páginas estáticas
+  // Páginas estáticas principales
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
@@ -28,6 +34,42 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/about`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/terms`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/feedback`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
+      url: `${baseUrl}/favorites`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.5,
     },
   ]
 
@@ -46,7 +88,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })) || []
 
   // Obtener todos los tipos para páginas filtradas
-  const { data: types } = await supabase.from("types").select("id")
+  const { data: types } = await supabase.from("types").select("id, name")
 
   const typePages: MetadataRoute.Sitemap =
     types?.map((type: TypeData) => ({
@@ -56,5 +98,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     })) || []
 
-  return [...staticPages, ...basePages, ...typePages]
+  // Obtener todos los team sizes para páginas filtradas
+  const { data: teamSizes } = await supabase.from("team_sizes").select("id, name")
+
+  const teamSizePages: MetadataRoute.Sitemap =
+    teamSizes?.map((size: TeamSizeData) => ({
+      url: `${baseUrl}/bases?teamSize=${size.id}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.75,
+    })) || []
+
+  return [...staticPages, ...basePages, ...typePages, ...teamSizePages]
 }
