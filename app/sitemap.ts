@@ -33,6 +33,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/bases`,
       lastModified: new Date(),
       changeFrequency: "daily",
+      priority: 0.95, // Increased priority based on analytics
+    },
+    // Future static landing pages (Sprint 2)
+    {
+      url: `${baseUrl}/bases/solo`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/bases/duo`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/bases/trio`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/bases/quad`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
       priority: 0.9,
     },
     {
@@ -84,7 +109,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/base/${base.slug}`,
       lastModified: new Date(base.updated_at),
       changeFrequency: "weekly" as const,
-      priority: 0.8,
+      priority: 0.85, // Increased priority for individual bases
     })) || []
 
   // Obtener todos los tipos para páginas filtradas
@@ -99,6 +124,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })) || []
 
   // Obtener todos los team sizes para páginas filtradas
+  // Note: These will be less important once we have static landing pages
   const { data: teamSizes } = await supabase.from("team_sizes").select("id, name")
 
   const teamSizePages: MetadataRoute.Sitemap =
@@ -106,7 +132,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/bases?teamSize=${size.id}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
-      priority: 0.75,
+      priority: 0.6, // Lowered priority in favor of static pages
     })) || []
 
   return [...staticPages, ...basePages, ...typePages, ...teamSizePages]
