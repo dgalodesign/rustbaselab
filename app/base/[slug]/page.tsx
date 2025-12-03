@@ -50,11 +50,36 @@ export async function generateMetadata({ params }: BasePageProps): Promise<Metad
     }
   }
 
-  const title = `${base.title} - Rust Base Design`
-  const description =
-    base.features ||
-    `${base.type?.name || "Base"} design for ${base.footprint?.name || "standard"} footprint. ${base.build_time_min ? `Build time: ${base.build_time_min} minutes.` : ""
-    } ${base.raid_cost_sulfur ? `Raid cost: ${base.raid_cost_sulfur.toLocaleString()} sulfur.` : ""}`
+  // Fetch team sizes for the title
+  const supabase = createPublicClient()
+  const { data: baseTeamsData } = await supabase
+    .from("base_teams")
+    .select("team_sizes(name)")
+    .eq("base_id", base.id)
+
+  const teamSizes = (baseTeamsData?.map((bt: any) => bt.team_sizes?.name).filter(Boolean) || []) as string[]
+
+  // Dynamic Year Logic
+  const year = new Date().getFullYear()
+
+  // Smart Title Logic: Avoid duplicate team sizes
+  const teamSizeString = teamSizes.join('/')
+  const titleSuffix = base.title.toLowerCase().includes(teamSizeString.toLowerCase())
+    ? `Base Design Rust ${year}`
+    : `${teamSizeString} Base Design Rust ${year}`
+
+  // Clean up double spaces if teamSizeString is empty
+  const cleanTitleSuffix = titleSuffix.replace(/^\s+/, '')
+  const title = `${base.title} | ${cleanTitleSuffix}`
+
+  // Enhanced Description
+  const baseType = base.type?.name || "Base"
+  const footprint = base.footprint?.name || "standard"
+  const raidCost = base.raid_cost_sulfur ? `🛡️ Raid Cost: ${base.raid_cost_sulfur.toLocaleString()} Sulfur.` : ""
+  const buildTime = base.build_time_min ? `⚡ Build Time: ${base.build_time_min}m.` : ""
+
+  const description = base.features ||
+    `Discover the best ${baseType} design for Rust ${year}. ${footprint} footprint optimized for ${teamSizes.join('/') || "any team"}. ${raidCost} ${buildTime} Easy to build & hard to raid tutorial.`
 
   // Usar thumbnail de YouTube si está disponible
   const ogImage = base.video_youtube_id
@@ -66,11 +91,14 @@ export async function generateMetadata({ params }: BasePageProps): Promise<Metad
     description,
     keywords: [
       "rust base",
+      "rust base design",
+      `rust base design ${year}`,
       base.type?.name || "base design",
       base.footprint?.name || "rust building",
       "rust tutorial",
       "rust building guide",
       base.creator?.name || "rust base builder",
+      ...teamSizes.map(size => `rust ${size} base`),
     ],
     authors: base.creator?.name ? [{ name: base.creator.name }] : undefined,
     openGraph: {

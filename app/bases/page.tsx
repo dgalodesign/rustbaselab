@@ -23,24 +23,39 @@ export async function generateMetadata({ searchParams }: BasesPageProps): Promis
   const teamSizeId = params.teamSize
   const footprintId = params.footprint
 
-  let title = "All Rust Base Designs"
-  let description = "Browse our complete collection of Rust base designs for all team sizes and playstyles."
+  const year = new Date().getFullYear()
+
+  let title = `All Rust Base Designs ${year} | Best Rust Bases`
+  let description = `Browse our complete collection of Rust base designs for ${year}. Filter by team size (Solo/Duo/Trio/Quad), type, and footprint. Updated daily with the best bases.`
 
   if (typeId && typeId !== "all") {
-    title = `${typeId} Rust Bases`
-    description = `Explore ${typeId} base designs for Rust with detailed video tutorials.`
+    title = `${typeId} Rust Bases ${year} | Best Designs`
+    description = `Explore the best ${typeId} base designs for Rust ${year}. Detailed video tutorials, build costs, and raid defense guides for ${typeId} bases.`
   } else if (teamSizeId && teamSizeId !== "all") {
-    title = `Rust ${teamSizeId} Bases`
-    description = `Find the best Rust base designs for ${teamSizeId} teams with building guides.`
+    title = `Best Rust ${teamSizeId} Bases ${year} | Top Designs`
+    description = `Find the best Rust base designs for ${teamSizeId} teams in ${year}. From starter bases to main bases, optimized for ${teamSizeId} players.`
+  } else if (footprintId && footprintId !== "all") {
+    title = `Rust ${footprintId} Base Designs ${year}`
+    description = `Discover top Rust base designs with ${footprintId} footprint for ${year}. Efficient and strong builds for any team size.`
   }
 
   return {
     title,
     description,
+    keywords: [
+      "rust base designs",
+      `rust base designs ${year}`,
+      "best rust bases",
+      "rust building",
+      "rust console base designs",
+      typeId !== "all" ? `rust ${typeId} base` : "",
+      teamSizeId !== "all" ? `rust ${teamSizeId} base` : "",
+    ].filter(Boolean),
     openGraph: {
       title: `${title} | RustBaseLab`,
       description,
       url: "https://rustbaselab.com/bases",
+      type: "website",
     },
     alternates: {
       canonical: "https://rustbaselab.com/bases",
