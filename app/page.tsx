@@ -3,6 +3,7 @@ import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { Button } from "@/components/ui/button"
 import { SectionHeader } from "@/components/section-header"
+import { StructuredData } from "@/components/structured-data"
 import {
   Sparkles,
   ArrowRight,
@@ -31,8 +32,42 @@ import {
 import Link from "next/link"
 import { getMetaBases, getPopularBases, getAllTypes, getAllTeamSizes } from "@/lib/db-queries"
 import type { Base, BaseType, TeamSize } from "@/lib/types"
+import type { Metadata } from "next"
 
 export const dynamic = "force-dynamic"
+
+export const metadata: Metadata = {
+  title: "Rust Base Designs & Building Tutorials",
+  description:
+    "Discover professional Rust base designs for solo, duo, trio, and zerg teams. Watch detailed video tutorials and learn advanced building techniques. Find the perfect base for your playstyle.",
+  keywords: [
+    "rust base designs",
+    "rust building guide",
+    "rust solo base",
+    "rust duo base",
+    "rust trio base",
+    "rust zerg base",
+    "rust base tutorial",
+    "rust fortifications",
+  ],
+  openGraph: {
+    title: "RustBaseLab - Professional Rust Base Designs",
+    description: "Discover the best Rust base designs with video tutorials for all team sizes.",
+    url: "https://rustbaselab.com",
+    images: [
+      {
+        url: "/logo.svg",
+        width: 1200,
+        height: 630,
+        alt: "RustBaseLab - Rust Base Designs",
+      },
+    ],
+  },
+  alternates: {
+    canonical: "https://rustbaselab.com",
+  },
+}
+
 
 const typeIcons: Record<string, any> = {
   starter: Home,
@@ -123,6 +158,39 @@ export default async function HomePage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
+
+      {/* Structured Data for SEO */}
+      <StructuredData
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "RustBaseLab",
+            url: "https://rustbaselab.com",
+            logo: "https://rustbaselab.com/logo.svg",
+            description:
+              "Professional Rust base designs and building tutorials for all team sizes. Learn advanced building techniques and defensive strategies.",
+            sameAs: [
+              // Añadir redes sociales cuando estén disponibles
+            ],
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "RustBaseLab",
+            url: "https://rustbaselab.com",
+            description: "Discover the best Rust base designs with video tutorials for all team sizes.",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: {
+                "@type": "EntryPoint",
+                urlTemplate: "https://rustbaselab.com/bases?search={search_term_string}",
+              },
+              "query-input": "required name=search_term_string",
+            },
+          },
+        ]}
+      />
 
       <main className="flex-1">
         {hasError && (

@@ -6,6 +6,7 @@ import { RelatedBases } from "@/components/related-bases"
 import { BackToHome } from "@/components/back-to-home"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
+import { StructuredData } from "@/components/structured-data"
 import {
   getBaseBySlug,
   getRelatedBases,
@@ -20,6 +21,7 @@ import Image from "next/image"
 import { BaseActions } from "@/components/base-actions"
 import { revalidatePath } from "next/cache"
 import { RequestInfoButton } from "@/components/request-info-button"
+
 
 export const dynamic = "force-dynamic"
 
@@ -48,16 +50,57 @@ export async function generateMetadata({ params }: BasePageProps): Promise<Metad
     }
   }
 
+  const title = `${base.title} - Rust Base Design`
+  const description =
+    base.features ||
+    `${base.type?.name || "Base"} design for ${base.footprint?.name || "standard"} footprint. ${base.build_time_min ? `Build time: ${base.build_time_min} minutes.` : ""
+    } ${base.raid_cost_sulfur ? `Raid cost: ${base.raid_cost_sulfur.toLocaleString()} sulfur.` : ""}`
+
+  // Usar thumbnail de YouTube si está disponible
+  const ogImage = base.video_youtube_id
+    ? `https://i.ytimg.com/vi/${base.video_youtube_id}/maxresdefault.jpg`
+    : "/logo.svg"
+
   return {
-    title: `${base.title} - RustBaseLab`,
-    description: base.features || base.title,
+    title,
+    description,
+    keywords: [
+      "rust base",
+      base.type?.name || "base design",
+      base.footprint?.name || "rust building",
+      "rust tutorial",
+      "rust building guide",
+      base.creator?.name || "rust base builder",
+    ],
+    authors: base.creator?.name ? [{ name: base.creator.name }] : undefined,
     openGraph: {
-      title: base.title,
-      description: base.features || base.title,
+      title,
+      description,
       type: "article",
+      url: `https://rustbaselab.com/base/${slug}`,
+      images: [
+        {
+          url: ogImage,
+          width: 1280,
+          height: 720,
+          alt: base.title,
+        },
+      ],
+      publishedTime: base.created_at,
+      modifiedTime: base.updated_at,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
+    alternates: {
+      canonical: `https://rustbaselab.com/base/${slug}`,
     },
   }
 }
+
 
 function getRelativeTime(dateString: string): string {
   const date = new Date(dateString)
@@ -166,6 +209,77 @@ export default async function BasePage({ params }: BasePageProps) {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
+
+      {/* Structured Data for SEO */}
+      <StructuredData
+        data={[
+          // BreadcrumbList Schema
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://rustbaselab.com",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Bases",
+                item: "https://rustbaselab.com/bases",
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: base.title,
+                item: `https://rustbaselab.com/base/${base.slug}`,
+              },
+            ],
+          },
+          // Article Schema
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: base.title,
+            description: base.features || `${base.type?.name} base design for Rust`,
+            image: base.video_youtube_id
+              ? `https://i.ytimg.com/vi/${base.video_youtube_id}/maxresdefault.jpg`
+              : "https://rustbaselab.com/logo.svg",
+            datePublished: base.created_at,
+            dateModified: base.updated_at,
+            author: {
+              "@type": "Person",
+              name: base.creator?.name || "RustBaseLab",
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "RustBaseLab",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://rustbaselab.com/logo.svg",
+              },
+            },
+          },
+          // VideoObject Schema (if video exists)
+          ...(base.video_youtube_id
+            ? [
+              {
+                "@context": "https://schema.org",
+                "@type": "VideoObject",
+                name: base.title,
+                description: base.features || `${base.type?.name} base design tutorial for Rust`,
+                thumbnailUrl: `https://i.ytimg.com/vi/${base.video_youtube_id}/maxresdefault.jpg`,
+                uploadDate: base.created_at,
+                contentUrl: `https://www.youtube.com/watch?v=${base.video_youtube_id}`,
+                embedUrl: `https://www.youtube.com/embed/${base.video_youtube_id}`,
+                duration: base.build_time_min ? `PT${base.build_time_min}M` : undefined,
+              },
+            ]
+            : []),
+        ]}
+      />
 
       <main className="flex-1">
         <section className="border-b-2 border-border bg-background">

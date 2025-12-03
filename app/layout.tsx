@@ -25,16 +25,75 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: "RustBaseLab - Rust Base Designs & Tutorials",
+  metadataBase: new URL("https://rustbaselab.com"),
+  title: {
+    default: "RustBaseLab - Rust Base Designs & Tutorials",
+    template: "%s | RustBaseLab",
+  },
   description:
-    "Discover the best Rust base designs for solo, duo, trio, and zerg gameplay. Video tutorials and building guides.",
-  keywords: "rust, rust base, rust base design, rust tutorial, rust building, rust solo base, rust duo base",
+    "Discover the best Rust base designs for solo, duo, trio, and zerg gameplay. Professional video tutorials and building guides for all team sizes.",
+  keywords: [
+    "rust",
+    "rust base",
+    "rust base design",
+    "rust tutorial",
+    "rust building guide",
+    "rust solo base",
+    "rust duo base",
+    "rust trio base",
+    "rust zerg base",
+    "rust building",
+    "rust fortifications",
+    "rust defense",
+    "rust base builder",
+  ],
+  authors: [{ name: "RustBaseLab" }],
+  creator: "RustBaseLab",
+  publisher: "RustBaseLab",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://rustbaselab.com",
+    siteName: "RustBaseLab",
+    title: "RustBaseLab - Rust Base Designs & Tutorials",
+    description: "Discover the best Rust base designs for solo, duo, trio, and zerg gameplay. Professional video tutorials and building guides.",
+    images: [
+      {
+        url: "/logo.svg",
+        width: 1200,
+        height: 630,
+        alt: "RustBaseLab - Rust Base Designs",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "RustBaseLab - Rust Base Designs & Tutorials",
     description: "Discover the best Rust base designs for solo, duo, trio, and zerg gameplay.",
-    type: "website",
+    images: ["/logo.svg"],
+    creator: "@rustbaselab",
   },
-  generator: "v0.app",
+  alternates: {
+    canonical: "https://rustbaselab.com",
+    languages: {
+      "en-US": "https://rustbaselab.com",
+      "es-ES": "https://rustbaselab.com/es",
+    },
+  },
+  verification: {
+    google: "google-site-verification-code", // Reemplazar con código real de Google Search Console
+  },
 }
 
 export default function RootLayout({
