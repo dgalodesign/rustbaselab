@@ -27,4 +27,4 @@ yarn-error.log*
 next-env.d.ts
 
 # external context data
-# /external-context/
+/external-context/
