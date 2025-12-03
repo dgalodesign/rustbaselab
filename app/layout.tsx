@@ -92,7 +92,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "google-site-verification-code", // Reemplazar con código real de Google Search Console
+    google: "bpWqD-y3XKcAqVhVhsjrnS8hlXHf-iHFzvBjhDqW10c",
   },
 }
 
