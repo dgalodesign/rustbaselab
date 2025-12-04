@@ -310,10 +310,19 @@ export default async function HomePage() {
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {sortTeamSizes(teamSizes).map((size) => {
               const Icon = getTeamSizeIcon(size.name)
+              // Map to static landing pages
+              const staticPageMap: Record<string, string> = {
+                solo: "/bases/solo",
+                duo: "/bases/duo",
+                trio: "/bases/trio",
+                quad: "/bases/quad",
+              }
+              const href = staticPageMap[size.name.toLowerCase()] || `/bases?teamSize=${size.id}`
+
               return (
                 <Link
                   key={size.id}
-                  href={`/bases?teamSize=${size.id}`}
+                  href={href}
                   className="group relative overflow-hidden rounded-lg border-2 border-border bg-card p-6 transition-all hover:border-secondary hover:shadow-lg hover:shadow-secondary/20 hover:scale-105"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
