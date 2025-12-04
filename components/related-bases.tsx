@@ -18,17 +18,24 @@ export function RelatedBases({ bases, title, description }: RelatedBasesProps) {
     return null
   }
 
+  // Limit to 6 related bases for better performance
+  const displayBases = bases.slice(0, 6)
   const displayTitle = title || t.base.relatedBases
   const displayDescription = description
 
   return (
-    <section className="container mx-auto px-4 py-12">
+    <section className="container mx-auto px-4 py-12 border-t-2 border-border">
       <SectionHeader title={displayTitle} description={displayDescription} />
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {bases.map((base) => (
+        {displayBases.map((base) => (
           <BaseCard key={base.id} base={base} />
         ))}
       </div>
+      {bases.length > 6 && (
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          Showing {displayBases.length} of {bases.length} related bases
+        </p>
+      )}
     </section>
   )
 }

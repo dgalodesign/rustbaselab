@@ -3,6 +3,7 @@ import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { BackToHome } from "@/components/back-to-home"
 import { StructuredData } from "@/components/structured-data"
+import { Breadcrumbs } from "@/components/breadcrumbs"
 import type { Base } from "@/lib/types"
 
 interface TeamSizeLandingPageProps {
@@ -32,19 +33,51 @@ export function TeamSizeLandingPage({
 
             {/* Structured Data for SEO */}
             <StructuredData
-                data={{
-                    "@context": "https://schema.org",
-                    "@type": "CollectionPage",
-                    name: title,
-                    description: description,
-                    url: `https://rustbaselab.com/bases/${teamSize.toLowerCase()}`,
-                }}
+                data={[
+                    {
+                        "@context": "https://schema.org",
+                        "@type": "BreadcrumbList",
+                        itemListElement: [
+                            {
+                                "@type": "ListItem",
+                                position: 1,
+                                name: "Home",
+                                item: "https://rustbaselab.com",
+                            },
+                            {
+                                "@type": "ListItem",
+                                position: 2,
+                                name: "Bases",
+                                item: "https://rustbaselab.com/bases",
+                            },
+                            {
+                                "@type": "ListItem",
+                                position: 3,
+                                name: `${teamSize} Bases`,
+                                item: `https://rustbaselab.com/bases/${teamSize.toLowerCase()}`,
+                            },
+                        ],
+                    },
+                    {
+                        "@context": "https://schema.org",
+                        "@type": "CollectionPage",
+                        name: title,
+                        description: description,
+                        url: `https://rustbaselab.com/bases/${teamSize.toLowerCase()}`,
+                    },
+                ]}
             />
 
             <main className="flex-1">
                 <section className="border-b-2 border-border bg-background">
-                    <div className="container mx-auto px-4 py-4">
+                    <div className="container mx-auto px-4 py-4 flex items-center justify-between">
                         <BackToHome />
+                        <Breadcrumbs
+                            items={[
+                                { label: "Bases", href: "/bases" },
+                                { label: `${teamSize} Bases` }
+                            ]}
+                        />
                     </div>
                 </section>
 

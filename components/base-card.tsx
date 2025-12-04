@@ -31,6 +31,8 @@ export function BaseCard({ base }: BaseCardProps) {
               alt={base.title}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-110"
+              loading="lazy"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               onError={(e) => {
                 const target = e.target as HTMLImageElement
                 target.src = `/placeholder.svg?height=400&width=600&query=${encodeURIComponent(base.title)}`
