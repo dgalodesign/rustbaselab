@@ -3,7 +3,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { YouTubeEmbed } from "@/components/youtube-embed"
 import { RelatedBases } from "@/components/related-bases"
-import { BackToHome } from "@/components/back-to-home"
+
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { StructuredData } from "@/components/structured-data"
@@ -312,7 +312,6 @@ export default async function BasePage({ params }: BasePageProps) {
       <main className="flex-1">
         <section className="border-b-2 border-border bg-background">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-            <BackToHome />
             <Breadcrumbs
               items={[
                 { label: "Bases", href: "/bases" },

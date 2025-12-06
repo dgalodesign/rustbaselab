@@ -1,7 +1,7 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
-import { BackToHome } from "@/components/back-to-home"
+
 import { StructuredData } from "@/components/structured-data"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import type { Base } from "@/lib/types"
@@ -71,7 +71,6 @@ export function TeamSizeLandingPage({
             <main className="flex-1">
                 <section className="border-b-2 border-border bg-background">
                     <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-                        <BackToHome />
                         <Breadcrumbs
                             items={[
                                 { label: "Bases", href: "/bases" },

@@ -2,7 +2,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { FilterBar } from "@/components/filter-bar"
-import { BackToHome } from "@/components/back-to-home"
+
 import { StructuredData } from "@/components/structured-data"
 import { getFilteredBases, getAllTypes, getAllTeamSizes, getAllFootprints } from "@/lib/db-queries"
 import type { Metadata } from "next"
@@ -115,7 +115,6 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
       <main className="flex-1">
         <section className="border-b-2 border-border bg-background">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-            <BackToHome />
             <Breadcrumbs items={[{ label: "Bases" }]} />
           </div>
         </section>
@@ -155,6 +154,6 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
       </main>
 
       <Footer />
-    </div>
+    </div >
   )
 }
