@@ -3,7 +3,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { YouTubeEmbed } from "@/components/youtube-embed"
 import { RelatedBases } from "@/components/related-bases"
-import { BackToHome } from "@/components/back-to-home"
+
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { StructuredData } from "@/components/structured-data"
@@ -21,9 +21,9 @@ import Image from "next/image"
 import { BaseActions } from "@/components/base-actions"
 import { revalidatePath } from "next/cache"
 import { RequestInfoButton } from "@/components/request-info-button"
+import { Breadcrumbs } from "@/components/breadcrumbs"
 
-
-export const dynamic = "force-dynamic"
+export const revalidate = 3600 // Revalidate every hour (ISR)
 
 interface BasePageProps {
   params: Promise<{
@@ -311,8 +311,13 @@ export default async function BasePage({ params }: BasePageProps) {
 
       <main className="flex-1">
         <section className="border-b-2 border-border bg-background">
-          <div className="container mx-auto px-4 py-4">
-            <BackToHome />
+          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+            <Breadcrumbs
+              items={[
+                { label: "Bases", href: "/bases" },
+                { label: base.title },
+              ]}
+            />
           </div>
         </section>
 

@@ -2,10 +2,11 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 import { FilterBar } from "@/components/filter-bar"
-import { BackToHome } from "@/components/back-to-home"
+
 import { StructuredData } from "@/components/structured-data"
 import { getFilteredBases, getAllTypes, getAllTeamSizes, getAllFootprints } from "@/lib/db-queries"
 import type { Metadata } from "next"
+import { Breadcrumbs } from "@/components/breadcrumbs"
 
 export const dynamic = "force-dynamic"
 
@@ -82,24 +83,47 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
 
       {/* Structured Data for SEO */}
       <StructuredData
-        data={{
-          "@context": "https://schema.org",
-          "@type": "CollectionPage",
-          name: "Rust Base Designs Collection",
-          description: "Browse our complete collection of Rust base designs for all team sizes.",
-          url: "https://rustbaselab.com/bases",
-        }}
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://rustbaselab.com",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Bases",
+                item: "https://rustbaselab.com/bases",
+              },
+            ],
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Rust Base Designs Collection",
+            description: "Browse our complete collection of Rust base designs for all team sizes.",
+            url: "https://rustbaselab.com/bases",
+          },
+        ]}
       />
 
       <main className="flex-1">
         <section className="border-b-2 border-border bg-background">
-          <div className="container mx-auto px-4 py-4">
-            <BackToHome />
+          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+            <Breadcrumbs items={[{ label: "Bases" }]} />
           </div>
         </section>
 
         <section className="border-b-2 border-border bg-gradient-to-b from-background to-background/95 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,255,0.1),transparent)]" aria-hidden="true" />
+          <div
+            className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,255,0.1),transparent)]"
+            aria-hidden="true"
+          />
           <div className="container relative mx-auto px-4 py-12">
             <h1 className="mb-4 font-display text-4xl font-bold md:text-5xl">ALL BASE DESIGNS</h1>
             <p className="text-lg text-muted-foreground">
@@ -130,6 +154,6 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
       </main>
 
       <Footer />
-    </div>
+    </div >
   )
 }
