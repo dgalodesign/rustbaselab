@@ -105,6 +105,21 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <head />
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-XP4WCJMLR4"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-XP4WCJMLR4');
+          `}
+        </Script>
+
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6148269016507542"
