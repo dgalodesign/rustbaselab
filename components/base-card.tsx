@@ -37,7 +37,12 @@ export function BaseCard({ base }: BaseCardProps) {
                 const target = e.target as HTMLImageElement
                 target.src = `/placeholder.svg?height=400&width=600&query=${encodeURIComponent(base.title)}`
               }}
-              unoptimized={thumbnailUrl.includes('placeholder.svg')}
+              unoptimized={
+                thumbnailUrl.includes('placeholder.svg') ||
+                thumbnailUrl.includes('ytimg.com') ||
+                thumbnailUrl.includes('youtube.com') ||
+                thumbnailUrl.includes('supabase.co')
+              }
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
 
