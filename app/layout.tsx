@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import "./globals.css"
 import { Suspense } from "react"
 import { I18nProvider } from "@/lib/i18n/context"
@@ -131,6 +132,7 @@ export default function RootLayout({
         </I18nProvider>
         <CookieConsent />
         <Analytics />
+        <SpeedInsights />
         <Toaster position="bottom-right" />
       </body>
     </html>
