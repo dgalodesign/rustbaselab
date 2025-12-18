@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Header } from "@/components/header"
+
 import { Footer } from "@/components/footer"
 import { Target, Users, Zap, Shield, ArrowRight } from "lucide-react"
 
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+
 
       <main className="container mx-auto px-4 py-12">
         {/* Hero Section */}

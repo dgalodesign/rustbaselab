@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { Header } from "@/components/header"
+
 import { Footer } from "@/components/footer"
 import { YouTubeEmbed } from "@/components/youtube-embed"
 import { RelatedBases } from "@/components/related-bases"
@@ -236,7 +236,7 @@ export default async function BasePage({ params }: BasePageProps) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header />
+
 
       {/* Structured Data for SEO */}
       <StructuredData

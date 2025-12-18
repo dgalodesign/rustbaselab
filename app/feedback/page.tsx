@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Header } from "@/components/header"
+
 import { Footer } from "@/components/footer"
 import { BackToHome } from "@/components/back-to-home"
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function FeedbackPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+
 
       <main className="container mx-auto px-4 py-12">
         <div className="mb-8">

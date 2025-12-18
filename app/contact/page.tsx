@@ -1,4 +1,4 @@
-import { Header } from "@/components/header"
+
 import { Footer } from "@/components/footer"
 import { Mail, MessageSquare } from "lucide-react"
 
@@ -10,7 +10,7 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Header />
+
       <main className="flex-1 container mx-auto px-4 py-12 max-w-4xl">
         <h1 className="text-4xl font-bold font-display mb-8 text-balance">Contacto</h1>
 

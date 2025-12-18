@@ -7,6 +7,8 @@ import { I18nProvider } from "@/lib/i18n/context"
 import { CookieConsent } from "@/components/cookie-consent"
 import Script from "next/script"
 import { Toaster } from "sonner"
+import { Header } from "@/components/header"
+import { getAllTypes, getAllTeamSizes } from "@/lib/db-queries"
 
 import { Inter, Space_Grotesk } from 'next/font/google'
 
@@ -96,11 +98,13 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const [types, teamSizes] = await Promise.all([getAllTypes(), getAllTeamSizes()])
+
   return (
     <html lang="en" className="dark">
       <head />
@@ -127,6 +131,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <I18nProvider>
+          <Header types={types} teamSizes={teamSizes} />
           <Suspense fallback={null}>{children}</Suspense>
         </I18nProvider>
         <CookieConsent />

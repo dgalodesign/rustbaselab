@@ -4,8 +4,15 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "@/lib/i18n/context"
 import Image from "next/image"
+import { ChevronDown } from "lucide-react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
-export function Header() {
+interface HeaderProps {
+  types?: Array<{ id: string; name: string }>
+  teamSizes?: Array<{ id: string; name: string }>
+}
+
+export function Header({ types = [], teamSizes = [] }: HeaderProps) {
   const { t } = useTranslations()
 
   return (
@@ -22,6 +29,59 @@ export function Header() {
           >
             {t.nav.home}
           </Link>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary outline-none focus:text-primary group">
+              {t.home.filters.type}
+              <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-[200px]">
+              <DropdownMenuItem asChild>
+                <Link href="/bases?type=all" className="w-full cursor-pointer">
+                  {t.home.filters.allTypes}
+                </Link>
+              </DropdownMenuItem>
+              {types.map((type) => (
+                <DropdownMenuItem key={type.id} asChild>
+                  <Link href={`/bases?type=${type.id}`} className="w-full cursor-pointer">
+                    {type.name}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary outline-none focus:text-primary group">
+              {t.home.filters.teamSize}
+              <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-[200px]">
+              <DropdownMenuItem asChild>
+                <Link href="/bases?teamSize=all" className="w-full cursor-pointer">
+                  {t.home.filters.allTeamSizes}
+                </Link>
+              </DropdownMenuItem>
+              {teamSizes.map((size) => {
+                const staticPageMap: Record<string, string> = {
+                  solo: "/bases/solo",
+                  duo: "/bases/duo",
+                  trio: "/bases/trio",
+                  quad: "/bases/quad",
+                }
+                const href = staticPageMap[size.name.toLowerCase()] || `/bases?teamSize=${size.id}`
+
+                return (
+                  <DropdownMenuItem key={size.id} asChild>
+                    <Link href={href} className="w-full cursor-pointer">
+                      {size.name}
+                    </Link>
+                  </DropdownMenuItem>
+                )
+              })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <Link
             href="/bases"
             className="text-sm font-medium transition-colors hover:text-primary border-b-2 border-transparent hover:border-primary pb-1"

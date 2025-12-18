@@ -1,6 +1,6 @@
 "use client"
 
-import { Header } from "@/components/header"
+
 import { Footer } from "@/components/footer"
 import { useFavorites } from "@/hooks/use-favorites"
 import Link from "next/link"
@@ -15,7 +15,7 @@ export default function FavoritesPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header />
+
 
       <main className="flex-1 container mx-auto px-4 py-8">
         <h1 className="mb-8 font-display text-4xl font-bold text-foreground">MY FAVORITES</h1>

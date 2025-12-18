@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Header } from "@/components/header"
+
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Home, Search } from "lucide-react"
@@ -12,7 +12,7 @@ export default function NotFound() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header />
+
 
       <main className="flex-1 flex items-center justify-center bg-gradient-to-b from-background to-muted">
         <div className="container mx-auto px-4 py-16 text-center">
