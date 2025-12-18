@@ -26,8 +26,10 @@ export function Header({ types = [], teamSizes = [] }: HeaderProps) {
   const { t } = useTranslations()
   const pathname = usePathname()
 
-  const isActive = (path: string) => pathname === path
-  const isBasesActive = pathname?.startsWith("/bases") && !pathname?.startsWith("/bases/solo") && !pathname?.startsWith("/bases/duo") // Simplified check
+  // Shared base styles for all nav items
+  const navItemStyles = "text-sm font-medium transition-colors hover:text-primary border-b-2 pb-1 flex items-center gap-1"
+  const activeStyles = "border-primary text-primary"
+  const inactiveStyles = "border-transparent text-foreground/80" // slightly muted for inactive to pop active more
 
   return (
     <header className="sticky top-0 z-50 w-full border-b-2 border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
@@ -46,8 +48,8 @@ export function Header({ types = [], teamSizes = [] }: HeaderProps) {
           <Link
             href="/bases"
             className={cn(
-              "text-sm font-medium transition-colors hover:text-primary border-b-2 pb-1",
-              pathname === "/bases" ? "border-primary text-primary" : "border-transparent"
+              navItemStyles,
+              pathname === "/bases" ? activeStyles : inactiveStyles
             )}
           >
             {t.nav.allBases}
@@ -56,8 +58,9 @@ export function Header({ types = [], teamSizes = [] }: HeaderProps) {
           {/* 2. Base Types Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger className={cn(
-              "flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary outline-none focus:text-primary group",
-              pathname?.includes("type=") ? "text-primary" : ""
+              navItemStyles,
+              "outline-none focus:text-primary group",
+              pathname?.includes("type=") ? activeStyles : inactiveStyles
             )}>
               {t.home.filters.type}
               <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
@@ -81,9 +84,10 @@ export function Header({ types = [], teamSizes = [] }: HeaderProps) {
           {/* 3. Team Sizes Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger className={cn(
-              "flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary outline-none focus:text-primary group",
+              navItemStyles,
+              "outline-none focus:text-primary group",
               // Check if current path matches any team size page or query
-              pathname?.includes("teamSize=") || Object.values(STATIC_PAGE_MAP).includes(pathname) ? "text-primary" : ""
+              pathname?.includes("teamSize=") || Object.values(STATIC_PAGE_MAP).includes(pathname) ? activeStyles : inactiveStyles
             )}>
               {t.home.filters.teamSize}
               <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
@@ -111,8 +115,8 @@ export function Header({ types = [], teamSizes = [] }: HeaderProps) {
           <Link
             href="/favorites"
             className={cn(
-              "text-sm font-medium transition-colors hover:text-primary border-b-2 pb-1",
-              pathname === "/favorites" ? "border-primary text-primary" : "border-transparent"
+              navItemStyles,
+              pathname === "/favorites" ? activeStyles : inactiveStyles
             )}
           >
             Favorites
