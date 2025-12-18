@@ -1,4 +1,4 @@
-import { Header } from "@/components/header"
+
 import { Footer } from "@/components/footer"
 import { BaseCard } from "@/components/base-card"
 
@@ -29,7 +29,7 @@ export function TeamSizeLandingPage({
 
     return (
         <div className="flex min-h-screen flex-col">
-            <Header />
+
 
             {/* Structured Data for SEO */}
             <StructuredData
