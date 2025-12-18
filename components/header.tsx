@@ -1,37 +1,64 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "@/lib/i18n/context"
 import Image from "next/image"
 import { ChevronDown } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { MobileNav } from "@/components/mobile-nav"
+import { cn } from "@/lib/utils"
 
 interface HeaderProps {
   types?: Array<{ id: string; name: string }>
   teamSizes?: Array<{ id: string; name: string }>
 }
 
+const STATIC_PAGE_MAP: Record<string, string> = {
+  solo: "/bases/solo",
+  duo: "/bases/duo",
+  trio: "/bases/trio",
+  quad: "/bases/quad",
+}
+
 export function Header({ types = [], teamSizes = [] }: HeaderProps) {
   const { t } = useTranslations()
+  const pathname = usePathname()
+
+  const isActive = (path: string) => pathname === path
+  const isBasesActive = pathname?.startsWith("/bases") && !pathname?.startsWith("/bases/solo") && !pathname?.startsWith("/bases/duo") // Simplified check
 
   return (
     <header className="sticky top-0 z-50 w-full border-b-2 border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center transition-transform hover:scale-105">
+        {/* Mobile Menu */}
+        <MobileNav types={types} teamSizes={teamSizes} />
+
+        {/* Logo */}
+        <Link href="/" className="flex items-center transition-transform hover:scale-105 mr-auto md:mr-0">
           <Image src="/logo.svg" alt="RustBaseLab" width={160} height={40} className="h-8 w-auto" priority />
         </Link>
 
+        {/* Desktop Navigation */}
         <nav className="hidden items-center gap-6 md:flex">
+          {/* 1. All Bases */}
           <Link
-            href="/"
-            className="text-sm font-medium transition-colors hover:text-primary border-b-2 border-transparent hover:border-primary pb-1"
+            href="/bases"
+            className={cn(
+              "text-sm font-medium transition-colors hover:text-primary border-b-2 pb-1",
+              pathname === "/bases" ? "border-primary text-primary" : "border-transparent"
+            )}
           >
-            {t.nav.home}
+            {t.nav.allBases}
           </Link>
 
+          {/* 2. Base Types Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary outline-none focus:text-primary group">
+            <DropdownMenuTrigger className={cn(
+              "flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary outline-none focus:text-primary group",
+              pathname?.includes("type=") ? "text-primary" : ""
+            )}>
               {t.home.filters.type}
               <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
             </DropdownMenuTrigger>
@@ -51,8 +78,13 @@ export function Header({ types = [], teamSizes = [] }: HeaderProps) {
             </DropdownMenuContent>
           </DropdownMenu>
 
+          {/* 3. Team Sizes Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary outline-none focus:text-primary group">
+            <DropdownMenuTrigger className={cn(
+              "flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary outline-none focus:text-primary group",
+              // Check if current path matches any team size page or query
+              pathname?.includes("teamSize=") || Object.values(STATIC_PAGE_MAP).includes(pathname) ? "text-primary" : ""
+            )}>
               {t.home.filters.teamSize}
               <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
             </DropdownMenuTrigger>
@@ -63,14 +95,7 @@ export function Header({ types = [], teamSizes = [] }: HeaderProps) {
                 </Link>
               </DropdownMenuItem>
               {teamSizes.map((size) => {
-                const staticPageMap: Record<string, string> = {
-                  solo: "/bases/solo",
-                  duo: "/bases/duo",
-                  trio: "/bases/trio",
-                  quad: "/bases/quad",
-                }
-                const href = staticPageMap[size.name.toLowerCase()] || `/bases?teamSize=${size.id}`
-
+                const href = STATIC_PAGE_MAP[size.name.toLowerCase()] || `/bases?teamSize=${size.id}`
                 return (
                   <DropdownMenuItem key={size.id} asChild>
                     <Link href={href} className="w-full cursor-pointer">
@@ -82,21 +107,20 @@ export function Header({ types = [], teamSizes = [] }: HeaderProps) {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Link
-            href="/bases"
-            className="text-sm font-medium transition-colors hover:text-primary border-b-2 border-transparent hover:border-primary pb-1"
-          >
-            {t.nav.allBases}
-          </Link>
+          {/* 4. Favorites */}
           <Link
             href="/favorites"
-            className="text-sm font-medium transition-colors hover:text-primary border-b-2 border-transparent hover:border-primary pb-1"
+            className={cn(
+              "text-sm font-medium transition-colors hover:text-primary border-b-2 pb-1",
+              pathname === "/favorites" ? "border-primary text-primary" : "border-transparent"
+            )}
           >
             Favorites
           </Link>
         </nav>
 
-        <div className="flex items-center gap-2">
+        {/* Feedback Button */}
+        <div className="hidden md:flex items-center gap-2">
           <Button variant="outline" size="sm" asChild className="border-2 bg-transparent">
             <Link href="/feedback">
               <span>{t.nav.feedback}</span>
