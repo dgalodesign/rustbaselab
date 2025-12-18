@@ -156,39 +156,39 @@ export default async function HomePage() {
   }
 
   return (
-    {/* Structured Data for SEO */ }
-    < StructuredData
-        data = {
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        name: "RustBaseLab",
-        url: "https://rustbaselab.com",
-        logo: "https://rustbaselab.com/logo.svg",
-        description:
-          "Professional Rust base designs and building tutorials for all team sizes. Learn advanced building techniques and defensive strategies.",
-        sameAs: [
-          // Añadir redes sociales cuando estén disponibles
-        ],
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        name: "RustBaseLab",
-        url: "https://rustbaselab.com",
-        description: "Discover the best Rust base designs with video tutorials for all team sizes.",
-        potentialAction: {
-          "@type": "SearchAction",
-          target: {
-            "@type": "EntryPoint",
-            urlTemplate: "https://rustbaselab.com/bases?search={search_term_string}",
+    <>
+      {/* Structured Data for SEO */}
+      <StructuredData
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "RustBaseLab",
+            url: "https://rustbaselab.com",
+            logo: "https://rustbaselab.com/logo.svg",
+            description:
+              "Professional Rust base designs and building tutorials for all team sizes. Learn advanced building techniques and defensive strategies.",
+            sameAs: [
+              // Añadir redes sociales cuando estén disponibles
+            ],
           },
-          "query-input": "required name=search_term_string",
-        },
-      },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "RustBaseLab",
+            url: "https://rustbaselab.com",
+            description: "Discover the best Rust base designs with video tutorials for all team sizes.",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: {
+                "@type": "EntryPoint",
+                urlTemplate: "https://rustbaselab.com/bases?search={search_term_string}",
+              },
+              "query-input": "required name=search_term_string",
+            },
+          },
         ]}
-    />
+      />
 
       <main className="flex-1">
         {hasError && (
@@ -339,6 +339,6 @@ export default async function HomePage() {
       </main>
 
       <Footer />
-    </div >
+    </>
   )
 }
