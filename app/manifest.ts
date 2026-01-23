@@ -2,10 +2,10 @@ import type { MetadataRoute } from "next"
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "RustBaseLab - Catálogo de Bases para Rust",
+    name: "RustBaseLab - Rust Base Designs Catalog",
     short_name: "RustBaseLab",
     description:
-      "Catálogo completo de diseños de bases para el videojuego Rust. Encuentra bases meta, populares y filtradas por tipo, tamaño y footprint.",
+      "Complete catalog of base designs for the Rust video game. Find meta bases, popular designs, and filter by type, team size, and footprint.",
     start_url: "/",
     display: "standalone",
     background_color: "#0a0a0a",

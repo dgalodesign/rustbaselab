@@ -306,6 +306,122 @@ export default async function BasePage({ params }: BasePageProps) {
               },
             ]
             : []),
+          // HowTo Schema for building instructions
+          {
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            name: `How to Build: ${base.title}`,
+            description: base.features || `Step-by-step guide to building this ${base.type?.name || "base"} design in Rust`,
+            image: base.video_youtube_id
+              ? `https://i.ytimg.com/vi/${base.video_youtube_id}/maxresdefault.jpg`
+              : "https://rustbaselab.com/logo.svg",
+            totalTime: base.build_time_min ? `PT${base.build_time_min}M` : undefined,
+            estimatedCost: {
+              "@type": "MonetaryAmount",
+              currency: "RESOURCES",
+              value: [
+                base.materials_stone ? `${base.materials_stone.toLocaleString()} Stone` : null,
+                base.materials_metal ? `${base.materials_metal.toLocaleString()} Metal Fragments` : null,
+                base.materials_hq ? `${base.materials_hq.toLocaleString()} HQM` : null,
+              ].filter(Boolean).join(", ") || "Materials not specified",
+            },
+            tool: [
+              {
+                "@type": "HowToTool",
+                name: "Building Plan",
+              },
+              {
+                "@type": "HowToTool",
+                name: "Hammer",
+              },
+            ],
+            supply: [
+              ...(base.materials_stone ? [{
+                "@type": "HowToSupply",
+                name: "Stone",
+                estimatedCost: {
+                  "@type": "MonetaryAmount",
+                  currency: "RESOURCES",
+                  value: base.materials_stone.toLocaleString(),
+                },
+              }] : []),
+              ...(base.materials_metal ? [{
+                "@type": "HowToSupply",
+                name: "Metal Fragments",
+                estimatedCost: {
+                  "@type": "MonetaryAmount",
+                  currency: "RESOURCES",
+                  value: base.materials_metal.toLocaleString(),
+                },
+              }] : []),
+              ...(base.materials_hq ? [{
+                "@type": "HowToSupply",
+                name: "High Quality Metal",
+                estimatedCost: {
+                  "@type": "MonetaryAmount",
+                  currency: "RESOURCES",
+                  value: base.materials_hq.toLocaleString(),
+                },
+              }] : []),
+            ],
+            step: [
+              {
+                "@type": "HowToStep",
+                position: 1,
+                name: "Gather Materials",
+                text: `Collect the required materials: ${[
+                  base.materials_stone ? `${base.materials_stone.toLocaleString()} Stone` : null,
+                  base.materials_metal ? `${base.materials_metal.toLocaleString()} Metal Fragments` : null,
+                  base.materials_hq ? `${base.materials_hq.toLocaleString()} High Quality Metal` : null,
+                ].filter(Boolean).join(", ") || "materials as shown in the build cost section"}`,
+                url: `https://rustbaselab.com/base/${base.slug}#build-cost`,
+              },
+              {
+                "@type": "HowToStep",
+                position: 2,
+                name: "Choose Location",
+                text: `Find a suitable location for your ${base.footprint?.name || "standard"} footprint base. Consider proximity to resources and monuments.`,
+                url: `https://rustbaselab.com/base/${base.slug}`,
+              },
+              {
+                "@type": "HowToStep",
+                position: 3,
+                name: "Follow Video Tutorial",
+                text: base.video_youtube_id
+                  ? `Watch the complete building tutorial to see the exact placement and building order for this ${base.type?.name || "base"} design.`
+                  : `Follow the base design specifications for this ${base.type?.name || "base"}.`,
+                url: base.video_youtube_id
+                  ? `https://www.youtube.com/watch?v=${base.video_youtube_id}`
+                  : `https://rustbaselab.com/base/${base.slug}`,
+                video: base.video_youtube_id ? {
+                  "@type": "VideoObject",
+                  name: base.title,
+                  thumbnailUrl: `https://i.ytimg.com/vi/${base.video_youtube_id}/maxresdefault.jpg`,
+                  contentUrl: `https://www.youtube.com/watch?v=${base.video_youtube_id}`,
+                  embedUrl: `https://www.youtube.com/embed/${base.video_youtube_id}`,
+                  uploadDate: base.created_at,
+                } : undefined,
+              },
+              {
+                "@type": "HowToStep",
+                position: 4,
+                name: "Upgrade and Secure",
+                text: "Upgrade walls and doors to metal or armored. Add code locks and ensure all entry points are secured.",
+                url: `https://rustbaselab.com/base/${base.slug}`,
+              },
+              ...(base.upkeep_stone || base.upkeep_metal || base.upkeep_hq ? [{
+                "@type": "HowToStep",
+                position: 5,
+                name: "Maintain Upkeep",
+                text: `Keep your base maintained with ${[
+                  base.upkeep_stone ? `${base.upkeep_stone.toLocaleString()} Stone` : null,
+                  base.upkeep_metal ? `${base.upkeep_metal.toLocaleString()} Metal` : null,
+                  base.upkeep_hq ? `${base.upkeep_hq.toLocaleString()} HQM` : null,
+                ].filter(Boolean).join(", ")} per 24 hours in the Tool Cupboard.`,
+                url: `https://rustbaselab.com/base/${base.slug}#upkeep`,
+              }] : []),
+            ],
+          },
         ]}
       />
 
