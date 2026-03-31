@@ -196,6 +196,8 @@ export default async function BasePage({ params }: BasePageProps) {
   async function requestInformation(formData: FormData) {
     "use server"
 
+    if (!base) return { success: false, error: "Base not found" }
+
     const requestType = formData.get("requestType") as "build_cost" | "upkeep"
 
     try {
