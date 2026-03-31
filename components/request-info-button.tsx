@@ -10,9 +10,10 @@ interface RequestInfoButtonProps {
 }
 
 export function RequestInfoButton({ requestType, action }: RequestInfoButtonProps) {
+  const label = requestType === "build_cost" ? "Build Cost" : "Upkeep Data"
+
   const handleClick = () => {
-    // Mostrar toast de éxito inmediatamente
-    toast.success("Request sent! We'll update the information soon.")
+    toast.success(`Got it! We'll add the ${label} shortly.`)
 
     // Ejecutar la acción en segundo plano sin bloquear la UI
     const formData = new FormData()
@@ -27,7 +28,7 @@ export function RequestInfoButton({ requestType, action }: RequestInfoButtonProp
   return (
     <Button type="button" variant="outline" size="sm" className="gap-2 bg-transparent" onClick={handleClick}>
       <Info className="h-4 w-4" />
-      Request Information
+      Request {label}
     </Button>
   )
 }

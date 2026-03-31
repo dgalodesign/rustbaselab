@@ -42,7 +42,11 @@ export default async function SoloBasesPage() {
     const soloTeamSize = teamSizes.find(ts => ts.name.toLowerCase() === "solo")
 
     if (!soloTeamSize) {
-        return <div>Solo team size not found</div>
+        return (
+            <div className="container mx-auto px-4 py-16 text-center">
+                <p className="text-lg text-muted-foreground">No encontramos bases Solo disponibles. Intenta más tarde.</p>
+            </div>
+        )
     }
 
     // Fetch all solo bases

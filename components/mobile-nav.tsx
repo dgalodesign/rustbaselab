@@ -132,7 +132,7 @@ export function MobileNav({ types = [], teamSizes = [] }: MobileNavProps) {
                             className={`text-foreground/70 transition-colors hover:text-foreground font-medium py-2 ${pathname === "/favorites" ? "text-primary font-bold" : ""
                                 }`}
                         >
-                            Favorites
+                            {t.nav.favorites}
                         </Link>
 
                         <Link

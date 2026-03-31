@@ -119,7 +119,7 @@ export function Header({ types = [], teamSizes = [] }: HeaderProps) {
               pathname === "/favorites" ? activeStyles : inactiveStyles
             )}
           >
-            Favorites
+            {t.nav.favorites}
           </Link>
         </nav>
 

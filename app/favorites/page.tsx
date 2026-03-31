@@ -3,6 +3,7 @@
 
 import { Footer } from "@/components/footer"
 import { useFavorites } from "@/hooks/use-favorites"
+import type { StoredFavorite } from "@/hooks/use-favorites"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -35,19 +36,19 @@ export default function FavoritesPage() {
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {favorites.map((base) => (
+            {favorites.map((base: StoredFavorite) => (
               <Link key={base.id} href={`/base/${base.slug}`}>
                 <Card className="h-full overflow-hidden border-2 border-border bg-card transition-all hover:border-primary/50 hover:shadow-lg group">
                   <div className="aspect-video relative overflow-hidden bg-muted">
                     {base.image_main_url ? (
                       <Image
-                        src={base.image_main_url || "/placeholder.svg"}
+                        src={base.image_main_url}
                         alt={base.title}
                         fill
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement
-                          target.src = `/placeholder.svg?height=400&width=600&query=${encodeURIComponent(base.title)}`
+                          target.src = "/placeholder.svg"
                         }}
                       />
                     ) : (

@@ -43,7 +43,7 @@ export default function NotFound() {
               >
                 <Link href="/">
                   <Home className="mr-2 h-5 w-5" />
-                  Go Home
+                  Back to Base
                 </Link>
               </Button>
 

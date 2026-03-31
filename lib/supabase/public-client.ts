@@ -37,32 +37,31 @@ export function createPublicClient() {
 function createMockClient() {
   logger.warn("Using mock Supabase client - data will not be available")
 
-  return {
-    from: () => ({
-      select: () => ({
-        eq: () => ({
-          data: [],
-          error: { message: "Supabase not configured" },
-        }),
-        order: () => ({
-          limit: () => ({
-            data: [],
-            error: { message: "Supabase not configured" },
-          }),
-        }),
-        limit: () => ({
-          data: [],
-          error: { message: "Supabase not configured" },
-        }),
-        data: [],
-        error: { message: "Supabase not configured" },
-      }),
+  const mockError = { message: "Supabase not configured" }
+  const emptyResult = { data: null, error: mockError }
+  const emptyArrayResult = { data: [], error: mockError }
+
+  // Chainable query builder that always resolves to empty results
+  const mockQuery = (): any => {
+    const query: any = {
+      select: () => mockQuery(),
+      eq: () => mockQuery(),
+      neq: () => mockQuery(),
+      in: () => mockQuery(),
+      or: () => mockQuery(),
+      order: () => mockQuery(),
+      limit: () => mockQuery(),
+      single: () => emptyResult,
+      // Make the object itself awaitable (for direct destructuring like `const { data } = await supabase.from(...).select(...)`)
+      then: (resolve: (value: any) => void) => Promise.resolve(emptyArrayResult).then(resolve),
       data: [],
-      error: { message: "Supabase not configured" },
-    }),
-    rpc: () => ({
-      data: null,
-      error: { message: "Supabase not configured" },
-    }),
+      error: mockError,
+    }
+    return query
+  }
+
+  return {
+    from: () => mockQuery(),
+    rpc: () => Promise.resolve(emptyResult),
   } as any
 }

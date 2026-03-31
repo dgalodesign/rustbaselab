@@ -194,10 +194,9 @@ export default async function HomePage() {
         {hasError && (
           <div className="container mx-auto px-4 py-8">
             <div className="rounded-lg border-2 border-destructive bg-destructive/10 p-6 text-center">
-              <h2 className="mb-2 text-xl font-bold text-destructive">Connection Error</h2>
+              <h2 className="mb-2 text-xl font-bold text-destructive">Estamos teniendo problemas</h2>
               <p className="text-muted-foreground">
-                Could not connect to the database. Please verify that environment variables are correctly configured in
-                Vercel.
+                No pudimos cargar las bases en este momento. Inténtalo de nuevo en unos minutos.
               </p>
             </div>
           </div>
@@ -210,14 +209,14 @@ export default async function HomePage() {
             <div className="mx-auto max-w-3xl text-center">
               <div className="mb-4 inline-flex items-center gap-2 rounded-lg border-2 border-primary/30 bg-primary/10 px-4 py-1.5 text-sm text-accent">
                 <Sparkles className="h-4 w-4" />
-                <span className="font-semibold">BEST RUST BASE DESIGNS</span>
+                <span className="font-semibold">META-APPROVED BUILDS</span>
               </div>
               <h1 className="mb-6 text-4xl font-bold font-display leading-tight text-balance md:text-6xl">
                 BUILD BETTER, SURVIVE LONGER
               </h1>
               <p className="mb-8 text-lg text-muted-foreground text-pretty md:text-xl">
-                Discover professional Rust base designs with detailed video tutorials. From beginner bases to massive
-                fortresses.
+                Stop getting raided. Find battle-tested base designs with step-by-step video tutorials — for every team
+                size.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <Button
@@ -250,8 +249,9 @@ export default async function HomePage() {
           </div>
 
           {metaBases.length === 0 && (
-            <div className="py-12 text-center border-2 border-border rounded-lg bg-card">
-              <p className="text-lg text-muted-foreground">NO META BASES AVAILABLE</p>
+            <div className="py-12 text-center border-2 border-border rounded-lg bg-card space-y-2">
+              <p className="text-lg font-bold">NO META BASES YET</p>
+              <p className="text-sm text-muted-foreground">Check back after the next update</p>
             </div>
           )}
         </section>
@@ -270,8 +270,9 @@ export default async function HomePage() {
           </div>
 
           {popularBases.length === 0 && (
-            <div className="py-12 text-center border-2 border-border rounded-lg bg-card">
-              <p className="text-lg text-muted-foreground">NO POPULAR BASES AVAILABLE</p>
+            <div className="py-12 text-center border-2 border-border rounded-lg bg-card space-y-2">
+              <p className="text-lg font-bold">THE COMMUNITY HASN'T VOTED YET</p>
+              <p className="text-sm text-muted-foreground">Be the first to explore the catalog</p>
             </div>
           )}
         </section>

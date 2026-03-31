@@ -5,13 +5,14 @@ export const translations = {
       allBases: "Todas las Bases",
       search: "Buscar",
       feedback: "Feedback",
+      favorites: "Favoritos",
     },
     home: {
       hero: {
-        badge: "Mejores Diseños de Bases de Rust",
+        badge: "Builds Aprobados por la Meta",
         title: "Construye Mejor, Sobrevive Más",
         subtitle:
-          "Descubre diseños profesionales de bases de Rust con tutoriales en video detallados. Desde bases para principiantes hasta fortalezas masivas.",
+          "Deja de ser raideado. Encuentra diseños de bases probados en batalla con tutoriales en video paso a paso — para todos los tamaños de equipo.",
         ctaPrimary: "Ver Todas las Bases",
         ctaSecondary: "Buscar Bases",
       },
@@ -76,8 +77,8 @@ export const translations = {
       allRightsReserved: "Todos los derechos reservados.",
       about: "Acerca de",
       privacy: "Privacidad",
-      terms: "Terms",
-      contact: "Contact",
+      terms: "Términos",
+      contact: "Contacto",
     },
     about: {
       title: "Acerca de RustBaseLab",
@@ -135,7 +136,7 @@ export const translations = {
         q1: {
           question: "¿Puedo enviar mis propios diseños de bases?",
           answer:
-            "Actualmente no aceptamos envíos de usuarios, pero estamos trabajando en esta funcionalidad. Mantente atento a futuras actualizaciones.",
+            "¡Pronto! Estamos construyendo la función de envío de bases. ¿Tienes un diseño que quieras ver en RustBaseLab? Escríbenos y lo tendremos en cuenta para el lanzamiento.",
         },
         q2: {
           question: "¿Los diseños están actualizados?",
@@ -293,9 +294,9 @@ export const translations = {
       description:
         "Este sitio utiliza cookies para mejorar tu experiencia, mostrar anuncios personalizados (Google AdSense) y analizar el tráfico (Google Analytics). Al aceptar, consientes el uso de estas tecnologías.",
       moreInfo: "Más información",
-      accept: "Aceptar cookies",
-      reject: "Rechazar",
-      close: "Cerrar",
+      accept: "Aceptar todo",
+      reject: "Solo esenciales",
+      close: "Rechazar cookies y cerrar",
     },
     time: {
       justNow: "Justo ahora",
@@ -319,13 +320,14 @@ export const translations = {
       allBases: "All Bases",
       search: "Search",
       feedback: "Feedback",
+      favorites: "Favorites",
     },
     home: {
       hero: {
-        badge: "Best Rust Base Designs",
+        badge: "Meta-Approved Builds",
         title: "Build Better, Survive Longer",
         subtitle:
-          "Discover professional Rust base designs with detailed video tutorials. From beginner bases to massive fortresses.",
+          "Stop getting raided. Find battle-tested base designs with step-by-step video tutorials — for every team size.",
         ctaPrimary: "View All Bases",
         ctaSecondary: "Search Bases",
       },
@@ -448,7 +450,7 @@ export const translations = {
         q1: {
           question: "Can I submit my own base designs?",
           answer:
-            "We currently don't accept user submissions, but we're working on this feature. Stay tuned for future updates.",
+            "Coming soon! We're building the base submission feature. Have a design you want to see on RustBaseLab? Write to us and we'll keep it in mind for launch.",
         },
         q2: {
           question: "Are the designs up to date?",
@@ -605,9 +607,9 @@ export const translations = {
       description:
         "This site uses cookies to improve your experience, display personalized ads (Google AdSense), and analyze traffic (Google Analytics). By accepting, you consent to the use of these technologies.",
       moreInfo: "More information",
-      accept: "Accept cookies",
-      reject: "Reject",
-      close: "Close",
+      accept: "Accept all",
+      reject: "Essential only",
+      close: "Reject cookies and close",
     },
     time: {
       justNow: "Just now",

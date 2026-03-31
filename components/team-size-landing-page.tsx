@@ -118,10 +118,9 @@ export function TeamSizeLandingPage({
                     </div>
 
                     {bases.length === 0 && (
-                        <div className="py-12 text-center border-2 border-border rounded-lg bg-card">
-                            <p className="text-lg text-muted-foreground">
-                                NO {teamSize.toUpperCase()} BASES FOUND
-                            </p>
+                        <div className="py-12 text-center border-2 border-border rounded-lg bg-card space-y-2">
+                            <p className="text-lg font-bold">BUILDING THE {teamSize.toUpperCase()} COLLECTION</p>
+                            <p className="text-sm text-muted-foreground">Check back soon — more bases coming</p>
                         </div>
                     )}
                 </section>

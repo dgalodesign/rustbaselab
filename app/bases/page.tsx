@@ -146,8 +146,10 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
           </div>
 
           {bases.length === 0 && (
-            <div className="py-12 text-center border-2 border-border rounded-lg bg-card">
-              <p className="text-lg text-muted-foreground">NO BASES FOUND WITH THESE FILTERS</p>
+            <div className="py-12 text-center border-2 border-border rounded-lg bg-card space-y-3">
+              <p className="text-lg font-bold">NO BUILDS MATCH</p>
+              <p className="text-sm text-muted-foreground">Try removing a filter or browse the full catalog</p>
+              <a href="/bases" className="inline-block text-sm text-primary hover:underline font-medium">View All Bases →</a>
             </div>
           )}
         </section>

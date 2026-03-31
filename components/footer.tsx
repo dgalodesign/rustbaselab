@@ -89,7 +89,7 @@ export function Footer() {
 
         <div className="mt-8 pt-8 border-t border-border">
           <p className="text-center text-xs text-muted-foreground">
-            Built for the Rust community • Powered by RustBaseLab DS
+            Crafted for the Rust community — by players, for players. Not affiliated with Facepunch Studios.
           </p>
         </div>
       </div>

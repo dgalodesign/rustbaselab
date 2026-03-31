@@ -55,8 +55,8 @@ export default function ContactPage() {
                   ¿Puedo enviar mis propios diseños de bases?
                 </h3>
                 <p className="text-muted-foreground">
-                  Actualmente no aceptamos envíos de usuarios, pero estamos trabajando en esta funcionalidad. Mantente
-                  atento a futuras actualizaciones.
+                  ¡Pronto! Estamos construyendo la función de envío de bases. ¿Tienes un diseño que quieras ver en
+                  RustBaseLab? Escríbenos y lo tendremos en cuenta para el lanzamiento.
                 </p>
               </div>
               <div>

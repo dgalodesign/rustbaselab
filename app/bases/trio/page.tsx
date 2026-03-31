@@ -42,7 +42,11 @@ export default async function TrioBasesPage() {
     const trioTeamSize = teamSizes.find(ts => ts.name.toLowerCase() === "trio")
 
     if (!trioTeamSize) {
-        return <div>Trio team size not found</div>
+        return (
+            <div className="container mx-auto px-4 py-16 text-center">
+                <p className="text-lg text-muted-foreground">No encontramos bases Trio disponibles. Intenta más tarde.</p>
+            </div>
+        )
     }
 
     // Fetch all trio bases

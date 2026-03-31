@@ -42,7 +42,11 @@ export default async function QuadBasesPage() {
     const quadTeamSize = teamSizes.find(ts => ts.name.toLowerCase() === "quad")
 
     if (!quadTeamSize) {
-        return <div>Quad team size not found</div>
+        return (
+            <div className="container mx-auto px-4 py-16 text-center">
+                <p className="text-lg text-muted-foreground">No encontramos bases Quad disponibles. Intenta más tarde.</p>
+            </div>
+        )
     }
 
     // Fetch all quad bases

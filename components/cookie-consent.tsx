@@ -34,7 +34,7 @@ export function CookieConsent() {
           <button
             onClick={rejectCookies}
             className="absolute right-4 top-4 text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Cerrar"
+            aria-label="Rechazar cookies y cerrar"
           >
             <X className="h-5 w-5" />
           </button>
@@ -56,10 +56,10 @@ export function CookieConsent() {
 
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <Button onClick={acceptCookies} className="font-bold">
-                  Aceptar cookies
+                  Aceptar todo
                 </Button>
                 <Button onClick={rejectCookies} variant="outline" className="font-bold bg-transparent">
-                  Rechazar
+                  Solo esenciales
                 </Button>
               </div>
             </div>

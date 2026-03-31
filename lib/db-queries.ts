@@ -3,6 +3,15 @@ import type { Base, Footprint, TeamSize, Tag, Creator } from "./types"
 import { logger } from "./logger"
 import { handleDatabaseError } from "./error-handler"
 
+/**
+ * Sanitizes a search query by removing PostgREST special characters
+ * that could manipulate filter expressions.
+ */
+function sanitizeSearchQuery(query: string): string {
+  // Remove characters special to PostgREST filter syntax: (, ), comma, period, colon, double-quote
+  return query.replace(/[()\,.:"\[\]{}]/g, "").slice(0, 200)
+}
+
 export async function getAllBases(): Promise<Base[]> {
   const supabase = createPublicClient()
 
@@ -80,12 +89,13 @@ export async function getBaseById(id: string): Promise<Base | null> {
 
 export async function searchBases(query: string): Promise<Base[]> {
   const supabase = createPublicClient()
+  const safeQuery = sanitizeSearchQuery(query)
 
   try {
     const { data, error } = await supabase
       .from("published_bases")
       .select("*")
-      .or(`title.ilike.%${query}%,features.ilike.%${query}%,seo_description.ilike.%${query}%`)
+      .or(`title.ilike.%${safeQuery}%,features.ilike.%${safeQuery}%,seo_description.ilike.%${safeQuery}%`)
       .order("created_at", { ascending: false })
 
     if (error) {
@@ -325,7 +335,8 @@ export async function getFilteredBases(filters: {
     }
 
     if (filters.search) {
-      query = query.or(`title.ilike.%${filters.search}%,features.ilike.%${filters.search}%`)
+      const safeSearch = sanitizeSearchQuery(filters.search)
+      query = query.or(`title.ilike.%${safeSearch}%,features.ilike.%${safeSearch}%`)
     }
 
     const { data, error } = await query.order("created_at", { ascending: false })

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+import { cache } from "react"
 
 import { Footer } from "@/components/footer"
 import { YouTubeEmbed } from "@/components/youtube-embed"
@@ -12,7 +13,6 @@ import {
   getRelatedBases,
   getBasesByCreator,
   incrementBaseViews,
-  incrementYoutubeClicks,
 } from "@/lib/db-queries"
 import { Clock, Hammer, Calendar, Users, TagIcon } from "lucide-react"
 import type { Metadata } from "next"
@@ -22,6 +22,21 @@ import { BaseActions } from "@/components/base-actions"
 import { revalidatePath } from "next/cache"
 import { RequestInfoButton } from "@/components/request-info-button"
 import { Breadcrumbs } from "@/components/breadcrumbs"
+import { logger } from "@/lib/logger"
+
+/**
+ * Cached fetchers — React's cache() deduplicates calls within the same
+ * request/render cycle, so generateMetadata and the Page component share
+ * a single DB round-trip for the same slug.
+ */
+const getCachedBase = cache((slug: string) => getBaseBySlug(slug))
+
+const getCachedBaseTeams = cache((baseId: string) =>
+  createPublicClient()
+    .from("base_teams")
+    .select("team_size_id, team_sizes(name)")
+    .eq("base_id", baseId)
+)
 
 export const revalidate = 3600 // Revalidate every hour (ISR)
 
@@ -42,7 +57,7 @@ interface BaseTagResult {
 
 export async function generateMetadata({ params }: BasePageProps): Promise<Metadata> {
   const { slug } = await params
-  const base = await getBaseBySlug(slug)
+  const base = await getCachedBase(slug)
 
   if (!base) {
     return {
@@ -50,12 +65,8 @@ export async function generateMetadata({ params }: BasePageProps): Promise<Metad
     }
   }
 
-  // Fetch team sizes for the title
-  const supabase = createPublicClient()
-  const { data: baseTeamsData } = await supabase
-    .from("base_teams")
-    .select("team_sizes(name)")
-    .eq("base_id", base.id)
+  // Reuse the cached query — no extra DB round-trip if the page also calls this
+  const { data: baseTeamsData } = await getCachedBaseTeams(base.id)
 
   const teamSizes = (baseTeamsData?.map((bt: any) => bt.team_sizes?.name).filter(Boolean) || []) as string[]
 
@@ -151,27 +162,23 @@ function getRelativeTime(dateString: string): string {
 
 export default async function BasePage({ params }: BasePageProps) {
   const { slug } = await params
-  const base = await getBaseBySlug(slug)
+  const base = await getCachedBase(slug)
 
   if (!base) {
     notFound()
   }
 
   await incrementBaseViews(base.id)
-  await incrementYoutubeClicks(base.id)
 
-  const supabase = createPublicClient()
-
-  const { data: baseTeamsData } = await supabase
-    .from("base_teams")
-    .select("team_size_id, team_sizes(name)")
-    .eq("base_id", base.id)
+  // Reuses the cached query from generateMetadata (same request cycle → no extra DB call)
+  const { data: baseTeamsData } = await getCachedBaseTeams(base.id)
 
   const baseTeams = baseTeamsData as BaseTeamResult[] | null
   const teamSizes = (baseTeams?.map((bt) => bt.team_sizes?.name).filter((name): name is string => name !== undefined) ||
     []) as string[]
   const teamSizeIds = baseTeams?.map((bt) => bt.team_size_id).filter(Boolean) || []
 
+  const supabase = createPublicClient()
   const { data: baseTagsData } = await supabase
     .from("base_tags")
     .select("tags(tag, description)")
@@ -196,13 +203,8 @@ export default async function BasePage({ params }: BasePageProps) {
       const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
       if (!supabaseUrl || !supabaseAnonKey) {
-        console.error("[v0] Supabase configuration missing")
+        logger.error("[RustBaseLab] Supabase configuration missing in requestInformation")
         return { success: false, error: "Configuration missing" }
-      }
-
-      if (!base) {
-        console.error("[v0] Base not found")
-        return { success: false, error: "Base not found" }
       }
 
       const title = "Update Material Cost"
@@ -214,22 +216,18 @@ export default async function BasePage({ params }: BasePageProps) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${supabaseAnonKey}`,
         },
-        body: JSON.stringify({
-          title,
-          message,
-        }),
+        body: JSON.stringify({ title, message }),
       })
 
       if (!response.ok) {
-        const error = await response.text()
-        console.error("[v0] Edge function error:", error)
+        logger.error("[RustBaseLab] Edge function error in requestInformation", await response.text())
         return { success: false, error: "Failed to create record" }
       }
 
       revalidatePath(`/base/${base.slug}`)
       return { success: true, message: "Request sent successfully! We'll update the information soon." }
     } catch (error) {
-      console.error("[v0] Error creating record:", error)
+      logger.error("[RustBaseLab] Error in requestInformation", error)
       return { success: false, error: "Internal error" }
     }
   }
@@ -517,7 +515,7 @@ export default async function BasePage({ params }: BasePageProps) {
             <div className="lg:col-span-2">
               {base.video_youtube_id && (
                 <div className="mb-8">
-                  <YouTubeEmbed videoId={base.video_youtube_id} title={base.title} />
+                  <YouTubeEmbed videoId={base.video_youtube_id} title={base.title} baseId={base.id} />
                 </div>
               )}
 
