@@ -104,7 +104,14 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className="dark">
-      <head />
+      <head>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="RustBaseLab Blog — RSS Feed"
+          href="https://rustbaselab.com/feed.xml"
+        />
+      </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
         {/* Google Analytics */}
         <Script

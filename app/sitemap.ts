@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
 import { createPublicClient } from "@/lib/supabase/public-client"
+import { getAllBlogPosts } from "@/lib/notion-blog"
 
 interface BaseData {
   slug: string
@@ -96,6 +97,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.5,
     },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
   ]
 
   // Obtener todas las bases publicadas para el sitemap
@@ -135,5 +142,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6, // Lowered priority in favor of static pages
     })) || []
 
-  return [...staticPages, ...basePages, ...typePages, ...teamSizePages]
+  // Blog posts from Notion
+  const blogPosts = await getAllBlogPosts()
+  const blogPostPages: MetadataRoute.Sitemap = blogPosts
+    .filter((post) => post.slug)
+    .map((post) => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: post.publishedDate ? new Date(post.publishedDate) : new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    }))
+
+  return [...staticPages, ...basePages, ...typePages, ...teamSizePages, ...blogPostPages]
 }

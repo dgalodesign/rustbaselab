@@ -127,6 +127,15 @@ export function MobileNav({ types = [], teamSizes = [] }: MobileNavProps) {
                         </Accordion>
 
                         <Link
+                            href="/blog"
+                            onClick={() => setOpen(false)}
+                            className={`text-foreground/70 transition-colors hover:text-foreground font-medium py-2 ${pathname?.startsWith("/blog") ? "text-primary font-bold" : ""
+                                }`}
+                        >
+                            {t.nav.blog}
+                        </Link>
+
+                        <Link
                             href="/favorites"
                             onClick={() => setOpen(false)}
                             className={`text-foreground/70 transition-colors hover:text-foreground font-medium py-2 ${pathname === "/favorites" ? "text-primary font-bold" : ""

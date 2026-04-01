@@ -25,6 +25,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'img.youtube.com',
       },
+      {
+        protocol: 'https',
+        hostname: '**.notion.so',
+      },
+      {
+        protocol: 'https',
+        hostname: 'prod-files-secure.s3.us-west-2.amazonaws.com',
+      },
     ],
   },
   // Validate required environment variables at build time
@@ -38,6 +46,8 @@ const nextConfig = {
 const requiredEnvVars = [
   'NEXT_PUBLIC_SUPABASE_URL',
   'NEXT_PUBLIC_SUPABASE_ANON_KEY',
+  'NOTION_API_TOKEN',
+  'NOTION_BLOG_DATABASE_ID',
 ]
 
 if (process.env.NODE_ENV === 'production') {

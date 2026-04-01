@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     url: "https://rustbaselab.com",
     images: [
       {
-        url: "/logo.svg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "RustBaseLab - Rust Base Designs",

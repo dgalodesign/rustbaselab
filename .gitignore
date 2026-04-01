@@ -28,3 +28,6 @@ next-env.d.ts
 
 # external context data
 /external-context/
+
+# Claude Code local settings (may contain tokens in permission history)
+.claude/settings.local.json

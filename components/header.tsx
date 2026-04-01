@@ -111,7 +111,18 @@ export function Header({ types = [], teamSizes = [] }: HeaderProps) {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* 4. Favorites */}
+          {/* 4. Blog */}
+          <Link
+            href="/blog"
+            className={cn(
+              navItemStyles,
+              pathname?.startsWith("/blog") ? activeStyles : inactiveStyles
+            )}
+          >
+            {t.nav.blog}
+          </Link>
+
+          {/* 5. Favorites */}
           <Link
             href="/favorites"
             className={cn(
