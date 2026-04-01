@@ -5,6 +5,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Footer } from "@/components/footer"
 import { Users, Youtube, Layout } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import type { Metadata } from "next"
 import type { Creator } from "@/lib/types"
 
@@ -132,9 +133,21 @@ function CreatorCard({ creator, baseCount }: { creator: Creator; baseCount: numb
       href={`/creators/${slug}`}
       className="group relative flex flex-col rounded-lg border-2 border-border bg-card p-6 transition-all hover:border-primary hover:shadow-lg hover:shadow-primary/10 hover:scale-[1.02]"
     >
-      {/* Avatar placeholder */}
-      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-border bg-background text-xl font-bold font-display text-primary group-hover:border-primary transition-colors">
-        {creator.name.charAt(0).toUpperCase()}
+      {/* Avatar */}
+      <div className="mb-4 h-14 w-14 shrink-0 rounded-full border-2 border-border group-hover:border-primary transition-colors overflow-hidden">
+        {creator.avatar_url ? (
+          <Image
+            src={creator.avatar_url}
+            alt={creator.name}
+            width={56}
+            height={56}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-background text-xl font-bold font-display text-primary">
+            {creator.name.charAt(0).toUpperCase()}
+          </div>
+        )}
       </div>
 
       <h2 className="font-display font-bold text-xl mb-1 group-hover:text-primary transition-colors">

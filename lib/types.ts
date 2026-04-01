@@ -57,6 +57,7 @@ export interface Creator {
   id: string
   name: string
   channel_youtube_id: string | null
+  avatar_url: string | null
   created_at: string
 }
 

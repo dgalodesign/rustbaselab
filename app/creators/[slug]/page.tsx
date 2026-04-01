@@ -6,6 +6,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Footer } from "@/components/footer"
 import { Youtube, Layout, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
@@ -115,8 +116,20 @@ export default async function CreatorPage({
           <div className="container relative mx-auto px-4 py-12">
             <div className="flex flex-col sm:flex-row sm:items-end gap-6">
               {/* Avatar */}
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border-2 border-primary bg-background text-3xl font-bold font-display text-primary">
-                {creator.name.charAt(0).toUpperCase()}
+              <div className="h-20 w-20 shrink-0 rounded-full border-2 border-primary overflow-hidden">
+                {creator.avatar_url ? (
+                  <Image
+                    src={creator.avatar_url}
+                    alt={creator.name}
+                    width={80}
+                    height={80}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-background text-3xl font-bold font-display text-primary">
+                    {creator.name.charAt(0).toUpperCase()}
+                  </div>
+                )}
               </div>
 
               <div className="flex-1">
