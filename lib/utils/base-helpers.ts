@@ -1,5 +1,12 @@
 import type { Base } from "@/lib/types"
 
+export function slugifyCreator(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+}
+
 export function getYouTubeEmbedUrl(videoId: string | null): string {
   if (!videoId) return ""
   return `https://www.youtube.com/embed/${videoId}`

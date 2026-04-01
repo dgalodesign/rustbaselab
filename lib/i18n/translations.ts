@@ -7,6 +7,7 @@ export const translations = {
       feedback: "Feedback",
       favorites: "Favoritos",
       blog: "Blog",
+      creators: "Creadores",
     },
     home: {
       hero: {
@@ -323,6 +324,7 @@ export const translations = {
       feedback: "Feedback",
       favorites: "Favorites",
       blog: "Blog",
+      creators: "Creators",
     },
     home: {
       hero: {

@@ -462,6 +462,32 @@ export async function incrementYoutubeClicks(baseId: string): Promise<void> {
   }
 }
 
+export async function getAllBasesByCreatorId(creatorId: string): Promise<Base[]> {
+  const supabase = createPublicClient()
+
+  try {
+    const { data, error } = await supabase
+      .from("published_bases")
+      .select(`
+        *,
+        creator:creators(name, channel_youtube_id),
+        type:types(name),
+        footprint:footprints(name)
+      `)
+      .eq("creator_id", creatorId)
+      .order("created_at", { ascending: false })
+
+    if (error) {
+      handleDatabaseError(error, "getAllBasesByCreatorId")
+    }
+
+    return (data || []) as Base[]
+  } catch (err) {
+    logger.error("Error in getAllBasesByCreatorId", err)
+    return []
+  }
+}
+
 export async function getBasesByCreator(creatorId: string, currentBaseId: string, limit = 3): Promise<Base[]> {
   const supabase = createPublicClient()
 

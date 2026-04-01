@@ -122,7 +122,18 @@ export function Header({ types = [], teamSizes = [] }: HeaderProps) {
             {t.nav.blog}
           </Link>
 
-          {/* 5. Favorites */}
+          {/* 5. Creators */}
+          <Link
+            href="/creators"
+            className={cn(
+              navItemStyles,
+              pathname?.startsWith("/creators") ? activeStyles : inactiveStyles
+            )}
+          >
+            {t.nav.creators}
+          </Link>
+
+          {/* 6. Favorites */}
           <Link
             href="/favorites"
             className={cn(

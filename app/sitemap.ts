@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next"
 import { createPublicClient } from "@/lib/supabase/public-client"
 import { getAllBlogPosts } from "@/lib/notion-blog"
+import { getAllCreators } from "@/lib/db-queries"
+import { slugifyCreator } from "@/lib/utils/base-helpers"
 
 interface BaseData {
   slug: string
@@ -103,6 +105,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/bases/console`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/creators`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
   ]
 
   // Obtener todas las bases publicadas para el sitemap
@@ -142,6 +156,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6, // Lowered priority in favor of static pages
     })) || []
 
+  // Creator profile pages
+  const creators = await getAllCreators()
+  const creatorPages: MetadataRoute.Sitemap = creators.map((creator) => ({
+    url: `${baseUrl}/creators/${slugifyCreator(creator.name)}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.65,
+  }))
+
   // Blog posts from Notion
   const blogPosts = await getAllBlogPosts()
   const blogPostPages: MetadataRoute.Sitemap = blogPosts
@@ -153,5 +176,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.75,
     }))
 
-  return [...staticPages, ...basePages, ...typePages, ...teamSizePages, ...blogPostPages]
+  return [...staticPages, ...basePages, ...typePages, ...teamSizePages, ...creatorPages, ...blogPostPages]
 }
