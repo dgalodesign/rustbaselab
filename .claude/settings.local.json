@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r \"font-family\\\\|@font-face\\\\|--font-\" /d/dev/proyects/rustbaselab --include=*.css --include=*.tsx --include=*.ts --include=*.json)",
+      "Bash(grep -r \"Space_Grotesk\\\\|Inter\\\\|Geist\" /d/dev/proyects/rustbaselab --include=*.tsx --include=*.ts)",
+      "Bash(grep -r \"fontFamily\\\\|font-sans\\\\|font-display\" /d/dev/proyects/rustbaselab --include=*.mjs --include=*.js --include=*.ts)"
+    ]
+  }
+}

@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     description: "Discover the best Rust base designs for solo, duo, trio, and zerg gameplay. Professional video tutorials and building guides.",
     images: [
       {
-        url: "/logo.svg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "RustBaseLab - Rust Base Designs",
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "RustBaseLab - Rust Base Designs & Tutorials",
     description: "Discover the best Rust base designs for solo, duo, trio, and zerg gameplay.",
-    images: ["/logo.svg"],
+    images: ["/og-image.png"],
     creator: "@rustbaselab",
   },
   alternates: {

@@ -212,7 +212,7 @@ export default async function HomePage() {
                 <span className="font-semibold">META-APPROVED BUILDS</span>
               </div>
               <h1 className="mb-6 text-4xl font-bold font-display leading-tight text-balance md:text-6xl">
-                BUILD BETTER, SURVIVE LONGER
+                Rust Base Designs — Build Better, Survive Longer
               </h1>
               <p className="mb-8 text-lg text-muted-foreground text-pretty md:text-xl">
                 Stop getting raided. Find battle-tested base designs with step-by-step video tutorials — for every team
