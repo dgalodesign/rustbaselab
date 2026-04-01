@@ -11,21 +11,6 @@ import { Toaster } from "sonner"
 import { Header } from "@/components/header"
 import { getAllTypes, getAllTeamSizes } from "@/lib/db-queries"
 
-import { Inter, Space_Grotesk } from 'next/font/google'
-
-
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-})
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rustbaselab.com"),
@@ -109,7 +94,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className="dark">
       <head />
-      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
+      <body className="font-sans antialiased">
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-XP4WCJMLR4"
