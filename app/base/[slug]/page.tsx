@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
 import { cache } from "react"
-import { SULFUR_PER_ROCKET } from "@/lib/constants"
+import { SULFUR_PER_ROCKET, SULFUR_PER_C4, SULFUR_PER_SATCHEL } from "@/lib/constants"
 
 import { Footer } from "@/components/footer"
 import { YouTubeEmbed } from "@/components/youtube-embed"
@@ -199,7 +199,7 @@ export default async function BasePage({ params }: BasePageProps) {
 
     if (!base) return { success: false, error: "Base not found" }
 
-    const requestType = formData.get("requestType") as "build_cost" | "upkeep"
+    const requestType = formData.get("requestType") as "build_cost" | "upkeep" | "raid_cost"
 
     try {
       const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -486,12 +486,6 @@ export default async function BasePage({ params }: BasePageProps) {
                   <span className="font-mono">TIME: {base.build_time_min} MIN</span>
                 </div>
               )}
-              {base.raid_rockets && (
-                <div className="flex items-center gap-2">
-                  <Hammer className="h-4 w-4" />
-                  <span className="font-mono">RAID: {(base.raid_rockets * SULFUR_PER_ROCKET).toLocaleString()} SULFUR</span>
-                </div>
-              )}
               {base.created_at && (
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
@@ -658,6 +652,48 @@ export default async function BasePage({ params }: BasePageProps) {
                         Upkeep data not available for this base
                       </p>
                       <RequestInfoButton requestType="upkeep" action={requestInformation} />
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              <Card className="border-2 border-border bg-card">
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-bold font-display text-foreground mb-0">RAID COST</h3>
+                  <p className="mb-4 text-muted-foreground text-sm">Explosives needed to destroy this base</p>
+                  {base.raid_rockets ? (
+                    <>
+                      <div className="grid grid-cols-3 gap-3 mb-4">
+                        <div className="flex flex-col items-center gap-1 rounded border border-border bg-muted/30 p-3">
+                          <span className="text-2xl">🚀</span>
+                          <span className="font-mono font-bold text-xl text-foreground">{base.raid_rockets}</span>
+                          <span className="text-xs text-muted-foreground uppercase font-mono">Rockets</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-1 rounded border border-border bg-muted/30 p-3">
+                          <span className="text-2xl">💣</span>
+                          <span className="font-mono font-bold text-xl text-foreground">
+                            {Math.ceil((base.raid_rockets * SULFUR_PER_ROCKET) / SULFUR_PER_C4)}
+                          </span>
+                          <span className="text-xs text-muted-foreground uppercase font-mono">C4</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-1 rounded border border-border bg-muted/30 p-3">
+                          <span className="text-2xl">🧨</span>
+                          <span className="font-mono font-bold text-xl text-foreground">
+                            {Math.ceil((base.raid_rockets * SULFUR_PER_ROCKET) / SULFUR_PER_SATCHEL)}
+                          </span>
+                          <span className="text-xs text-muted-foreground uppercase font-mono">Satchels</span>
+                        </div>
+                      </div>
+                      <div className="rounded border border-border/50 bg-muted/20 px-4 py-2 text-center">
+                        <span className="text-xs text-muted-foreground font-mono uppercase tracking-wide">
+                          ≈ {(base.raid_rockets * SULFUR_PER_ROCKET).toLocaleString()} Sulfur to craft rockets
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex flex-col gap-3 py-4 items-start">
+                      <p className="text-sm text-muted-foreground text-center">Raid cost not specified for this base</p>
+                      <RequestInfoButton requestType="raid_cost" action={requestInformation} />
                     </div>
                   )}
                 </CardContent>

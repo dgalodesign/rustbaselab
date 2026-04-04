@@ -5,12 +5,12 @@ import { Info } from "lucide-react"
 import { toast } from "sonner"
 
 interface RequestInfoButtonProps {
-  requestType: "build_cost" | "upkeep"
+  requestType: "build_cost" | "upkeep" | "raid_cost"
   action: (formData: FormData) => Promise<{ success: boolean; message?: string; error?: string }>
 }
 
 export function RequestInfoButton({ requestType, action }: RequestInfoButtonProps) {
-  const label = requestType === "build_cost" ? "Build Cost" : "Upkeep Data"
+  const label = requestType === "build_cost" ? "Build Cost" : requestType === "upkeep" ? "Upkeep Data" : "Raid Cost"
 
   const handleClick = () => {
     toast.success(`Got it! We'll add the ${label} shortly.`)
