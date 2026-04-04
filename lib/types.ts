@@ -18,8 +18,7 @@ export interface Base {
   upkeep_hq: number | null
   upkeep_wood: number | null
   build_time_min: number | null
-  raid_cost_sulfur: number | null
-  raid_costs: any | null
+  raid_rockets: number | null
   created_at: string
   updated_at: string
   type_id: string | null

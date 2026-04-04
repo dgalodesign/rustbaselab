@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import { cache } from "react"
+import { SULFUR_PER_ROCKET } from "@/lib/constants"
 
 import { Footer } from "@/components/footer"
 import { YouTubeEmbed } from "@/components/youtube-embed"
@@ -86,7 +87,7 @@ export async function generateMetadata({ params }: BasePageProps): Promise<Metad
   // Enhanced Description
   const baseType = base.type?.name || "Base"
   const footprint = base.footprint?.name || "standard"
-  const raidCost = base.raid_cost_sulfur ? `🛡️ Raid Cost: ${base.raid_cost_sulfur.toLocaleString()} Sulfur.` : ""
+  const raidCost = base.raid_rockets ? `🛡️ Raid Cost: ${(base.raid_rockets * SULFUR_PER_ROCKET).toLocaleString()} Sulfur.` : ""
   const buildTime = base.build_time_min ? `⚡ Build Time: ${base.build_time_min}m.` : ""
 
   const description = base.features ||
@@ -485,10 +486,10 @@ export default async function BasePage({ params }: BasePageProps) {
                   <span className="font-mono">TIME: {base.build_time_min} MIN</span>
                 </div>
               )}
-              {base.raid_cost_sulfur && (
+              {base.raid_rockets && (
                 <div className="flex items-center gap-2">
                   <Hammer className="h-4 w-4" />
-                  <span className="font-mono">RAID: {base.raid_cost_sulfur.toLocaleString()} SULFUR</span>
+                  <span className="font-mono">RAID: {(base.raid_rockets * SULFUR_PER_ROCKET).toLocaleString()} SULFUR</span>
                 </div>
               )}
               {base.created_at && (
