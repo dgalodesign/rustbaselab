@@ -30,15 +30,24 @@ export async function generateMetadata({ searchParams }: BasesPageProps): Promis
   let description = `Browse our complete collection of Rust base designs for ${year}. Filter by team size (Solo/Duo/Trio/Quad), type, and footprint. Updated daily with the best bases.`
 
   if (typeId && typeId !== "all") {
-    title = `${typeId} Rust Bases ${year} | Best Designs`
-    description = `Explore the best ${typeId} base designs for Rust ${year}. Detailed video tutorials, build costs, and raid defense guides for ${typeId} bases.`
+    const types = await getAllTypes()
+    const typeName = types.find((t) => String(t.id) === String(typeId))?.name ?? typeId
+    title = `${typeName} Rust Bases ${year} | Best Designs`
+    description = `Explore the best ${typeName} base designs for Rust ${year}. Detailed video tutorials, build costs, and raid defense guides for ${typeName} bases.`
   } else if (teamSizeId && teamSizeId !== "all") {
     title = `Best Rust ${teamSizeId} Bases ${year} | Top Designs`
     description = `Find the best Rust base designs for ${teamSizeId} teams in ${year}. From starter bases to main bases, optimized for ${teamSizeId} players.`
   } else if (footprintId && footprintId !== "all") {
-    title = `Rust ${footprintId} Base Designs ${year}`
-    description = `Discover top Rust base designs with ${footprintId} footprint for ${year}. Efficient and strong builds for any team size.`
+    const footprints = await getAllFootprints()
+    const footprintName = footprints.find((f) => String(f.id) === String(footprintId))?.name ?? footprintId
+    title = `Rust ${footprintName} Base Designs ${year}`
+    description = `Discover top Rust base designs with ${footprintName} footprint for ${year}. Efficient and strong builds for any team size.`
   }
+
+  const hasFilter =
+    (typeId && typeId !== "all") ||
+    (teamSizeId && teamSizeId !== "all") ||
+    (footprintId && footprintId !== "all")
 
   return {
     title,
@@ -61,6 +70,7 @@ export async function generateMetadata({ searchParams }: BasesPageProps): Promis
     alternates: {
       canonical: "https://rustbaselab.com/bases",
     },
+    ...(hasFilter && { robots: { index: false, follow: true } }),
   }
 }
 
