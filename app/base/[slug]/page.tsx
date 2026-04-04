@@ -665,28 +665,53 @@ export default async function BasePage({ params }: BasePageProps) {
                     <>
                       <div className="grid grid-cols-3 gap-3 mb-4">
                         <div className="flex flex-col items-center gap-1 rounded border border-border bg-muted/30 p-3">
-                          <span className="text-2xl">🚀</span>
+                          <Image
+                            src="/icons/rocket.webp"
+                            alt="Rocket"
+                            width={36}
+                            height={36}
+                            className="h-9 w-9 object-contain"
+                          />
                           <span className="font-mono font-bold text-xl text-foreground">{base.raid_rockets}</span>
                           <span className="text-xs text-muted-foreground uppercase font-mono">Rockets</span>
                         </div>
                         <div className="flex flex-col items-center gap-1 rounded border border-border bg-muted/30 p-3">
-                          <span className="text-2xl">💣</span>
+                          <Image
+                            src="/icons/c4.webp"
+                            alt="C4"
+                            width={36}
+                            height={36}
+                            className="h-9 w-9 object-contain"
+                          />
                           <span className="font-mono font-bold text-xl text-foreground">
                             {Math.ceil((base.raid_rockets * SULFUR_PER_ROCKET) / SULFUR_PER_C4)}
                           </span>
                           <span className="text-xs text-muted-foreground uppercase font-mono">C4</span>
                         </div>
                         <div className="flex flex-col items-center gap-1 rounded border border-border bg-muted/30 p-3">
-                          <span className="text-2xl">🧨</span>
+                          <Image
+                            src="/icons/satchel.webp"
+                            alt="Satchel"
+                            width={36}
+                            height={36}
+                            className="h-9 w-9 object-contain"
+                          />
                           <span className="font-mono font-bold text-xl text-foreground">
                             {Math.ceil((base.raid_rockets * SULFUR_PER_ROCKET) / SULFUR_PER_SATCHEL)}
                           </span>
                           <span className="text-xs text-muted-foreground uppercase font-mono">Satchels</span>
                         </div>
                       </div>
-                      <div className="rounded border border-border/50 bg-muted/20 px-4 py-2 text-center">
+                      <div className="flex items-center gap-2 rounded border border-border/50 bg-muted/20 px-4 py-2">
+                        <Image
+                          src="/icons/sulfur.webp"
+                          alt="Sulfur"
+                          width={20}
+                          height={20}
+                          className="h-5 w-5 object-contain"
+                        />
                         <span className="text-xs text-muted-foreground font-mono uppercase tracking-wide">
-                          ≈ {(base.raid_rockets * SULFUR_PER_ROCKET).toLocaleString()} Sulfur to craft rockets
+                          ≈ {(base.raid_rockets * SULFUR_PER_ROCKET).toLocaleString()} Sulfur to craft
                         </span>
                       </div>
                     </>
