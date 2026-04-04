@@ -72,9 +72,13 @@ export default async function BlogPage() {
       />
 
       <main className="flex-1">
-        <div className="container mx-auto px-4 py-8">
-          <Breadcrumbs items={[{ label: "Blog" }]} className="mb-6" />
+        <section className="border-b border-border bg-background">
+          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+            <Breadcrumbs items={[{ label: "Blog" }]} />
+          </div>
+        </section>
 
+        <div className="container mx-auto px-4 py-8">
           <SectionHeader
             icon={BookOpen}
             title="RUST BLOG"
@@ -83,7 +87,7 @@ export default async function BlogPage() {
           />
 
           {posts.length === 0 ? (
-            <div className="py-16 text-center border-2 border-border rounded-lg bg-card space-y-2">
+            <div className="py-16 text-center border border-border rounded-lg bg-card space-y-2">
               <BookOpen className="h-10 w-10 mx-auto text-muted-foreground mb-3" />
               <p className="text-lg font-bold">NO POSTS YET</p>
               <p className="text-sm text-muted-foreground">Check back soon — guides are on the way!</p>
@@ -94,11 +98,11 @@ export default async function BlogPage() {
                 <Link
                   key={post.id}
                   href={`/blog/${post.slug}`}
-                  className="group relative overflow-hidden rounded-lg border-2 border-border bg-card transition-all hover:border-primary hover:shadow-lg hover:shadow-primary/10 hover:scale-[1.02] flex flex-col"
+                  className="group relative overflow-hidden rounded-lg border border-border bg-card transition-all hover:border-primary hover:shadow-lg hover:shadow-primary/10 hover:scale-[1.02] flex flex-col"
                 >
                   {/* Cover image */}
                   {post.coverImageUrl ? (
-                    <div className="relative aspect-video overflow-hidden border-b-2 border-border">
+                    <div className="relative aspect-video overflow-hidden border-b border-border">
                       <Image
                         src={post.coverImageUrl}
                         alt={post.title}
@@ -109,7 +113,7 @@ export default async function BlogPage() {
                       />
                     </div>
                   ) : (
-                    <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/5 border-b-2 border-border flex items-center justify-center">
+                    <div className="aspect-video bg-muted/30 border-b border-border flex items-center justify-center">
                       <BookOpen className="h-12 w-12 text-muted-foreground/30" />
                     </div>
                   )}

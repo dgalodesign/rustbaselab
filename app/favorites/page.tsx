@@ -38,7 +38,7 @@ export default function FavoritesPage() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {favorites.map((base: StoredFavorite) => (
               <Link key={base.id} href={`/base/${base.slug}`}>
-                <Card className="h-full overflow-hidden border-2 border-border bg-card transition-all hover:border-primary/50 hover:shadow-lg group">
+                <Card className="h-full overflow-hidden border border-border bg-card transition-all hover:border-primary/50 hover:shadow-lg group">
                   <div className="aspect-video relative overflow-hidden bg-muted">
                     {base.image_main_url ? (
                       <Image

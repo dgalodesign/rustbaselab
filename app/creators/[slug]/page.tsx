@@ -96,7 +96,7 @@ export default async function CreatorPage({
 
       <main className="flex-1">
         {/* Breadcrumb */}
-        <section className="border-b-2 border-border bg-background">
+        <section className="border-b border-border bg-background">
           <div className="container mx-auto px-4 py-4">
             <Breadcrumbs
               items={[
@@ -108,15 +108,11 @@ export default async function CreatorPage({
         </section>
 
         {/* Hero */}
-        <section className="border-b-2 border-border bg-gradient-to-b from-background to-background/95 relative overflow-hidden">
-          <div
-            className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(86,117,162,0.12),transparent)]"
-            aria-hidden="true"
-          />
-          <div className="container relative mx-auto px-4 py-12">
+        <section className="border-b border-border bg-background">
+          <div className="container mx-auto px-4 py-12">
             <div className="flex flex-col sm:flex-row sm:items-end gap-6">
               {/* Avatar */}
-              <div className="h-20 w-20 shrink-0 rounded-full border-2 border-primary overflow-hidden">
+              <div className="h-20 w-20 shrink-0 rounded-full border border-primary overflow-hidden">
                 {creator.avatar_url ? (
                   <Image
                     src={creator.avatar_url}
@@ -164,7 +160,7 @@ export default async function CreatorPage({
         {/* Bases grid */}
         <section className="container mx-auto px-4 py-12">
           {bases.length === 0 ? (
-            <div className="py-16 text-center border-2 border-border rounded-lg bg-card space-y-2">
+            <div className="py-16 text-center border border-border rounded-lg bg-card space-y-2">
               <p className="text-lg font-bold">NO BASES YET</p>
               <p className="text-sm text-muted-foreground">
                 {creator.name} hasn&apos;t published any bases yet — check back soon.
@@ -183,8 +179,8 @@ export default async function CreatorPage({
             </>
           )}
 
-          <div className="mt-12 pt-8 border-t-2 border-border">
-            <Button variant="outline" asChild className="border-2">
+          <div className="mt-12 pt-8 border-t border-border">
+            <Button variant="outline" asChild className="border">
               <Link href="/creators">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 All Creators

@@ -30,7 +30,7 @@ export function CookieConsent() {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 animate-in slide-in-from-bottom-5">
       <div className="container mx-auto max-w-4xl">
-        <div className="relative rounded-lg border-2 border-primary bg-card p-6 shadow-[0_0_30px_rgba(0,255,255,0.3)]">
+        <div className="relative rounded-lg border border-primary bg-card p-6 shadow-[0_0_30px_rgba(0,255,255,0.3)]">
           <button
             onClick={rejectCookies}
             className="absolute right-4 top-4 text-muted-foreground hover:text-foreground transition-colors"

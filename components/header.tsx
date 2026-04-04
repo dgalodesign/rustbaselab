@@ -27,12 +27,12 @@ export function Header({ types = [], teamSizes = [] }: HeaderProps) {
   const pathname = usePathname()
 
   // Shared base styles for all nav items
-  const navItemStyles = "text-sm font-medium transition-colors hover:text-primary border-b-2 pb-1 flex items-center gap-1"
+  const navItemStyles = "text-sm font-medium transition-colors hover:text-primary border-b pb-1 flex items-center gap-1"
   const activeStyles = "border-primary text-primary"
   const inactiveStyles = "border-transparent text-foreground/80" // slightly muted for inactive to pop active more
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b-2 border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Mobile Menu */}
         <MobileNav types={types} teamSizes={teamSizes} />
@@ -147,7 +147,7 @@ export function Header({ types = [], teamSizes = [] }: HeaderProps) {
 
         {/* Feedback Button */}
         <div className="hidden md:flex items-center gap-2">
-          <Button variant="outline" size="sm" asChild className="border-2 bg-transparent">
+          <Button variant="outline" size="sm" asChild className="border bg-transparent">
             <Link href="/feedback">
               <span>{t.nav.feedback}</span>
             </Link>

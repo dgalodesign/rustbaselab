@@ -69,7 +69,7 @@ export function TeamSizeLandingPage({
             />
 
             <main className="flex-1">
-                <section className="border-b-2 border-border bg-background">
+                <section className="border-b border-border bg-background">
                     <div className="container mx-auto px-4 py-4 flex items-center justify-between">
                         <Breadcrumbs
                             items={[
@@ -80,7 +80,7 @@ export function TeamSizeLandingPage({
                     </div>
                 </section>
 
-                <section className="border-b-2 border-border bg-gradient-to-b from-background to-background/95 relative overflow-hidden">
+                <section className="border-b border-border bg-gradient-to-b from-background to-background/95 relative overflow-hidden">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,255,0.1),transparent)]" aria-hidden="true" />
                     <div className="container relative mx-auto px-4 py-12">
                         <h1 className="mb-4 font-display text-4xl font-bold md:text-5xl">
@@ -89,7 +89,7 @@ export function TeamSizeLandingPage({
                         <p className="text-lg text-muted-foreground mb-6">{description}</p>
 
                         {/* Intro Section */}
-                        <div className="bg-card border-2 border-border rounded-lg p-6 mb-6">
+                        <div className="bg-card border border-border rounded-lg p-6 mb-6">
                             <h2 className="text-2xl font-bold font-display mb-4">WHY {teamSize.toUpperCase()} BASES?</h2>
                             <p className="text-muted-foreground mb-4">{introText}</p>
 
@@ -118,7 +118,7 @@ export function TeamSizeLandingPage({
                     </div>
 
                     {bases.length === 0 && (
-                        <div className="py-12 text-center border-2 border-border rounded-lg bg-card space-y-2">
+                        <div className="py-12 text-center border border-border rounded-lg bg-card space-y-2">
                             <p className="text-lg font-bold">BUILDING THE {teamSize.toUpperCase()} COLLECTION</p>
                             <p className="text-sm text-muted-foreground">Check back soon — more bases coming</p>
                         </div>

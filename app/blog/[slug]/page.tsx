@@ -125,16 +125,18 @@ export default async function BlogPostPage({
       <StructuredData data={structuredData} />
 
       <main className="flex-1">
-        <article className="container mx-auto px-4 py-8 max-w-3xl">
-          {/* Breadcrumbs */}
-          <Breadcrumbs
-            items={[
-              { label: "Blog", href: "/blog" },
-              { label: post.title },
-            ]}
-            className="mb-6"
-          />
+        <section className="border-b border-border bg-background">
+          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+            <Breadcrumbs
+              items={[
+                { label: "Blog", href: "/blog" },
+                { label: post.title },
+              ]}
+            />
+          </div>
+        </section>
 
+        <article className="container mx-auto px-4 py-8 max-w-3xl">
           {/* Header */}
           <header className="mb-8">
             {/* Category badge */}
@@ -184,7 +186,7 @@ export default async function BlogPostPage({
 
           {/* Cover image */}
           {post.coverImageUrl && (
-            <div className="relative aspect-video w-full overflow-hidden rounded-lg border-2 border-border mb-8">
+            <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-border mb-8">
               <Image
                 src={post.coverImageUrl}
                 alt={post.title}
@@ -206,8 +208,8 @@ export default async function BlogPostPage({
           </section>
 
           {/* Back link */}
-          <div className="mt-12 pt-8 border-t-2 border-border">
-            <Button variant="outline" asChild className="border-2">
+          <div className="mt-12 pt-8 border-t border-border">
+            <Button variant="outline" asChild className="border">
               <Link href="/blog">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Blog

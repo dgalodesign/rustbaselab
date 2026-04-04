@@ -14,7 +14,7 @@ export default function NotFound() {
     <div className="flex min-h-screen flex-col">
 
 
-      <main className="flex-1 flex items-center justify-center bg-gradient-to-b from-background to-muted">
+      <main className="flex-1 flex items-center justify-center bg-background">
         <div className="container mx-auto px-4 py-16 text-center">
           <div className="mx-auto max-w-2xl space-y-8">
             {/* Error Code */}
@@ -51,7 +51,7 @@ export default function NotFound() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="border-2 border-secondary text-secondary hover:bg-secondary/10 font-bold uppercase min-w-[200px] bg-transparent"
+                className="border border-secondary text-secondary hover:bg-secondary/10 font-bold uppercase min-w-[200px] bg-transparent"
               >
                 <Link href="/bases">
                   <Search className="mr-2 h-5 w-5" />

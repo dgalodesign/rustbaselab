@@ -24,7 +24,7 @@ export default function FeedbackPage() {
             We'd love to hear your thoughts, suggestions, and ideas to make RustBaseLab better.
           </p>
 
-          <div className="overflow-hidden border-2 border-border bg-card shadow-lg rounded-xl">
+          <div className="overflow-hidden border border-border bg-card shadow-lg rounded-xl">
             <iframe
               src="https://dgalodesign.notion.site/ebd/299dd320ec4a806da553cc188d88cafc"
               width="100%"

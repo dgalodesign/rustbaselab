@@ -20,7 +20,7 @@ export default function ContactPage() {
           </p>
 
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="border-2 border-border rounded-lg p-6 bg-card hover:border-primary transition-colors">
+            <div className="border border-border rounded-lg p-6 bg-card hover:border-primary transition-colors">
               <div className="flex items-center gap-3 mb-4">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                   <Mail className="h-5 w-5 text-primary" />
@@ -33,7 +33,7 @@ export default function ContactPage() {
               </a>
             </div>
 
-            <div className="border-2 border-border rounded-lg p-6 bg-card hover:border-primary transition-colors">
+            <div className="border border-border rounded-lg p-6 bg-card hover:border-primary transition-colors">
               <div className="flex items-center gap-3 mb-4">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary/10">
                   <MessageSquare className="h-5 w-5 text-secondary" />
@@ -47,7 +47,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="border-2 border-border rounded-lg p-6 bg-card">
+          <div className="border border-border rounded-lg p-6 bg-card">
             <h2 className="text-2xl font-bold font-display mb-4">Preguntas Frecuentes</h2>
             <div className="space-y-4">
               <div>
@@ -78,7 +78,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="bg-primary/5 border-2 border-primary/20 rounded-lg p-6">
+          <div className="bg-primary/5 border border-primary/20 rounded-lg p-6">
             <h2 className="text-xl font-bold font-display mb-2">Nota sobre Publicidad</h2>
             <p className="text-muted-foreground">
               Este sitio utiliza Google AdSense para mostrar anuncios. Si tienes problemas con anuncios específicos,

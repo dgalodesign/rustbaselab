@@ -113,18 +113,14 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
       />
 
       <main className="flex-1">
-        <section className="border-b-2 border-border bg-background">
+        <section className="border-b border-border bg-background">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <Breadcrumbs items={[{ label: "Bases" }]} />
           </div>
         </section>
 
-        <section className="border-b-2 border-border bg-gradient-to-b from-background to-background/95 relative overflow-hidden">
-          <div
-            className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,255,0.1),transparent)]"
-            aria-hidden="true"
-          />
-          <div className="container relative mx-auto px-4 py-12">
+        <section className="border-b border-border bg-background">
+          <div className="container mx-auto px-4 py-12">
             <h1 className="mb-4 font-display text-4xl font-bold md:text-5xl">ALL BASE DESIGNS</h1>
             <p className="text-lg text-muted-foreground">
               Explore our complete collection of Rust base designs for all team sizes
@@ -146,7 +142,7 @@ export default async function BasesPage({ searchParams }: BasesPageProps) {
           </div>
 
           {bases.length === 0 && (
-            <div className="py-12 text-center border-2 border-border rounded-lg bg-card space-y-3">
+            <div className="py-12 text-center border border-border rounded-lg bg-card space-y-3">
               <p className="text-lg font-bold">NO BUILDS MATCH</p>
               <p className="text-sm text-muted-foreground">Try removing a filter or browse the full catalog</p>
               <a href="/bases" className="inline-block text-sm text-primary hover:underline font-medium">View All Bases →</a>

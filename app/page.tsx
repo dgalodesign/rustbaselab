@@ -193,7 +193,7 @@ export default async function HomePage() {
       <main className="flex-1">
         {hasError && (
           <div className="container mx-auto px-4 py-8">
-            <div className="rounded-lg border-2 border-destructive bg-destructive/10 p-6 text-center">
+            <div className="rounded-lg border border-destructive bg-destructive/10 p-6 text-center">
               <h2 className="mb-2 text-xl font-bold text-destructive">Estamos teniendo problemas</h2>
               <p className="text-muted-foreground">
                 No pudimos cargar las bases en este momento. Inténtalo de nuevo en unos minutos.
@@ -203,11 +203,11 @@ export default async function HomePage() {
         )}
 
         {/* Hero Section */}
-        <section className="border-b-2 border-primary/20 bg-gradient-to-b from-background via-background/95 to-background/90 relative overflow-hidden">
+        <section className="border-b border-primary/20 bg-background relative overflow-hidden">
           <div className="absolute inset-0" aria-hidden="true" />
           <div className="container relative mx-auto px-4 py-16 md:py-24">
             <div className="mx-auto max-w-3xl text-center">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-lg border-2 border-primary/30 bg-primary/10 px-4 py-1.5 text-sm text-accent">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm text-accent">
                 <Sparkles className="h-4 w-4" />
                 <span className="font-semibold">META-APPROVED BUILDS</span>
               </div>
@@ -222,7 +222,7 @@ export default async function HomePage() {
                 <Button
                   size="lg"
                   asChild
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground border-2 border-primary/50 font-bold"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground border border-primary/50 font-bold"
                 >
                   <Link href="/bases">
                     VIEW ALL BASES
@@ -249,7 +249,7 @@ export default async function HomePage() {
           </div>
 
           {metaBases.length === 0 && (
-            <div className="py-12 text-center border-2 border-border rounded-lg bg-card space-y-2">
+            <div className="py-12 text-center border border-border rounded-lg bg-card space-y-2">
               <p className="text-lg font-bold">NO META BASES YET</p>
               <p className="text-sm text-muted-foreground">Check back after the next update</p>
             </div>
@@ -270,7 +270,7 @@ export default async function HomePage() {
           </div>
 
           {popularBases.length === 0 && (
-            <div className="py-12 text-center border-2 border-border rounded-lg bg-card space-y-2">
+            <div className="py-12 text-center border border-border rounded-lg bg-card space-y-2">
               <p className="text-lg font-bold">THE COMMUNITY HASN'T VOTED YET</p>
               <p className="text-sm text-muted-foreground">Be the first to explore the catalog</p>
             </div>
@@ -287,11 +287,10 @@ export default async function HomePage() {
                 <Link
                   key={type.id}
                   href={`/bases?type=${type.id}`}
-                  className="group relative overflow-hidden rounded-lg border-2 border-border bg-card p-6 transition-all hover:border-primary hover:shadow-lg hover:shadow-primary/20 hover:scale-105"
+                  className="group relative overflow-hidden rounded-lg border border-border bg-card p-6 transition-all hover:border-primary hover:shadow-lg hover:shadow-primary/20 hover:scale-105"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                   <div className="relative flex flex-col items-center gap-3 text-center">
-                    <div className="rounded-lg bg-primary/10 p-3 border-2 border-primary/20 group-hover:border-primary/50 transition-colors">
+                    <div className="rounded-lg bg-primary/10 p-3 border border-primary/20 group-hover:border-primary/50 transition-colors">
                       <Icon className="h-8 w-8 text-primary-foregroundry" />
                     </div>
                     <span className="text-lg font-bold uppercase">{type.name}</span>
@@ -322,11 +321,10 @@ export default async function HomePage() {
                 <Link
                   key={size.id}
                   href={href}
-                  className="group relative overflow-hidden rounded-lg border-2 border-border bg-card p-6 transition-all hover:border-secondary hover:shadow-lg hover:shadow-secondary/20 hover:scale-105"
+                  className="group relative overflow-hidden rounded-lg border border-border bg-card p-6 transition-all hover:border-secondary hover:shadow-lg hover:shadow-secondary/20 hover:scale-105"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                   <div className="relative flex flex-col items-center gap-3 text-center">
-                    <div className="rounded-lg bg-secondary/10 p-3 border-2 border-secondary/20 group-hover:border-secondary/50 transition-colors">
+                    <div className="rounded-lg bg-secondary/10 p-3 border border-secondary/20 group-hover:border-secondary/50 transition-colors">
                       <Icon className="h-8 w-8 text-secondary" />
                     </div>
                     <span className="text-lg font-bold uppercase">{size.name}</span>

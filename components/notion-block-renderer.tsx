@@ -116,7 +116,7 @@ function QuoteBlock({ block }: { block: NotionBlock }) {
 function CalloutBlock({ block }: { block: NotionBlock }) {
   const emoji = block.callout?.icon?.type === "emoji" ? block.callout.icon.emoji : "💡"
   return (
-    <div className="flex items-start gap-3 rounded-lg border-2 border-border bg-card p-4">
+    <div className="flex items-start gap-3 rounded-lg border border-border bg-card p-4">
       <span className="text-xl shrink-0" aria-hidden="true">
         {emoji}
       </span>
@@ -131,7 +131,7 @@ function CodeBlock({ block }: { block: NotionBlock }) {
   const code = block.code?.rich_text.map((r) => r.plain_text ?? "").join("") ?? ""
   const lang = block.code?.language ?? ""
   return (
-    <div className="rounded-lg border-2 border-border overflow-hidden">
+    <div className="rounded-lg border border-border overflow-hidden">
       {lang && (
         <div className="bg-muted px-4 py-1.5 text-xs font-mono text-muted-foreground border-b border-border">
           {lang}
@@ -155,7 +155,7 @@ function ImageBlock({ block }: { block: NotionBlock }) {
 
   return (
     <figure className="my-6">
-      <div className="relative w-full aspect-video rounded-lg overflow-hidden border-2 border-border">
+      <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-border">
         <Image
           src={url}
           alt={caption || "Blog image"}
@@ -172,7 +172,7 @@ function ImageBlock({ block }: { block: NotionBlock }) {
 }
 
 function DividerBlock() {
-  return <hr className="border-t-2 border-border my-8" />
+  return <hr className="border-t border-border my-8" />
 }
 
 // ─── Main Renderer ────────────────────────────────────────────────────────────

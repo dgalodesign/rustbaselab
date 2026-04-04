@@ -19,7 +19,7 @@ export default function AboutPage() {
       <main className="container mx-auto px-4 py-12">
         {/* Hero Section */}
         <div className="max-w-4xl mx-auto text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-black font-display mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-black font-display mb-6 text-foreground">
             Acerca de RustBaseLab
           </h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
@@ -29,7 +29,7 @@ export default function AboutPage() {
 
         {/* Mission Section */}
         <div className="max-w-4xl mx-auto mb-16">
-          <div className="rounded-lg border-2 border-primary bg-card p-8 shadow-[0_0_30px_rgba(0,255,255,0.2)]">
+          <div className="rounded-lg border border-primary bg-card p-8 shadow-[0_0_30px_rgba(0,255,255,0.2)]">
             <div className="flex items-center gap-3 mb-6">
               <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
                 <Target className="h-6 w-6 text-primary" />

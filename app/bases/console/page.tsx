@@ -98,7 +98,7 @@ export default async function ConsoleBasesPage() {
       <div className="flex min-h-screen flex-col">
         <main className="flex-1">
           {/* Breadcrumb */}
-          <section className="border-b-2 border-border bg-background">
+          <section className="border-b border-border bg-background">
             <div className="container mx-auto px-4 py-4">
               <Breadcrumbs
                 items={[
@@ -110,12 +110,8 @@ export default async function ConsoleBasesPage() {
           </section>
 
           {/* Hero */}
-          <section className="border-b-2 border-border bg-gradient-to-b from-background to-background/95 relative overflow-hidden">
-            <div
-              className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(86,117,162,0.12),transparent)]"
-              aria-hidden="true"
-            />
-            <div className="container relative mx-auto px-4 py-12">
+          <section className="border-b border-border bg-background">
+            <div className="container mx-auto px-4 py-12">
               <h1 className="mb-4 font-display text-4xl font-bold md:text-5xl">
                 BEST RUST CONSOLE BASE DESIGNS {year}
               </h1>
@@ -129,7 +125,7 @@ export default async function ConsoleBasesPage() {
                 {["PS4", "PS5", "Xbox One", "Xbox Series X|S"].map((platform) => (
                   <span
                     key={platform}
-                    className="rounded border-2 border-primary/30 bg-primary/10 px-3 py-1 text-sm font-bold text-primary"
+                    className="rounded border border-primary/30 bg-primary/10 px-3 py-1 text-sm font-bold text-primary"
                   >
                     {platform}
                   </span>
@@ -137,7 +133,7 @@ export default async function ConsoleBasesPage() {
               </div>
 
               {/* Info box */}
-              <div className="bg-card border-2 border-border rounded-lg p-6 mb-2">
+              <div className="bg-card border border-border rounded-lg p-6 mb-2">
                 <h2 className="text-2xl font-bold font-display mb-4">CONSOLE BUILDING TIPS</h2>
                 <ul className="space-y-2">
                   {CONSOLE_TIPS.map((tip, i) => (
@@ -152,11 +148,11 @@ export default async function ConsoleBasesPage() {
           </section>
 
           {/* FAQ section */}
-          <section className="border-b-2 border-border bg-card/50">
+          <section className="border-b border-border bg-card/50">
             <div className="container mx-auto px-4 py-8">
               <h2 className="font-display text-2xl font-bold mb-6">FREQUENTLY ASKED QUESTIONS</h2>
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg border-2 border-border bg-card p-5">
+                <div className="rounded-lg border border-border bg-card p-5">
                   <h3 className="font-bold mb-2">
                     Are PC base designs compatible with Rust Console Edition?
                   </h3>
@@ -165,21 +161,21 @@ export default async function ConsoleBasesPage() {
                     PS4, PS5, Xbox One, and Xbox Series X/S without modification.
                   </p>
                 </div>
-                <div className="rounded-lg border-2 border-border bg-card p-5">
+                <div className="rounded-lg border border-border bg-card p-5">
                   <h3 className="font-bold mb-2">Does Rust Console have honeycomb?</h3>
                   <p className="text-sm text-muted-foreground">
                     Yes. Honeycomb works identically on console. Place triangle foundations around your core
                     and upgrade them to stone or metal for maximum raid protection.
                   </p>
                 </div>
-                <div className="rounded-lg border-2 border-border bg-card p-5">
+                <div className="rounded-lg border border-border bg-card p-5">
                   <h3 className="font-bold mb-2">What&apos;s the best starter base for console?</h3>
                   <p className="text-sm text-muted-foreground">
                     A 2×1 or 2×2 with honeycomb is the standard wipe-day starter for console players. Browse
                     our Solo Bases section for the best beginner-friendly designs.
                   </p>
                 </div>
-                <div className="rounded-lg border-2 border-border bg-card p-5">
+                <div className="rounded-lg border border-border bg-card p-5">
                   <h3 className="font-bold mb-2">When do Rust Console servers wipe?</h3>
                   <p className="text-sm text-muted-foreground">
                     Console servers typically wipe on the first Thursday of each month, aligned with PC Rust

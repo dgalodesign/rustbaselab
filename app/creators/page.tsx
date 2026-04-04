@@ -68,18 +68,14 @@ export default async function CreatorsPage() {
       />
 
       <main className="flex-1">
-        <section className="border-b-2 border-border bg-background">
+        <section className="border-b border-border bg-background">
           <div className="container mx-auto px-4 py-4">
             <Breadcrumbs items={[{ label: "Creators" }]} />
           </div>
         </section>
 
-        <section className="border-b-2 border-border bg-gradient-to-b from-background to-background/95 relative overflow-hidden">
-          <div
-            className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(86,117,162,0.12),transparent)]"
-            aria-hidden="true"
-          />
-          <div className="container relative mx-auto px-4 py-12">
+        <section className="border-b border-border bg-background">
+          <div className="container mx-auto px-4 py-12">
             <div className="flex items-center gap-4 mb-4">
               <h1 className="font-display text-4xl font-bold md:text-5xl">BASE CREATORS</h1>
               <Users className="text-primary size-10" />
@@ -93,7 +89,7 @@ export default async function CreatorsPage() {
 
         <section className="container mx-auto px-4 py-12">
           {activeCreators.length === 0 ? (
-            <div className="py-16 text-center border-2 border-border rounded-lg bg-card space-y-2">
+            <div className="py-16 text-center border border-border rounded-lg bg-card space-y-2">
               <Users className="h-10 w-10 mx-auto text-muted-foreground mb-3" />
               <p className="text-lg font-bold">NO CREATORS YET</p>
               <p className="text-sm text-muted-foreground">Check back soon.</p>
@@ -131,10 +127,10 @@ function CreatorCard({ creator, baseCount }: { creator: Creator; baseCount: numb
   return (
     <Link
       href={`/creators/${slug}`}
-      className="group relative flex flex-col rounded-lg border-2 border-border bg-card p-6 transition-all hover:border-primary hover:shadow-lg hover:shadow-primary/10 hover:scale-[1.02]"
+      className="group relative flex flex-col rounded-lg border border-border bg-card p-6 transition-all hover:border-primary hover:shadow-lg hover:shadow-primary/10 hover:scale-[1.02]"
     >
       {/* Avatar */}
-      <div className="mb-4 h-14 w-14 shrink-0 rounded-full border-2 border-border group-hover:border-primary transition-colors overflow-hidden">
+      <div className="mb-4 h-14 w-14 shrink-0 rounded-full border border-border group-hover:border-primary transition-colors overflow-hidden">
         {creator.avatar_url ? (
           <Image
             src={creator.avatar_url}

@@ -427,7 +427,7 @@ export default async function BasePage({ params }: BasePageProps) {
       />
 
       <main className="flex-1">
-        <section className="border-b-2 border-border bg-background">
+        <section className="border-b border-border bg-background">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <Breadcrumbs
               items={[
@@ -438,14 +438,14 @@ export default async function BasePage({ params }: BasePageProps) {
           </div>
         </section>
 
-        <section className="border-b-2 border-border bg-background relative overflow-hidden">
+        <section className="border-b border-border bg-background relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('/noise.png')] opacity-5" aria-hidden="true" />
           <div className="container relative mx-auto px-4 py-8">
             <div className="mb-4 flex flex-wrap items-center gap-2">
               {base.type?.name && (
                 <Badge
                   variant="outline"
-                  className="bg-primary/10 text-primary border-2 border-primary/30 font-mono font-bold"
+                  className="bg-primary/10 text-primary border border-primary/30 font-mono font-bold"
                 >
                   {base.type.name.toUpperCase()}
                 </Badge>
@@ -453,7 +453,7 @@ export default async function BasePage({ params }: BasePageProps) {
               {base.footprint?.name && (
                 <Badge
                   variant="outline"
-                  className="bg-secondary/10 text-secondary border-2 border-secondary/30 font-mono font-bold"
+                  className="bg-secondary/10 text-secondary border border-secondary/30 font-mono font-bold"
                 >
                   {base.footprint.name.toUpperCase()}
                 </Badge>
@@ -462,7 +462,7 @@ export default async function BasePage({ params }: BasePageProps) {
                 <Badge
                   key={index}
                   variant="outline"
-                  className="bg-accent/10 text-accent border-2 border-accent/30 font-mono font-bold"
+                  className="bg-accent/10 text-accent border border-accent/30 font-mono font-bold"
                 >
                   {size.toUpperCase()}
                 </Badge>
@@ -539,7 +539,7 @@ export default async function BasePage({ params }: BasePageProps) {
             </div>
 
             <div className="space-y-6">
-              <Card className="border-2 border-border bg-card">
+              <Card className="border border-border bg-card">
                 <CardContent className="p-6">
                   <h3 className="text-lg font-bold font-display text-foreground mb-0">BUILD COST</h3>
                   <p className="mb-4 text-muted-foreground text-sm">Materials for base construction</p>
@@ -597,7 +597,7 @@ export default async function BasePage({ params }: BasePageProps) {
                 </CardContent>
               </Card>
 
-              <Card className="border-2 border-border bg-card">
+              <Card className="border border-border bg-card">
                 <CardContent className="p-6">
                   <h3 className="text-lg font-bold font-display text-foreground mb-0">UPKEEP</h3>
                   <p className="mb-4 text-muted-foreground text-sm">Materials for 24h maintenance</p>
@@ -657,7 +657,7 @@ export default async function BasePage({ params }: BasePageProps) {
                 </CardContent>
               </Card>
 
-              <Card className="border-2 border-border bg-card">
+              <Card className="border border-border bg-card">
                 <CardContent className="p-6">
                   <h3 className="text-lg font-bold font-display text-foreground mb-0">RAID COST</h3>
                   <p className="mb-4 text-muted-foreground text-sm">Explosives needed to destroy this base</p>

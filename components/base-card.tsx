@@ -23,7 +23,7 @@ export function BaseCard({ base }: BaseCardProps) {
 
   return (
     <Link href={`/base/${base.slug}`} className="group">
-      <Card className="industrial-card group overflow-hidden transition-all hover:border-primary hover:shadow-xl border-2">
+      <Card className="industrial-card group overflow-hidden transition-all hover:border-primary hover:shadow-xl border">
         <CardHeader className="p-0">
           <div className="relative aspect-video overflow-hidden bg-muted">
             <Image
@@ -68,7 +68,7 @@ export function BaseCard({ base }: BaseCardProps) {
           </div>
         </CardContent>
 
-        <CardFooter className="border-t-2 border-border p-4">
+        <CardFooter className="border-t border-border p-4">
           <span className="text-muted-foreground text-sm">{relativeTime}</span>
         </CardFooter>
       </Card>
