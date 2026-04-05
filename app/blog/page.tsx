@@ -50,8 +50,18 @@ const categoryColors: Record<string, string> = {
   Meta: "bg-destructive/15 text-destructive border-destructive/30",
 }
 
-export default async function BlogPage() {
-  const posts = await getAllBlogPosts()
+const ALL_CATEGORIES = ["Guide", "Tutorial", "Strategy", "Meta"]
+
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>
+}) {
+  const { category } = await searchParams
+  const allPosts = await getAllBlogPosts()
+
+  const activeCategory = ALL_CATEGORIES.includes(category ?? "") ? category! : null
+  const posts = activeCategory ? allPosts.filter((p) => p.category === activeCategory) : allPosts
 
   return (
     <>
@@ -63,6 +73,7 @@ export default async function BlogPage() {
           description:
             "Advanced Rust building techniques, base strategies, and meta guides for all team sizes.",
           url: "https://rustbaselab.com/blog",
+          numberOfItems: allPosts.length,
           publisher: {
             "@type": "Organization",
             name: "RustBaseLab",
@@ -86,8 +97,35 @@ export default async function BlogPage() {
             className="border-none pb-2"
           />
 
+          {/* Category filters */}
+          <nav className="flex flex-wrap gap-2 mt-4" aria-label="Filter by category">
+            <Link
+              href="/blog"
+              className={`rounded border px-3 py-1 text-xs font-bold uppercase transition-colors ${
+                !activeCategory
+                  ? "border-primary bg-primary/15 text-primary"
+                  : "border-border bg-card text-muted-foreground hover:border-primary hover:text-primary"
+              }`}
+            >
+              All
+            </Link>
+            {ALL_CATEGORIES.map((cat) => (
+              <Link
+                key={cat}
+                href={`/blog?category=${cat}`}
+                className={`rounded border px-3 py-1 text-xs font-bold uppercase transition-colors ${
+                  activeCategory === cat
+                    ? categoryColors[cat]
+                    : "border-border bg-card text-muted-foreground hover:border-primary hover:text-primary"
+                }`}
+              >
+                {cat}
+              </Link>
+            ))}
+          </nav>
+
           {posts.length === 0 ? (
-            <div className="py-16 text-center border border-border rounded-lg bg-card space-y-2">
+            <div className="py-16 text-center border border-border rounded-lg bg-card space-y-2 mt-6">
               <BookOpen className="h-10 w-10 mx-auto text-muted-foreground mb-3" />
               <p className="text-lg font-bold">NO POSTS YET</p>
               <p className="text-sm text-muted-foreground">Check back soon — guides are on the way!</p>

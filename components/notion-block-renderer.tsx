@@ -62,20 +62,30 @@ function ParagraphBlock({ block }: { block: NotionBlock }) {
   )
 }
 
+export function slugifyHeading(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+}
+
 function HeadingBlock({ block, level }: { block: NotionBlock; level: 1 | 2 | 3 }) {
   const key = `heading_${level}` as "heading_1" | "heading_2" | "heading_3"
   const items = block[key]?.rich_text
+  const plainText = items?.map((r) => r.plain_text ?? "").join("") ?? ""
+  const id = slugifyHeading(plainText)
 
   const Tag = level === 1 ? "h2" : level === 2 ? "h3" : "h4"
   const className = cn(
-    "font-display font-bold text-foreground",
+    "font-display font-bold text-foreground scroll-mt-20",
     level === 1 && "text-2xl md:text-3xl mt-10 mb-4",
     level === 2 && "text-xl md:text-2xl mt-8 mb-3",
     level === 3 && "text-lg md:text-xl mt-6 mb-2"
   )
 
   return (
-    <Tag className={className}>
+    <Tag id={id} className={className}>
       <RichText items={items} />
     </Tag>
   )

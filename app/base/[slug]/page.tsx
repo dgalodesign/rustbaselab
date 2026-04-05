@@ -716,10 +716,9 @@ export default async function BasePage({ params }: BasePageProps) {
                       </div>
                     </>
                   ) : (
-                    <div className="flex flex-col gap-3 py-4 items-start">
-                      <p className="text-sm text-muted-foreground text-center">Raid cost not specified for this base</p>
-                      <RequestInfoButton requestType="raid_cost" action={requestInformation} />
-                    </div>
+                    <p className="py-4 text-sm text-muted-foreground">
+                      The creator has not provided raid cost data for this base.
+                    </p>
                   )}
                 </CardContent>
               </Card>

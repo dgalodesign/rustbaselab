@@ -31,6 +31,7 @@ export interface BlogPost {
   slug: string
   description: string
   publishedDate: string | null
+  updatedDate: string | null
   category: string | null
   tags: string[]
   coverImageUrl: string | null
@@ -94,6 +95,7 @@ function parsePageToPost(page: any): BlogPost {
     slug: extractRichText(slugItems),
     description: extractRichText(descriptionItems),
     publishedDate: props.PublishedDate?.date?.start ?? null,
+    updatedDate: props.UpdatedDate?.date?.start ?? null,
     category: props.Category?.select?.name ?? null,
     tags: (props.Tags?.multi_select ?? []).map((tag: { name: string }) => tag.name),
     coverImageUrl: props.CoverImageUrl?.url ?? null,
@@ -182,6 +184,53 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
     logger.error("Error in getBlogPostBySlug", err)
     return null
   }
+}
+
+/**
+ * Estimates reading time in minutes from an array of Notion blocks (~200 wpm).
+ */
+export function estimateReadingTime(blocks: NotionBlock[]): number {
+  let wordCount = 0
+
+  for (const block of blocks) {
+    const textBlocks = [
+      block.paragraph?.rich_text,
+      block.heading_1?.rich_text,
+      block.heading_2?.rich_text,
+      block.heading_3?.rich_text,
+      block.bulleted_list_item?.rich_text,
+      block.numbered_list_item?.rich_text,
+      block.quote?.rich_text,
+      block.callout?.rich_text,
+      block.code?.rich_text,
+    ]
+    for (const richText of textBlocks) {
+      if (richText) {
+        const text = richText.map((r) => r.plain_text ?? "").join(" ")
+        wordCount += text.split(/\s+/).filter(Boolean).length
+      }
+    }
+  }
+
+  return Math.max(1, Math.ceil(wordCount / 200))
+}
+
+/**
+ * Returns up to `limit` posts related to the current one by category or tags.
+ */
+export async function getRelatedPosts(
+  currentSlug: string,
+  category: string | null,
+  limit = 3
+): Promise<BlogPost[]> {
+  const all = await getAllBlogPosts()
+  const others = all.filter((p) => p.slug !== currentSlug)
+
+  // Prefer same category first, then fallback to any other post
+  const sameCategory = others.filter((p) => p.category && p.category === category)
+  const rest = others.filter((p) => p.category !== category)
+
+  return [...sameCategory, ...rest].slice(0, limit)
 }
 
 /**

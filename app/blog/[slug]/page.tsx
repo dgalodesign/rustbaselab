@@ -1,9 +1,16 @@
-import { getAllBlogPosts, getBlogPostBySlug, getBlogPostContent } from "@/lib/notion-blog"
+import {
+  getAllBlogPosts,
+  getBlogPostBySlug,
+  getBlogPostContent,
+  getRelatedPosts,
+  estimateReadingTime,
+} from "@/lib/notion-blog"
 import { NotionBlockRenderer } from "@/components/notion-block-renderer"
+import { TableOfContents } from "@/components/table-of-contents"
 import { StructuredData } from "@/components/structured-data"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Footer } from "@/components/footer"
-import { CalendarDays, Tag, ArrowLeft } from "lucide-react"
+import { CalendarDays, Tag, Clock, ArrowLeft, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
@@ -35,20 +42,23 @@ export async function generateMetadata({
     return { title: "Post not found" }
   }
 
+  const description = post.description || `Read ${post.title} on RustBaseLab`
   const ogImage = post.coverImageUrl
     ? [{ url: post.coverImageUrl, width: 1200, height: 630, alt: post.title }]
     : [{ url: "/og-image.png", width: 1200, height: 630, alt: post.title }]
 
   return {
     title: post.title,
-    description: post.description || `Read ${post.title} on RustBaseLab`,
+    description,
     keywords: post.tags.length > 0 ? post.tags : undefined,
     openGraph: {
       title: `${post.title} | RustBaseLab`,
-      description: post.description || undefined,
+      description,
       url: `https://rustbaselab.com/blog/${slug}`,
       type: "article",
       publishedTime: post.publishedDate ?? undefined,
+      modifiedTime: post.updatedDate ?? post.publishedDate ?? undefined,
+      authors: ["https://rustbaselab.com"],
       tags: post.tags,
       images: ogImage,
     },
@@ -91,14 +101,21 @@ export default async function BlogPostPage({
 
   if (!post) notFound()
 
+  const readingTime = estimateReadingTime(content)
+  const relatedPosts = await getRelatedPosts(slug, post.category)
+  const description = post.description || post.title
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
-    description: post.description || undefined,
+    description,
     image: post.coverImageUrl ?? "https://rustbaselab.com/og-image.png",
     datePublished: post.publishedDate ?? undefined,
-    dateModified: post.publishedDate ?? undefined,
+    dateModified: post.updatedDate ?? post.publishedDate ?? undefined,
+    inLanguage: "en-US",
+    articleSection: post.category ?? undefined,
+    ...(post.tags.length > 0 && { keywords: post.tags.join(", ") }),
     author: {
       "@type": "Organization",
       name: "RustBaseLab",
@@ -117,8 +134,10 @@ export default async function BlogPostPage({
       "@type": "WebPage",
       "@id": `https://rustbaselab.com/blog/${slug}`,
     },
-    keywords: post.tags.join(", ") || undefined,
   }
+
+  const shareUrl = `https://rustbaselab.com/blog/${slug}`
+  const shareText = encodeURIComponent(post.title)
 
   return (
     <>
@@ -168,6 +187,10 @@ export default async function BlogPostPage({
                   <time dateTime={post.publishedDate}>{formatDate(post.publishedDate)}</time>
                 </div>
               )}
+              <div className="flex items-center gap-1.5">
+                <Clock className="h-4 w-4" />
+                <span>{readingTime} min read</span>
+              </div>
               {post.tags.length > 0 && (
                 <div className="flex items-center gap-1.5 flex-wrap">
                   <Tag className="h-4 w-4" />
@@ -198,6 +221,9 @@ export default async function BlogPostPage({
             </div>
           )}
 
+          {/* Table of Contents */}
+          <TableOfContents blocks={content} />
+
           {/* Content */}
           <section>
             {content.length > 0 ? (
@@ -207,15 +233,76 @@ export default async function BlogPostPage({
             )}
           </section>
 
-          {/* Back link */}
-          <div className="mt-12 pt-8 border-t border-border">
+          {/* Share + Back */}
+          <div className="mt-12 pt-8 border-t border-border flex flex-wrap items-center justify-between gap-4">
             <Button variant="outline" asChild className="border">
               <Link href="/blog">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Blog
               </Link>
             </Button>
+
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground flex items-center gap-1.5">
+                <Share2 className="h-4 w-4" />
+                Share:
+              </span>
+              <a
+                href={`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground hover:border-primary hover:text-primary transition-colors"
+                aria-label="Share on X (Twitter)"
+              >
+                X / Twitter
+              </a>
+              <a
+                href={`https://www.reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${shareText}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground hover:border-primary hover:text-primary transition-colors"
+                aria-label="Share on Reddit"
+              >
+                Reddit
+              </a>
+            </div>
           </div>
+
+          {/* Related Articles */}
+          {relatedPosts.length > 0 && (
+            <section className="mt-12" aria-label="Related guides">
+              <h2 className="font-display font-bold text-xl text-foreground mb-4">
+                Related Guides
+              </h2>
+              <div className="grid sm:grid-cols-3 gap-4">
+                {relatedPosts.map((related) => (
+                  <Link
+                    key={related.id}
+                    href={`/blog/${related.slug}`}
+                    className="group rounded-lg border border-border bg-card p-4 hover:border-primary hover:shadow-lg hover:shadow-primary/10 transition-all flex flex-col gap-2"
+                  >
+                    {related.category && (
+                      <span
+                        className={`self-start rounded border px-2 py-0.5 text-xs font-bold uppercase ${
+                          categoryColors[related.category] ?? "bg-muted text-muted-foreground border-border"
+                        }`}
+                      >
+                        {related.category}
+                      </span>
+                    )}
+                    <p className="font-display font-bold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3">
+                      {related.title}
+                    </p>
+                    {related.publishedDate && (
+                      <p className="text-xs text-muted-foreground mt-auto">
+                        {formatDate(related.publishedDate)}
+                      </p>
+                    )}
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
         </article>
       </main>
 

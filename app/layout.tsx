@@ -85,10 +85,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://rustbaselab.com",
-    languages: {
-      "en-US": "https://rustbaselab.com",
-      "es-ES": "https://rustbaselab.com/es",
-    },
   },
   verification: {
     google: "bpWqD-y3XKcAqVhVhsjrnS8hlXHf-iHFzvBjhDqW10c",
