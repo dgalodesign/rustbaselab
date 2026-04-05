@@ -136,6 +136,15 @@ export function MobileNav({ types = [], teamSizes = [] }: MobileNavProps) {
                         </Link>
 
                         <Link
+                            href="/tools"
+                            onClick={() => setOpen(false)}
+                            className={`text-foreground/70 transition-colors hover:text-foreground font-medium py-2 ${pathname?.startsWith("/tools") ? "text-primary font-bold" : ""
+                                }`}
+                        >
+                            {t.nav.tools}
+                        </Link>
+
+                        <Link
                             href="/creators"
                             onClick={() => setOpen(false)}
                             className={`text-foreground/70 transition-colors hover:text-foreground font-medium py-2 ${pathname?.startsWith("/creators") ? "text-primary font-bold" : ""
