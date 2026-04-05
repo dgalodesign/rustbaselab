@@ -588,6 +588,10 @@ export default async function BasePage({ params }: BasePageProps) {
                         </div>
                       )}
                     </div>
+                  ) : base.build_cost_no_creator_data ? (
+                    <p className="py-4 text-sm text-muted-foreground">
+                      The creator has not provided build cost data for this base.
+                    </p>
                   ) : (
                     <div className="flex flex-col gap-3 py-4 items-start">
                       <p className="text-sm text-center text-muted-foreground">Materials not specified for this base</p>
@@ -646,6 +650,10 @@ export default async function BasePage({ params }: BasePageProps) {
                         </div>
                       )}
                     </div>
+                  ) : base.upkeep_no_creator_data ? (
+                    <p className="py-4 text-sm text-muted-foreground">
+                      The creator has not provided upkeep data for this base.
+                    </p>
                   ) : (
                     <div className="flex flex-col gap-3 py-4 items-start">
                       <p className="text-sm text-muted-foreground text-center">

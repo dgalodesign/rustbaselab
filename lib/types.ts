@@ -19,6 +19,8 @@ export interface Base {
   upkeep_wood: number | null
   build_time_min: number | null
   raid_rockets: number | null
+  build_cost_no_creator_data: boolean
+  upkeep_no_creator_data: boolean
   created_at: string
   updated_at: string
   type_id: string | null
