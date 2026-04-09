@@ -356,7 +356,15 @@ export async function getMetaBases(limit = 6): Promise<Base[]> {
   try {
     const supabase = createPublicClient()
 
-    const { data, error } = await supabase
+    const { data: typeData } = await supabase
+      .from("types")
+      .select("id")
+      .ilike("name", "main")
+      .single()
+
+    const mainTypeId = typeData?.id
+
+    let query = supabase
       .from("published_bases")
       .select(`
         *,
@@ -367,6 +375,12 @@ export async function getMetaBases(limit = 6): Promise<Base[]> {
       .order("created_at", { ascending: false })
       .limit(limit)
 
+    if (mainTypeId) {
+      query = query.eq("type_id", mainTypeId)
+    }
+
+    const { data, error } = await query
+
     if (error) {
       handleDatabaseError(error, "getMetaBases")
     }
@@ -376,7 +390,16 @@ export async function getMetaBases(limit = 6): Promise<Base[]> {
     logger.error("Error in getMetaBases, attempting fallback", err)
     try {
       const supabase = createPublicClient()
-      const { data, error } = await supabase
+
+      const { data: typeData } = await supabase
+        .from("types")
+        .select("id")
+        .ilike("name", "main")
+        .single()
+
+      const mainTypeId = typeData?.id
+
+      let query = supabase
         .from("bases")
         .select(`
           *,
@@ -387,6 +410,12 @@ export async function getMetaBases(limit = 6): Promise<Base[]> {
         .eq("status", "published")
         .order("created_at", { ascending: false })
         .limit(limit)
+
+      if (mainTypeId) {
+        query = query.eq("type_id", mainTypeId)
+      }
+
+      const { data, error } = await query
 
       if (error) {
         handleDatabaseError(error, "getMetaBases fallback")
